@@ -1,23 +1,18 @@
 //
-//  ViewController.swift
+//  EventsManager.swift
 //  Morty
 //
 //  Created by Ezequiel Becerra on 27/05/2021.
 //
 
-import Cocoa
+import Foundation
 import EventKit
 
-class ViewController: NSViewController {
+class EventsManager {
     var store = EKEventStore()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Request access to reminders.
-        store.requestAccess(to: .event) { granted, error in
-            // Handle the response to the request.
-            print("Hello world")
+    func requestAccess(completion: ((Bool, Error) -> ())) {
+        store.requestAccess(to: .event) { _, _ in
         }
     }
     
@@ -36,17 +31,6 @@ class ViewController: NSViewController {
         
         return store.events(matching: predicate)
     }
-
-    @IBAction func fetchEvents(_ sender: Any) {
-        let events = fetchEvents()
-        print(events)
-    }
-    
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
-    }
 }
 
 fileprivate func dateByAdding(days: Int) -> Date? {
@@ -55,4 +39,3 @@ fileprivate func dateByAdding(days: Int) -> Date? {
     
     return Calendar.current.date(byAdding: components, to: Date())
 }
-
