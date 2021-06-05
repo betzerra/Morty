@@ -15,7 +15,7 @@ struct Event: Codable, Hashable {
     let date: Date
     let title: String
     let type: EventType
-    
+
     var standupText: String {
         return "📞 \(date.time) - \(title)"
     }
