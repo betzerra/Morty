@@ -15,32 +15,32 @@ class EventsHelper {
 }
 
 fileprivate func textFrom(events: [EKEvent]) -> String {
-    let processed = process(events: events)
+    let mortyEvents = events
+        .map { Event(date: $0.startDate, title: $0.title, type: .meeting) }
+    
+    let processed = process(events: mortyEvents)
     var text = ""
     processed.forEach { key, events in
         text.append("\(key)\n")
 
-        let textEvents = events.map { "- 📞 \($0)"}.joined(separator: "\n")
+        let textEvents = events.map { $0.standupText }.joined(separator: "\n")
         text.append(textEvents)
-        text.append("\n\n")
     }
-
-    text.append("ℹ️ Calendar events expressed in my current time")
 
     return text
 }
 
-fileprivate func process(events: [EKEvent]) -> [String: [String]] {
+fileprivate func process(events: [Event]) -> [String: [Event]] {
     // Get different date components for all events (day, month, year)
     let dates = Set(events.map { anEvent -> DateComponents in
         return Calendar.current.dateComponents(
             [.day, .month, .year],
-            from: anEvent.startDate
+            from: anEvent.date
         )
     })
 
     // Group events by date
-    var processedEvents: [String: [String]] = [:]
+    var processedEvents: [String: [Event]] = [:]
 
     dates.forEach { component in
         guard let componentDate = Calendar.current.date(from: component) else {
@@ -56,19 +56,22 @@ fileprivate func process(events: [EKEvent]) -> [String: [String]] {
         itemTimeFormatter.timeStyle = .short
         itemTimeFormatter.timeZone = .current
 
-        let dayEvents = Set(events
-            .filter { event in
-                let eventComponent = Calendar.current.dateComponents(
-                    [.day, .month, .year],
-                    from: event.startDate
-                )
-
-                return component == eventComponent
-            }
-            .compactMap { "\(itemTimeFormatter.string(from: $0.startDate)) - \($0.title ?? "N/A")" })
+        let dayEvents = Set(
+            events
+                .filter { event in
+                    let eventComponent = Calendar.current.dateComponents(
+                        [.day, .month, .year],
+                        from: event.date
+                    )
+                    
+                    return component == eventComponent
+                }
+        )
 
         let key = keyDateFormatter.string(from: componentDate)
-        processedEvents[key] = Array(dayEvents)
+        processedEvents[key] = Array(dayEvents).sorted(by: { lEvent, rEvent in
+            return lEvent.date < rEvent.date
+        })
     }
 
     return processedEvents
