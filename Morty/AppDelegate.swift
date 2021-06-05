@@ -10,14 +10,13 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     let eventsManager = EventsManager()
-    
+
     var statusItem: NSStatusItem?
     @IBOutlet weak var menu: NSMenu?
 
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupStatusItem()
-        
+
         // TODO: Handle request issue
         eventsManager.requestAccess { _, _ in }
     }
@@ -26,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: IBActions
     @IBAction func copyStandupToPasteboard(_ sender: Any) {
-        
+
         standupTextToPasteboard()
     }
 }
@@ -37,17 +36,26 @@ private extension AppDelegate {
         statusItem = NSStatusBar
             .system
             .statusItem(withLength: NSStatusItem.variableLength)
-        
+
         statusItem?.button?.title = "Morty"
-        
+
         // Set menu when icon is clicked
         if let menu = menu {
             statusItem?.menu = menu
         }
     }
-    
+
     func standupTextToPasteboard() {
-        let events = eventsManager.fetchEvents()
+        let events = eventsManager
+            .fetchEvents()
+            .map {
+                Event.init(
+                    date: $0.startDate,
+                    title: $0.title,
+                    type: .meeting
+                )
+            }
+
         let standup = EventsHelper.standupText(from: events)
 
         let pasteboard = NSPasteboard.general
