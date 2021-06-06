@@ -21,6 +21,11 @@
                                                 <action selector="copyStandupToPasteboard:" target="Voe-Tx-rLC" id="UCc-lR-4aI"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="LRf-EH-TzK"/>
+                                        <menuItem title="calendarMenuItem" id="vAF-4J-DOU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
                                         <menuItem title="About Morty" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -44,6 +49,7 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Morty" customModuleProvider="target">
                     <connections>
+                        <outlet property="calendarMenuItem" destination="vAF-4J-DOU" id="bzX-8V-OI3"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="oTG-G6-mga"/>
                     </connections>
                 </customObject>
@@ -70,6 +76,35 @@
                                     <action selector="fetchEvents:" target="XfG-lQ-9wD" id="AYr-L3-6Hq"/>
                                 </connections>
                             </button>
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rbY-BU-XXe">
+                                <rect key="frame" x="27" y="195" width="92" height="40"/>
+                                <subviews>
+                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gIA-X0-Gdy">
+                                        <rect key="frame" x="-2" y="24" width="96" height="16"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="asdsadas" id="K0g-nR-qJP">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5P1-u7-CG8">
+                                        <rect key="frame" x="-2" y="0.0" width="37" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="7hP-Kx-hK6">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="atG-VX-YAp" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="93H-L9-Z2m"/>

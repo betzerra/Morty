@@ -8,11 +8,17 @@
 import Cocoa
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let eventsManager = EventsManager()
 
+    // Menu
     var statusItem: NSStatusItem?
     @IBOutlet weak var menu: NSMenu?
+
+    // Calendar View
+    @IBOutlet weak var calendarMenuItem: NSMenuItem?
+    var calendarViewModel: CalendarViewModel?
+    var calendarView: NSView?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupStatusItem()
@@ -28,10 +34,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         standupTextToPasteboard()
     }
-}
 
-private extension AppDelegate {
-    func setupStatusItem() {
+    // MARK: NSMenuDelegate
+    func menuWillOpen(_ menu: NSMenu) {
+        eventsManager.updateEvents()
+    }
+
+    // MARK: Private
+    private func setupStatusItem() {
         // Set status item
         statusItem = NSStatusBar
             .system
@@ -42,10 +52,22 @@ private extension AppDelegate {
         // Set menu when icon is clicked
         if let menu = menu {
             statusItem?.menu = menu
+            menu.delegate = self
+        }
+
+        if let calendarMenuItem = calendarMenuItem {
+            let rect = NSRect(x: 0, y: 0, width: 250, height: 150)
+            let view = CalendarView(frame: rect)
+            calendarMenuItem.view = view
+
+            calendarViewModel = CalendarViewModel(
+                view: view,
+                eventsPublisher: eventsManager.eventsFetched
+            )
         }
     }
 
-    func standupTextToPasteboard() {
+    private func standupTextToPasteboard() {
         let events = eventsManager
             .fetchEvents()
             .map {

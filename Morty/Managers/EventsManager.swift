@@ -5,15 +5,22 @@
 //  Created by Ezequiel Becerra on 27/05/2021.
 //
 
+import Combine
 import Foundation
 import EventKit
 
 class EventsManager {
+    let eventsFetched: AnyPublisher <[Event], Never>
+    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
+
     var store = EKEventStore()
 
+    init() {
+        eventsFetched = _eventsFetched.eraseToAnyPublisher()
+    }
+
     func requestAccess(completion: ((Bool, Error) -> Void)) {
-        store.requestAccess(to: .event) { _, _ in
-        }
+        store.requestAccess(to: .event) { _, _ in }
     }
 
     func fetchEvents() -> [EKEvent] {
@@ -30,6 +37,19 @@ class EventsManager {
         )
 
         return store.events(matching: predicate)
+    }
+
+    func updateEvents() {
+        let events = fetchEvents()
+            .map {
+                Event.init(
+                    date: $0.startDate,
+                    title: $0.title,
+                    type: .meeting
+                )
+            }
+
+        _eventsFetched.value = events
     }
 }
 
