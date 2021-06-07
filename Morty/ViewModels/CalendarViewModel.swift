@@ -18,7 +18,7 @@ class CalendarViewModel {
         eventsPublisher
             .print()
             .sink { events in
-                view?.update(with: events)
+                view?.update(with: Array(events.prefix(5)))
             }
             .store(in: &cancellables)
     }
