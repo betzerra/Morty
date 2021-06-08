@@ -10,21 +10,27 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let eventsManager = EventsManager()
+    var menuViewModel: MenuViewModel?
 
     // Menu
     var statusItem: NSStatusItem?
     @IBOutlet weak var menu: NSMenu?
 
-    // Calendar View
-    @IBOutlet weak var calendarMenuItem: NSMenuItem?
-    var calendarViewModel: CalendarViewModel?
-    var calendarView: NSView?
+    // Today Menu Item
+    @IBOutlet weak var todayMenuItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupStatusItem()
 
+        menuViewModel = MenuViewModel(
+            menu: menu,
+            eventsPublisher: eventsManager.dayEventsFetched
+        )
+
         // TODO: Handle request issue
         eventsManager.requestAccess { _, _ in }
+
+        eventsManager.updateDayEvents()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {}
@@ -37,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: NSMenuDelegate
     func menuWillOpen(_ menu: NSMenu) {
-        eventsManager.updateEvents()
+        eventsManager.updateDayEvents()
     }
 
     // MARK: Private
@@ -53,17 +59,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         if let menu = menu {
             statusItem?.menu = menu
             menu.delegate = self
-        }
-
-        if let calendarMenuItem = calendarMenuItem {
-            let rect = NSRect(x: 0, y: 0, width: 250, height: 150)
-            let view = CalendarView(frame: rect)
-            calendarMenuItem.view = view
-
-            calendarViewModel = CalendarViewModel(
-                view: view,
-                eventsPublisher: eventsManager.eventsFetched
-            )
         }
     }
 

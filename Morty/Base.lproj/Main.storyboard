@@ -22,7 +22,11 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="LRf-EH-TzK"/>
-                                        <menuItem title="calendarMenuItem" id="vAF-4J-DOU">
+                                        <menuItem title="Yesterday" tag="9" enabled="NO" id="hfn-GT-qK8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="BpR-yd-Ttj"/>
+                                        <menuItem title="Today" state="mixed" tag="10" enabled="NO" id="vAF-4J-DOU">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
@@ -49,8 +53,8 @@
                 </application>
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Morty" customModuleProvider="target">
                     <connections>
-                        <outlet property="calendarMenuItem" destination="vAF-4J-DOU" id="bzX-8V-OI3"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="oTG-G6-mga"/>
+                        <outlet property="todayMenuItem" destination="vAF-4J-DOU" id="Hf7-ms-7ok"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>

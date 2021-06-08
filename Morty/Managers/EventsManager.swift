@@ -10,13 +10,13 @@ import Foundation
 import EventKit
 
 class EventsManager {
-    let eventsFetched: AnyPublisher <[Event], Never>
-    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
+    let dayEventsFetched: AnyPublisher <[Day], Never>
+    private let _dayEventsFetched = CurrentValueSubject<[Day], Never>([])
 
     var store = EKEventStore()
 
     init() {
-        eventsFetched = _eventsFetched.eraseToAnyPublisher()
+        dayEventsFetched = _dayEventsFetched.eraseToAnyPublisher()
     }
 
     func requestAccess(completion: ((Bool, Error) -> Void)) {
@@ -39,7 +39,7 @@ class EventsManager {
         return store.events(matching: predicate)
     }
 
-    func updateEvents() {
+    func updateDayEvents() {
         let events = fetchEvents()
             .map {
                 Event.init(
@@ -49,7 +49,7 @@ class EventsManager {
                 )
             }
 
-        _eventsFetched.value = events
+        _dayEventsFetched.value = EventsHelper.days(from: events)
     }
 }
 
