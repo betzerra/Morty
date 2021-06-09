@@ -102,6 +102,11 @@ class MenuViewModel {
             )
 
             item.tag = tag
+            // Code below is needed to remove gray out and handle
+            // event clicks
+//            item.target = self
+//            item.action = #selector(foo)
+//            item.isEnabled = true
 
             menu?.insertItem(item, at: tagIndex + index + 1)
         }
