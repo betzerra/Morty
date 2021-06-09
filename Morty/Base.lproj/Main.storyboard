@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -21,6 +20,15 @@
                                                 <action selector="copyStandupToPasteboard:" target="Voe-Tx-rLC" id="UCc-lR-4aI"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="LRf-EH-TzK"/>
+                                        <menuItem title="Yesterday" tag="9" enabled="NO" id="hfn-GT-qK8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="BpR-yd-Ttj"/>
+                                        <menuItem title="Today" tag="10" enabled="NO" id="vAF-4J-DOU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
                                         <menuItem title="About Morty" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -45,41 +53,13 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Morty" customModuleProvider="target">
                     <connections>
                         <outlet property="menu" destination="uQy-DD-JDr" id="oTG-G6-mga"/>
+                        <outlet property="todayMenuItem" destination="vAF-4J-DOU" id="Hf7-ms-7ok"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="hIz-AP-VOD">
-            <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Morty" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="atG-VX-YAp">
-                                <rect key="frame" x="146" y="118" width="188" height="32"/>
-                                <buttonCell key="cell" type="push" title="Copy Events to Clipboard" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="znb-V0-Z4i">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="fetchEvents:" target="XfG-lQ-9wD" id="AYr-L3-6Hq"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="atG-VX-YAp" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="93H-L9-Z2m"/>
-                            <constraint firstItem="atG-VX-YAp" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="Skc-rU-FGV"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
 </document>

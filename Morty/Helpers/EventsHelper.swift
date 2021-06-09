@@ -13,6 +13,51 @@ class EventsHelper {
         let days = days(from: events)
         return textFrom(days: days)
     }
+
+    static func days(from events: [Event]) -> [Day] {
+        // Get different date components for all events (day, month, year)
+        let dates = Set(events.map { anEvent -> DateComponents in
+            return Calendar.current.dateComponents(
+                [.day, .month, .year],
+                from: anEvent.date
+            )
+        })
+
+        // Group events by day
+        var days: [Day] = []
+
+        dates.forEach { component in
+            guard let componentDate = Calendar.current.date(from: component) else {
+                return
+            }
+
+            let dayEvents = Set(
+                events
+                    .filter { event in
+                        let eventComponent = Calendar.current.dateComponents(
+                            [.day, .month, .year],
+                            from: event.date
+                        )
+
+                        return component == eventComponent
+                    }
+            )
+
+            let sortedDayEvents = Array(dayEvents)
+                .sorted { lEvent, rEvent in
+                    return lEvent.date < rEvent.date
+                }
+
+            let day = Day(events: sortedDayEvents, date: componentDate)
+            days.append(day)
+        }
+
+        let sortedDays = Array(days)
+            .sorted { lDay, rDay in
+                return lDay.date < rDay.date
+            }
+        return sortedDays
+    }
 }
 
 private func textFrom(days: [Day]) -> String {
@@ -30,49 +75,4 @@ private func textFrom(days: [Day]) -> String {
     }
 
     return text
-}
-
-private func days(from events: [Event]) -> [Day] {
-    // Get different date components for all events (day, month, year)
-    let dates = Set(events.map { anEvent -> DateComponents in
-        return Calendar.current.dateComponents(
-            [.day, .month, .year],
-            from: anEvent.date
-        )
-    })
-
-    // Group events by day
-    var days: [Day] = []
-
-    dates.forEach { component in
-        guard let componentDate = Calendar.current.date(from: component) else {
-            return
-        }
-
-        let dayEvents = Set(
-            events
-                .filter { event in
-                    let eventComponent = Calendar.current.dateComponents(
-                        [.day, .month, .year],
-                        from: event.date
-                    )
-
-                    return component == eventComponent
-                }
-        )
-
-        let sortedDayEvents = Array(dayEvents)
-            .sorted { lEvent, rEvent in
-                return lEvent.date < rEvent.date
-            }
-
-        let day = Day(events: sortedDayEvents, date: componentDate)
-        days.append(day)
-    }
-
-    let sortedDays = Array(days)
-        .sorted { lDay, rDay in
-            return lDay.date < rDay.date
-        }
-    return sortedDays
 }

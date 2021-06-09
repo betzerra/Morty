@@ -8,17 +8,29 @@
 import Cocoa
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let eventsManager = EventsManager()
+    var menuViewModel: MenuViewModel?
 
+    // Menu
     var statusItem: NSStatusItem?
     @IBOutlet weak var menu: NSMenu?
+
+    // Today Menu Item
+    @IBOutlet weak var todayMenuItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupStatusItem()
 
+        menuViewModel = MenuViewModel(
+            menu: menu,
+            eventsPublisher: eventsManager.dayEventsFetched
+        )
+
         // TODO: Handle request issue
         eventsManager.requestAccess { _, _ in }
+
+        eventsManager.updateDayEvents()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {}
@@ -28,10 +40,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         standupTextToPasteboard()
     }
-}
 
-private extension AppDelegate {
-    func setupStatusItem() {
+    // MARK: NSMenuDelegate
+    func menuWillOpen(_ menu: NSMenu) {
+        eventsManager.updateDayEvents()
+    }
+
+    // MARK: Private
+    private func setupStatusItem() {
         // Set status item
         statusItem = NSStatusBar
             .system
@@ -42,10 +58,11 @@ private extension AppDelegate {
         // Set menu when icon is clicked
         if let menu = menu {
             statusItem?.menu = menu
+            menu.delegate = self
         }
     }
 
-    func standupTextToPasteboard() {
+    private func standupTextToPasteboard() {
         let events = eventsManager
             .fetchEvents()
             .map {
