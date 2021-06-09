@@ -30,17 +30,35 @@ class MenuViewModel {
 
                 let events = days.flatMap { $0.events }
 
-                self.removeItems(with: todayItemsTag)
-                let todayEvents = events
-                    .filter { Calendar.current.isDateInToday($0.date) }
-                self.addItems(events: todayEvents, after: todayTitleTag)
-
-                self.removeItems(with: yesterdayItemsTag)
-                let yesterdayEvents = events
-                    .filter { Calendar.current.isDateInYesterday($0.date) }
-                self.addItems(events: yesterdayEvents, after: yesterdayTitleTag)
+                self.updateYesterday(from: events)
+                self.updateToday(from: events)
             }
             .store(in: &cancellables)
+    }
+
+    private func updateYesterday(from events: [Event]) {
+        removeItems(with: yesterdayItemsTag)
+
+        let yesterdayEvents = events
+            .filter { Calendar.current.isDateInYesterday($0.date) }
+
+        addItems(
+            events: yesterdayEvents,
+            after: yesterdayTitleTag,
+            tag: yesterdayItemsTag
+        )
+    }
+
+    private func updateToday(from events: [Event]) {
+        self.removeItems(with: todayItemsTag)
+        let todayEvents = events
+            .filter { Calendar.current.isDateInToday($0.date) }
+
+        self.addItems(
+            events: todayEvents,
+            after: todayTitleTag,
+            tag: todayItemsTag
+        )
     }
 
     private func removeItems(with tag: Int) {
@@ -53,8 +71,26 @@ class MenuViewModel {
         }
     }
 
-    private func addItems(events: [Event], after tag: Int) {
-        guard let tagIndex = menu?.indexOfItem(withTag: tag) else {
+    private func addItems(
+        events: [Event],
+        after referenceTag: Int,
+        tag: Int
+    ) {
+        guard let tagIndex = menu?.indexOfItem(withTag: referenceTag) else {
+            return
+        }
+
+        guard events.count > 0 else {
+            // If there's no items to add.
+            // Add one saying there're no items!
+            let item = NSMenuItem(
+                title: "No events! 🎉",
+                action: nil,
+                keyEquivalent: ""
+            )
+            item.tag = tag
+
+            menu?.insertItem(item, at: tagIndex + 1)
             return
         }
 
@@ -65,8 +101,7 @@ class MenuViewModel {
                 keyEquivalent: ""
             )
 
-            item.tag = todayItemsTag
-            item.isEnabled = true
+            item.tag = tag
 
             menu?.insertItem(item, at: tagIndex + index + 1)
         }
