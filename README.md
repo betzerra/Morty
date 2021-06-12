@@ -6,14 +6,12 @@ It's just a tray app that gets information from my calenday and copies a text li
 
 ```
 27/05/2021
-- 📞 12:00 - Dev Sync
+📞 12:00 - Dev Sync
 
 28/05/2021
-- 📞 13:00 - 1:1 Meeting with your manager
-- 📞 14:00 - Interview with iOS candidate
-- 📞 14:30 - Super secret meeting
-
-ℹ️ Calendar events expressed in my current time
+📞 13:00 - 1:1 Meeting with your manager
+📞 14:00 - Interview with iOS candidate
+📞 14:30 - Super secret meeting
 ```
 
 This is very useful for me because I do standup meetings in Slack every day at work.
