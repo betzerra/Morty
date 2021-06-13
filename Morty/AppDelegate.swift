@@ -35,6 +35,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {}
 
+    @IBAction func preferencesTapped(_ sender: Any) {
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+
+        if let windowController =
+            storyboard.instantiateController(withIdentifier: "preferences")
+            as? NSWindowController {
+
+            windowController.showWindow(self)
+            windowController.window?.orderFrontRegardless()
+        }
+    }
+
     // MARK: NSMenuDelegate
     func menuWillOpen(_ menu: NSMenu) {
         eventsManager.updateDayEvents()
