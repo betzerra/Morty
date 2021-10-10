@@ -18,14 +18,14 @@ class MenuViewModel {
     weak var menu: NSMenu?
 
     let todayHandler = DayEventHandler(
-        titleTag: yesterdayTitleTag,
-        itemsTag: yesterdayItemsTag,
+        titleTag: todayTitleTag,
+        itemsTag: todayItemsTag,
         dayDescription: "today"
     )
 
     let yesterdayHandler = DayEventHandler(
-        titleTag: todayTitleTag,
-        itemsTag: todayItemsTag,
+        titleTag: yesterdayTitleTag,
+        itemsTag: yesterdayItemsTag,
         dayDescription: "yesterday"
     )
 
