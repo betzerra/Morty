@@ -35,12 +35,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {}
 
-    // MARK: IBActions
-    @IBAction func copyStandupToPasteboard(_ sender: Any) {
-
-        standupTextToPasteboard()
-    }
-
     // MARK: NSMenuDelegate
     func menuWillOpen(_ menu: NSMenu) {
         eventsManager.updateDayEvents()
@@ -60,23 +54,5 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             statusItem?.menu = menu
             menu.delegate = self
         }
-    }
-
-    private func standupTextToPasteboard() {
-        let events = eventsManager
-            .fetchEvents()
-            .map {
-                Event.init(
-                    date: $0.startDate,
-                    title: $0.title,
-                    type: .meeting
-                )
-            }
-
-        let standup = EventsHelper.standupText(from: events)
-
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(standup, forType: .string)
     }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -14,26 +15,19 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Morty" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="Copy Standup to Pasteboard " id="vgz-Ec-kY8">
+                                        <menuItem title="About Morty" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="copyStandupToPasteboard:" target="Voe-Tx-rLC" id="UCc-lR-4aI"/>
+                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="LRf-EH-TzK"/>
+                                        <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
                                         <menuItem title="Yesterday" tag="9" enabled="NO" id="hfn-GT-qK8">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="BpR-yd-Ttj"/>
                                         <menuItem title="Today" tag="10" enabled="NO" id="vAF-4J-DOU">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
-                                        <menuItem title="About Morty" id="5kV-Vb-QxS">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
-                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Quit Morty" keyEquivalent="q" id="4sb-4s-VLi">

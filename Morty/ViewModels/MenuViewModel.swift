@@ -16,6 +16,19 @@ private let todayItemsTag = 100
 
 class MenuViewModel {
     weak var menu: NSMenu?
+
+    let todayHandler = DayEventHandler(
+        titleTag: yesterdayTitleTag,
+        itemsTag: yesterdayItemsTag,
+        dayDescription: "today"
+    )
+
+    let yesterdayHandler = DayEventHandler(
+        titleTag: todayTitleTag,
+        itemsTag: todayItemsTag,
+        dayDescription: "yesterday"
+    )
+
     var cancellables = [AnyCancellable]()
 
     init(menu: NSMenu?, eventsPublisher: AnyPublisher <[Day], Never>) {
@@ -30,35 +43,28 @@ class MenuViewModel {
 
                 let events = days.flatMap { $0.events }
 
-                self.updateYesterday(from: events)
-                self.updateToday(from: events)
+                self.updateDayHandler(
+                    self.todayHandler,
+                    with: events.filter { Calendar.current.isDateInYesterday($0.date) }
+                )
+
+                self.updateDayHandler(
+                    self.yesterdayHandler,
+                    with: events.filter { Calendar.current.isDateInToday($0.date) }
+                )
             }
             .store(in: &cancellables)
     }
 
-    private func updateYesterday(from events: [Event]) {
-        removeItems(with: yesterdayItemsTag)
+    private func updateDayHandler(_ handler: DayEventHandler, with events: [Event]) {
+        // Remove old elements from menu
+        removeItems(with: handler.itemsTag)
 
-        let yesterdayEvents = events
-            .filter { Calendar.current.isDateInYesterday($0.date) }
+        // Update handler's events
+        handler.events = events
 
-        addItems(
-            events: yesterdayEvents,
-            after: yesterdayTitleTag,
-            tag: yesterdayItemsTag
-        )
-    }
-
-    private func updateToday(from events: [Event]) {
-        self.removeItems(with: todayItemsTag)
-        let todayEvents = events
-            .filter { Calendar.current.isDateInToday($0.date) }
-
-        self.addItems(
-            events: todayEvents,
-            after: todayTitleTag,
-            tag: todayItemsTag
-        )
+        // Add new items to Menu
+        addItems(from: handler)
     }
 
     private func removeItems(with tag: Int) {
@@ -71,43 +77,12 @@ class MenuViewModel {
         }
     }
 
-    private func addItems(
-        events: [Event],
-        after referenceTag: Int,
-        tag: Int
-    ) {
-        guard let tagIndex = menu?.indexOfItem(withTag: referenceTag) else {
+    private func addItems(from handler: DayEventHandler) {
+        guard let tagIndex = menu?.indexOfItem(withTag: handler.titleTag) else {
             return
         }
 
-        guard events.count > 0 else {
-            // If there's no items to add.
-            // Add one saying there're no items!
-            let item = NSMenuItem(
-                title: "No events! 🎉",
-                action: nil,
-                keyEquivalent: ""
-            )
-            item.tag = tag
-
-            menu?.insertItem(item, at: tagIndex + 1)
-            return
-        }
-
-        events.enumerated().forEach { (index, element) in
-            let item = NSMenuItem(
-                title: element.standupText,
-                action: nil,
-                keyEquivalent: ""
-            )
-
-            item.tag = tag
-            // Code below is needed to remove gray out and handle
-            // event clicks
-//            item.target = self
-//            item.action = #selector(foo)
-//            item.isEnabled = true
-
+        handler.menuItems.enumerated().forEach { (index, item) in
             menu?.insertItem(item, at: tagIndex + index + 1)
         }
     }
