@@ -66,12 +66,17 @@ class DayEventHandler {
     }
 
     private func copyItemsToClipboardItem() -> NSMenuItem {
-        let item = NSMenuItem(
-            title: "Copy \(dayDescription)'s items",
-            action: #selector(copyToClipboard),
-            keyEquivalent: ""
-        )
+        let imageAttachment = NSTextAttachment()
+        imageAttachment.image = NSImage(systemSymbolName: "doc.on.clipboard", accessibilityDescription: nil)
+
+        let title = NSMutableAttributedString()
+        title.append(NSAttributedString(attachment: imageAttachment))
+        title.append(NSAttributedString(string: " Copy \(dayDescription)'s items."))
+
+        let item = NSMenuItem()
+        item.attributedTitle = title
         item.target = self
+        item.action = #selector(copyToClipboard)
         item.tag = itemsTag
         item.isEnabled = true
         return item

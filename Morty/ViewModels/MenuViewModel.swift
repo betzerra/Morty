@@ -45,12 +45,12 @@ class MenuViewModel {
 
                 self.updateDayHandler(
                     self.todayHandler,
-                    with: events.filter { Calendar.current.isDateInYesterday($0.date) }
+                    with: events.filter { Calendar.current.isDateInToday($0.date) }
                 )
 
                 self.updateDayHandler(
                     self.yesterdayHandler,
-                    with: events.filter { Calendar.current.isDateInToday($0.date) }
+                    with: events.filter { Calendar.current.isDateInYesterday($0.date) }
                 )
             }
             .store(in: &cancellables)
