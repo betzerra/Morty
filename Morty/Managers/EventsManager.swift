@@ -14,8 +14,10 @@ class EventsManager {
     private let _dayEventsFetched = CurrentValueSubject<[Day], Never>([])
 
     var store = EKEventStore()
+    let settings: Settings
 
-    init() {
+    init(settings: Settings) {
+        self.settings = settings
         dayEventsFetched = _dayEventsFetched.eraseToAnyPublisher()
     }
 
@@ -50,6 +52,18 @@ class EventsManager {
             }
 
         _dayEventsFetched.value = EventsHelper.days(from: events)
+    }
+
+    func isCalendarEnabled(identifier: String) -> Bool {
+        settings.enabledCalendars.contains(identifier)
+    }
+
+    func enableCalender(_ identifier: String, enabled: Bool) {
+        if enabled {
+            settings.enabledCalendars.insert(identifier)
+        } else {
+            settings.enabledCalendars.remove(identifier)
+        }
     }
 }
 

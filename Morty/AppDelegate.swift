@@ -9,7 +9,9 @@ import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    let eventsManager = EventsManager()
+    let settings = Settings()
+    var eventsManager: EventsManager!
+
     var menuViewModel: MenuViewModel?
 
     // Menu
@@ -20,6 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     @IBOutlet weak var todayMenuItem: NSMenuItem?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        eventsManager = EventsManager(settings: settings)
+
         setupStatusItem()
 
         menuViewModel = MenuViewModel(

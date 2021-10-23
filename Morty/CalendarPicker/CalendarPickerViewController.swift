@@ -7,6 +7,7 @@
 
 import AppKit
 import Foundation
+import EventKit
 
 class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
@@ -29,15 +30,41 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
     // MARK: NSTableViewDelegate
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let calendar = viewModel.calendars[row]
+        return calendarCell(with: calendar)
+    }
+
+    private func calendarCell(with calendar: EKCalendar) -> NSTableCellView? {
         let identifier = NSUserInterfaceItemIdentifier("calendarIdentifier")
 
-        let calendar = viewModel.calendars[row]
-        if let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView {
-            cell.textField?.stringValue = calendar.calendarTitle
-            cell.textField?.textColor = calendar.color
+        guard let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView else {
+            return nil
+        }
+
+        guard let checkbox = cell.viewWithTag(0) as? NSButton else {
             return cell
         }
 
-        return nil
+        let state = viewModel.checkBoxState(for: calendar)
+        checkbox.state = state
+        checkbox.attributedTitle = calendar.attributedTitle
+
+        checkbox.action = #selector(handleCheckboxForCalendar(_:))
+        checkbox.target = self
+
+        return cell
+    }
+
+    @objc func handleCheckboxForCalendar(_ sender: Any?) {
+        guard
+            let checkbox = sender as? NSButton else {
+                return
+            }
+
+        let row = tableView.row(for: checkbox)
+        let calendar = viewModel.calendars[row]
+
+        let state = checkbox.state != .off
+        viewModel.enableCalendar(calendar.calendarIdentifier, state)
     }
 }
