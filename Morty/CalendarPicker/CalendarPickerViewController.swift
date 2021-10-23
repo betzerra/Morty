@@ -7,6 +7,7 @@
 
 import AppKit
 import Foundation
+import EventKit
 
 class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
@@ -29,15 +30,42 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
     // MARK: NSTableViewDelegate
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let identifier = NSUserInterfaceItemIdentifier("calendarIdentifier")
-
         let calendar = viewModel.calendars[row]
-        if let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView {
-            cell.textField?.stringValue = calendar.calendarTitle
-            cell.textField?.textColor = calendar.color
-            return cell
+
+        if tableColumn == tableView.tableColumns[0] {
+            return showCell(with: calendar)
+
+        } else if tableColumn == tableView.tableColumns[1] {
+            return calendarCell(with: calendar)
         }
 
         return nil
+    }
+
+    private func calendarCell(with calendar: EKCalendar) -> NSTableCellView? {
+        let identifier = NSUserInterfaceItemIdentifier("calendarIdentifier")
+
+        guard let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView else {
+            return nil
+        }
+
+        cell.textField?.stringValue = calendar.calendarTitle
+        cell.textField?.textColor = calendar.color
+        return cell
+    }
+
+    private func showCell(with calendar: EKCalendar) -> NSTableCellView? {
+        let identifier = NSUserInterfaceItemIdentifier("showIdentifier")
+
+        guard let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView else {
+            return nil
+        }
+
+        guard let checkbox = cell.viewWithTag(0) as? NSButton else {
+            return cell
+        }
+
+        checkbox.state = .on
+        return cell
     }
 }
