@@ -31,15 +31,7 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
 
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let calendar = viewModel.calendars[row]
-
-        if tableColumn == tableView.tableColumns[0] {
-            return showCell(with: calendar)
-
-        } else if tableColumn == tableView.tableColumns[1] {
-            return calendarCell(with: calendar)
-        }
-
-        return nil
+        return calendarCell(with: calendar)
     }
 
     private func calendarCell(with calendar: EKCalendar) -> NSTableCellView? {
@@ -49,23 +41,30 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
             return nil
         }
 
-        cell.textField?.stringValue = calendar.calendarTitle
-        cell.textField?.textColor = calendar.color
-        return cell
-    }
-
-    private func showCell(with calendar: EKCalendar) -> NSTableCellView? {
-        let identifier = NSUserInterfaceItemIdentifier("showIdentifier")
-
-        guard let cell = tableView.makeView(withIdentifier: identifier, owner: nil) as? NSTableCellView else {
-            return nil
-        }
-
         guard let checkbox = cell.viewWithTag(0) as? NSButton else {
             return cell
         }
 
-        checkbox.state = .on
+        let state = viewModel.checkBoxState(for: calendar)
+        checkbox.state = state
+        checkbox.attributedTitle = calendar.attributedTitle
+
+        checkbox.action = #selector(handleCheckboxForCalendar(_:))
+        checkbox.target = self
+
         return cell
+    }
+
+    @objc func handleCheckboxForCalendar(_ sender: Any?) {
+        guard
+            let checkbox = sender as? NSButton else {
+                return
+            }
+
+        let row = tableView.row(for: checkbox)
+        let calendar = viewModel.calendars[row]
+
+        let state = checkbox.state != .off
+        viewModel.enableCalendar(calendar.calendarIdentifier, state)
     }
 }
