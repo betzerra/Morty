@@ -11,11 +11,7 @@ import Foundation
 
 class CalendarPickerViewModel {
     lazy var calendars: [EKCalendar] = {
-        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
-            assert(false, "Unable to reach AppDelegate")
-        }
-
-        return appDelegate.eventsManager
+        AppDelegate.current.eventsManager
             .store.calendars(for: .event)
             .sorted { lhs, rhs in
                 if lhs.source.title.isEmpty && rhs.source.title.isEmpty {
@@ -35,21 +31,15 @@ class CalendarPickerViewModel {
     }()
 
     func enableCalendar(_ identifier: String, _ enable: Bool) {
-        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
-            assert(false, "Unable to reach AppDelegate")
-        }
-
-        appDelegate
+        AppDelegate
+            .current
             .eventsManager
-            .enableCalender(identifier, enabled: enable)
+            .enableCalendar(identifier, enabled: enable)
     }
 
     func checkBoxState(for calendar: EKCalendar) -> NSControl.StateValue {
-        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
-            assert(false, "Unable to reach AppDelegate")
-        }
-
-        return appDelegate
+        AppDelegate
+            .current
             .eventsManager
             .isCalendarEnabled(identifier: calendar.calendarIdentifier) ? .on : .off
     }

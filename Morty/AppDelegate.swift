@@ -9,7 +9,16 @@ import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
-    let settings = Settings()
+
+    static var current: AppDelegate {
+        guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
+            assert(false, "Unable to reach AppDelegate")
+        }
+
+        return appDelegate
+    }
+
+    let settings = Settings.fromUserDefaults()
     var eventsManager: EventsManager!
 
     var menuViewModel: MenuViewModel?
@@ -30,9 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             menu: menu,
             eventsPublisher: eventsManager.dayEventsFetched
         )
-
-        // TODO: Handle request issue
-        eventsManager.requestAccess { _, _ in }
 
         eventsManager.updateDayEvents()
     }
