@@ -85,7 +85,7 @@
         <scene sceneID="34l-I4-3KK">
             <objects>
                 <viewController id="RO2-2N-het" customClass="CalendarPickerViewController" customModule="Morty" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="RzH-Vp-k67">
+                    <view key="view" id="RzH-Vp-k67">
                         <rect key="frame" x="0.0" y="0.0" width="515" height="314"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>

@@ -18,7 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         return appDelegate
     }
 
-    let settings = Settings()
+    let settings = Settings.fromUserDefaults()
     var eventsManager: EventsManager!
 
     var menuViewModel: MenuViewModel?
