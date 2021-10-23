@@ -11,14 +11,24 @@ import EventKit
 
 class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
+    @IBOutlet weak var allowButton: NSButton!
     @IBOutlet weak var tableView: NSTableView!
     let viewModel = CalendarPickerViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        allowButton.title = EventsManager.isAuthorized ? "Granted" : "Allow"
+
         tableView.dataSource = self
         tableView.delegate = self
+    }
+
+    @IBAction func allowButtonPressed(_ sender: Any) {
+        AppDelegate
+            .current
+            .eventsManager
+            .requestAccess { _, _ in }
     }
 
     // MARK: NSTableViewDataSource

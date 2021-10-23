@@ -25,6 +25,10 @@ class EventsManager {
         store.requestAccess(to: .event) { _, _ in }
     }
 
+    static var isAuthorized: Bool {
+        EKEventStore.authorizationStatus(for: .event) == .authorized
+    }
+
     func fetchEvents() -> [EKEvent] {
         guard let yesterday = dateByAdding(days: -1),
               let tomorrow = dateByAdding(days: 1) else {
@@ -58,7 +62,7 @@ class EventsManager {
         settings.enabledCalendars.contains(identifier)
     }
 
-    func enableCalender(_ identifier: String, enabled: Bool) {
+    func enableCalendar(_ identifier: String, enabled: Bool) {
         if enabled {
             settings.enabledCalendars.insert(identifier)
         } else {

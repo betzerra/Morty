@@ -86,7 +86,7 @@
             <objects>
                 <viewController id="RO2-2N-het" customClass="CalendarPickerViewController" customModule="Morty" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="RzH-Vp-k67">
-                        <rect key="frame" x="0.0" y="0.0" width="515" height="312"/>
+                        <rect key="frame" x="0.0" y="0.0" width="515" height="314"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="32" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4T2-ps-mR1">
@@ -115,7 +115,7 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hIe-BA-QTU">
-                                                        <rect key="frame" x="0.0" y="0.0" width="194" height="20"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="54" height="20"/>
                                                         <subviews>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rKp-Ig-twa">
                                                                 <rect key="frame" x="-7" y="-7" width="68" height="32"/>
@@ -123,21 +123,15 @@
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
-                                                            </button>
-                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="h9t-ea-l0y">
-                                                                <rect key="frame" x="55" y="-7" width="146" height="32"/>
-                                                                <buttonCell key="cell" type="push" title="Reset Permissions" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PbN-pg-gWh">
-                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
+                                                                <connections>
+                                                                    <action selector="allowButtonPressed:" target="RO2-2N-het" id="hYx-I0-rW1"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <visibilityPriorities>
                                                             <integer value="1000"/>
-                                                            <integer value="1000"/>
                                                         </visibilityPriorities>
                                                         <customSpacing>
-                                                            <real value="3.4028234663852886e+38"/>
                                                             <real value="3.4028234663852886e+38"/>
                                                         </customSpacing>
                                                     </stackView>
@@ -275,6 +269,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="allowButton" destination="rKp-Ig-twa" id="2LW-Xz-TYr"/>
                         <outlet property="tableView" destination="dyd-q7-A0B" id="dav-na-PxI"/>
                     </connections>
                 </viewController>
