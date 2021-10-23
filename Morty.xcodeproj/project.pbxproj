@@ -24,6 +24,8 @@
 		673BBA1B265F432300F22219 /* MortyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BBA1A265F432300F22219 /* MortyTests.swift */; };
 		673BBA26265F432300F22219 /* MortyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BBA25265F432300F22219 /* MortyUITests.swift */; };
 		67475844271267920015C20E /* DayEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67475843271267920015C20E /* DayEventHandler.swift */; };
+		678B31EA2724870400CC0574 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */; };
+		67EF68F7267678090005F99F /* CalendarPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EF68F6267678090005F99F /* CalendarPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		673BBA25265F432300F22219 /* MortyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortyUITests.swift; sourceTree = "<group>"; };
 		673BBA27265F432300F22219 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67475843271267920015C20E /* DayEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayEventHandler.swift; sourceTree = "<group>"; };
+		678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
+		67EF68F6267678090005F99F /* CalendarPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,10 +171,11 @@
 				6718A54C266BD6D3007161B1 /* Models */,
 				671856F926606031005EB677 /* Helpers */,
 				671856FC2660607D005EB677 /* Managers */,
-				671C5C0E266C45270029F6B8 /* ViewModels */,
 				673BBA0B265F432300F22219 /* Assets.xcassets */,
 				673BBA0D265F432300F22219 /* Main.storyboard */,
 				673BBA10265F432300F22219 /* Info.plist */,
+				678B31E8272486ED00CC0574 /* CalendarPicker */,
+				671C5C0E266C45270029F6B8 /* ViewModels */,
 				673BBA11265F432300F22219 /* Morty.entitlements */,
 			);
 			path = Morty;
@@ -195,6 +200,15 @@
 				673BBA27265F432300F22219 /* Info.plist */,
 			);
 			path = MortyUITests;
+			sourceTree = "<group>";
+		};
+		678B31E8272486ED00CC0574 /* CalendarPicker */ = {
+			isa = PBXGroup;
+			children = (
+				67EF68F6267678090005F99F /* CalendarPickerViewController.swift */,
+				678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */,
+			);
+			path = CalendarPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,7 +367,9 @@
 				6718A555266BDE9B007161B1 /* Bundle+Content.swift in Sources */,
 				6718A54E266BD701007161B1 /* Event.swift in Sources */,
 				6718A560266BEF38007161B1 /* Day.swift in Sources */,
+				678B31EA2724870400CC0574 /* CalendarPickerViewModel.swift in Sources */,
 				673BBA08265F432200F22219 /* AppDelegate.swift in Sources */,
+				67EF68F7267678090005F99F /* CalendarPickerViewController.swift in Sources */,
 				6718A55B266BE498007161B1 /* JSONDecoder+Standard.swift in Sources */,
 				67121AD9266F14AE00004442 /* MenuViewModel.swift in Sources */,
 				671856FE2660608D005EB677 /* EventsManager.swift in Sources */,
