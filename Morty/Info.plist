@@ -7,9 +7,9 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>NSContactsUsageDescription</key>
-	<string>TEST TEST TEST</string>
+	<string>Morty needs access to your contacts in order to display them on the app</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>TEST TEST</string>
+	<string>Morty needs access to your calendar in order to display them on the app</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIconFile</key>
