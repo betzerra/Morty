@@ -36,10 +36,15 @@ class EventsManager {
             return []
         }
 
+        // Return events only from the calendars that the user previously selected
+        let calendars = store
+            .calendars(for: .event)
+            .filter { settings.enabledCalendars.contains($0.calendarIdentifier) }
+
         let predicate = store.predicateForEvents(
             withStart: yesterday,
             end: tomorrow,
-            calendars: nil
+            calendars: calendars
         )
 
         return store.events(matching: predicate)
