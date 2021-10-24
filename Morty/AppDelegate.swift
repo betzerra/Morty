@@ -12,7 +12,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     static var current: AppDelegate {
         guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
-            assert(false, "Unable to reach AppDelegate")
+            fatalError("Unable to reach AppDelegate")
         }
 
         return appDelegate
