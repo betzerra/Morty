@@ -10,9 +10,11 @@ import Combine
 import Foundation
 
 private let yesterdayTitleTag = 9
-private let yesterdayItemsTag = 99
+private let yesterdayItemsTag = 90
 private let todayTitleTag = 10
 private let todayItemsTag = 100
+private let tomorrowTitleTag = 11
+private let tomorrowItemsTag = 110
 
 class MenuViewModel {
     weak var menu: NSMenu?
@@ -27,6 +29,12 @@ class MenuViewModel {
         titleTag: yesterdayTitleTag,
         itemsTag: yesterdayItemsTag,
         dayDescription: "yesterday"
+    )
+
+    let tomorrowHandler = DayEventHandler(
+        titleTag: tomorrowTitleTag,
+        itemsTag: tomorrowItemsTag,
+        dayDescription: "tomorrow"
     )
 
     var cancellables = [AnyCancellable]()
@@ -51,6 +59,11 @@ class MenuViewModel {
                 self.updateDayHandler(
                     self.yesterdayHandler,
                     with: events.filter { Calendar.current.isDateInYesterday($0.date) }
+                )
+
+                self.updateDayHandler(
+                    self.tomorrowHandler,
+                    with: events.filter { Calendar.current.isDateInTomorrow($0.date) }
                 )
             }
             .store(in: &cancellables)
