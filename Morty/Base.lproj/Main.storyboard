@@ -31,6 +31,10 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
+                                        <menuItem title="Tomorrow" tag="11" enabled="NO" id="cWs-hM-eWY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="cB8-Pd-OL0"/>
                                         <menuItem title="Quit Morty" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
@@ -200,7 +204,7 @@
                                                                     <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="calendarIdentifier" id="TCo-cj-QXI">
-                                                                            <rect key="frame" x="8" y="0.0" width="449" height="24"/>
+                                                                            <rect key="frame" x="18" y="0.0" width="449" height="24"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <button verticalHuggingPriority="750" id="Prn-tQ-bD4">
