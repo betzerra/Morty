@@ -19,7 +19,7 @@ class EventsHelper {
         let dates = Set(events.map { anEvent -> DateComponents in
             return Calendar.current.dateComponents(
                 [.day, .month, .year],
-                from: anEvent.date
+                from: anEvent.startDate
             )
         })
 
@@ -36,7 +36,7 @@ class EventsHelper {
                     .filter { event in
                         let eventComponent = Calendar.current.dateComponents(
                             [.day, .month, .year],
-                            from: event.date
+                            from: event.startDate
                         )
 
                         return component == eventComponent
@@ -45,7 +45,7 @@ class EventsHelper {
 
             let sortedDayEvents = Array(dayEvents)
                 .sorted { lEvent, rEvent in
-                    return lEvent.date < rEvent.date
+                    return lEvent.startDate < rEvent.startDate
                 }
 
             let day = Day(events: sortedDayEvents, date: componentDate)

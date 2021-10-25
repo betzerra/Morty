@@ -22,6 +22,10 @@
                                                 <action selector="preferencesTapped:" target="Voe-Tx-rLC" id="NtG-w3-NTr"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="uCo-LL-WdS"/>
+                                        <menuItem title="CUSTOM" tag="1" id="gqZ-wB-K9v">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
                                         <menuItem title="Yesterday" tag="9" enabled="NO" id="hfn-GT-qK8">
                                             <modifierMask key="keyEquivalentModifierMask"/>

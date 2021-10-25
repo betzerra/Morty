@@ -54,7 +54,8 @@ class EventsManager {
         let events = fetchEvents()
             .map {
                 Event.init(
-                    date: $0.startDate,
+                    startDate: $0.startDate,
+                    endDate: $0.endDate,
                     title: $0.title,
                     type: .meeting
                 )

@@ -37,10 +37,20 @@ class MenuViewModel {
         dayDescription: "tomorrow"
     )
 
+    let customMenuDayViewModel: MenuDayViewModel
+
     var cancellables = [AnyCancellable]()
 
     init(menu: NSMenu?, eventsPublisher: AnyPublisher <[Day], Never>) {
         self.menu = menu
+
+        let customView = MenuDayView(frame: NSRect(origin: .zero, size: .zero))
+        customView.autoresizingMask = [.width, .height]
+
+        let customItem = menu?.item(withTag: 1)
+        customItem!.view = customView
+
+        customMenuDayViewModel = MenuDayViewModel(view: customView, publisher: eventsPublisher)
 
         eventsPublisher
             .receive(on: RunLoop.main)
@@ -53,17 +63,17 @@ class MenuViewModel {
 
                 self.updateDayHandler(
                     self.todayHandler,
-                    with: events.filter { Calendar.current.isDateInToday($0.date) }
+                    with: events.filter { Calendar.current.isDateInToday($0.startDate) }
                 )
 
                 self.updateDayHandler(
                     self.yesterdayHandler,
-                    with: events.filter { Calendar.current.isDateInYesterday($0.date) }
+                    with: events.filter { Calendar.current.isDateInYesterday($0.startDate) }
                 )
 
                 self.updateDayHandler(
                     self.tomorrowHandler,
-                    with: events.filter { Calendar.current.isDateInTomorrow($0.date) }
+                    with: events.filter { Calendar.current.isDateInTomorrow($0.startDate) }
                 )
             }
             .store(in: &cancellables)
