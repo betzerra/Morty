@@ -71,7 +71,7 @@ class MenuViewModel {
         )
 
         tomorrowCopyMenuItem.isEnabled = true
-        tomorrowCopyMenuItem.target = todayViewModel
+        tomorrowCopyMenuItem.target = tomorrowViewModel
         tomorrowCopyMenuItem.action = #selector(viewTapped)
     }
 

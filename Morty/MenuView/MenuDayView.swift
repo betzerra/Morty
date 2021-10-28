@@ -21,6 +21,7 @@ class MenuDayView: NSView {
 
     func update(with summary: DaySummary, title: String) {
         if stackView != nil {
+            NSLayoutConstraint.deactivate(stackView.constraints)
             stackView.removeFromSuperview()
         }
 
@@ -30,6 +31,8 @@ class MenuDayView: NSView {
         stackView = NSStackView(views: dayViews)
         stackView.autoresizingMask = .none
         stackView.alignment = .left
+        stackView.setHuggingPriority(.required, for: .vertical)
+        stackView.setContentCompressionResistancePriority(.required, for: .vertical)
         addSubview(stackView)
 
         NSLayoutConstraint.activate([

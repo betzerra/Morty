@@ -16,9 +16,20 @@ class EventsManager {
     var store = EKEventStore()
     let settings: Settings
 
+    var cancellables = [AnyCancellable]()
+
     init(settings: Settings) {
         self.settings = settings
-        eventsFetched = _eventsFetched.eraseToAnyPublisher()
+
+        eventsFetched = _eventsFetched
+            .prepend([])
+            .eraseToAnyPublisher()
+
+        NotificationCenter.default.publisher(for: .EKEventStoreChanged)
+            .sink { [weak self] (_) in
+                self?.updateDayEvents()
+            }
+            .store(in: &cancellables)
     }
 
     func requestAccess(completion: ((Bool, Error) -> Void)) {
@@ -31,7 +42,7 @@ class EventsManager {
 
     func fetchEvents() -> [EKEvent] {
         guard let yesterday = dateByAdding(days: -1),
-              let tomorrow = dateByAdding(days: 1) else {
+              let tomorrow = dateByAdding(days: 2) else {
 
             return []
         }
