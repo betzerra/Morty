@@ -10,8 +10,11 @@ import Combine
 import Foundation
 
 private let yesterdayMenuTag = 1
+private let yesterdayCopyTag = 10
 private let todayMenuTag = 2
+private let todayCopyTag = 20
 private let tomorrowMenuTag = 3
+private let tomorrowCopyTag = 30
 
 private let menuItemViewWidth = 350.0
 
@@ -29,8 +32,11 @@ class MenuViewModel {
 
         guard
             let yesterdayMenuItem = menu?.item(withTag: yesterdayMenuTag),
+            let yesterdayCopyMenuItem = menu?.item(withTag: yesterdayCopyTag),
             let todayMenuItem = menu?.item(withTag: todayMenuTag),
-            let tomorrowMenuItem = menu?.item(withTag: tomorrowMenuTag) else {
+            let todayCopyMenuItem = menu?.item(withTag: todayCopyTag),
+            let tomorrowMenuItem = menu?.item(withTag: tomorrowMenuTag),
+            let tomorrowCopyMenuItem = menu?.item(withTag: tomorrowCopyTag) else {
 
                 fatalError("Can't get menu items from IB")
             }
@@ -42,9 +48,9 @@ class MenuViewModel {
             eventFilter: { Calendar.current.isDateInYesterday($0.startDate) }
         )
 
-        yesterdayMenuItem.target = yesterdayViewModel
-        yesterdayMenuItem.action = #selector(viewTapped)
-        yesterdayMenuItem.isEnabled = true
+        yesterdayCopyMenuItem.isEnabled = true
+        yesterdayCopyMenuItem.target = yesterdayViewModel
+        yesterdayCopyMenuItem.action = #selector(viewTapped)
 
         todayViewModel = viewModel(
             title: "today",
@@ -53,9 +59,9 @@ class MenuViewModel {
             eventFilter: { Calendar.current.isDateInToday($0.startDate) }
         )
 
-        todayMenuItem.target = todayViewModel
-        todayMenuItem.action = #selector(viewTapped)
-        todayMenuItem.isEnabled = true
+        todayCopyMenuItem.isEnabled = true
+        todayCopyMenuItem.target = todayViewModel
+        todayCopyMenuItem.action = #selector(viewTapped)
 
         tomorrowViewModel = viewModel(
             title: "tomorrow",
@@ -64,9 +70,9 @@ class MenuViewModel {
             eventFilter: { Calendar.current.isDateInTomorrow($0.startDate) }
         )
 
-        tomorrowMenuItem.target = tomorrowViewModel
-        tomorrowMenuItem.action = #selector(viewTapped)
-        tomorrowMenuItem.isEnabled = true
+        tomorrowCopyMenuItem.isEnabled = true
+        tomorrowCopyMenuItem.target = todayViewModel
+        tomorrowCopyMenuItem.action = #selector(viewTapped)
     }
 
     @objc func viewTapped(_ sender: Any) {

@@ -40,32 +40,6 @@ class MenuDayView: NSView {
         ])
     }
 
-    override func draw(_ dirtyRect: NSRect) {
-        if let enclosingMenuItem = enclosingMenuItem {
-            if enclosingMenuItem.isHighlighted {
-                NSColor.systemBlue.set()
-//                NSColor.selectedMenuItemColor.set()
-                dirtyRect.fill()
-            }
-        }
-
-        super.draw(dirtyRect)
-    }
-
-    // Handle clicks https://stackoverflow.com/a/3429777
-    override func mouseUp(with event: NSEvent) {
-        guard let item = enclosingMenuItem else {
-            return
-        }
-
-        let menu = item.menu
-
-        if let index = menu?.index(of: item) {
-            menu?.performActionForItem(at: index)
-            menu?.cancelTracking()
-        }
-    }
-
     // MARK: Private
     private func titleLabel(from title: String) -> NSTextField {
         let attributed = NSAttributedString(string: title.capitalized)
@@ -80,6 +54,7 @@ class MenuDayView: NSView {
     private func views(from events: [Event]) -> [NSView] {
         events.map { event in
             let textField = NSTextField(labelWithAttributedString: event.attributedText)
+            textField.textColor = .secondaryLabelColor
             textField.backgroundColor = .none
             textField.isBordered = false
             return textField
@@ -102,7 +77,6 @@ class MenuDayView: NSView {
             var eventViews = views(from: events)
             let label = String(format: "%.2f hours spent in meetings.", timeSpent)
             eventViews.append(summaryView(from: label))
-            eventViews.append(copyItemsToClipboardLabel(title: title))
             return eventViews
         }
     }
@@ -112,15 +86,6 @@ class MenuDayView: NSView {
 
         let textField = NSTextField(labelWithAttributedString: attributed)
         textField.textColor = .secondaryLabelColor
-        textField.backgroundColor = .none
-        textField.isBordered = false
-        return textField
-    }
-
-    private func copyItemsToClipboardLabel(title: String) -> NSTextField {
-        let attributed = "Copy \(title)'s items.".attributed(leadingSymbol: "doc.on.clipboard")
-        let textField = NSTextField(labelWithAttributedString: attributed)
-        textField.textColor = .labelColor
         textField.backgroundColor = .none
         textField.isBordered = false
         return textField

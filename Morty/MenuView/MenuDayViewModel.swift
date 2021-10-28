@@ -17,7 +17,7 @@ enum DaySummary {
 class MenuDayViewModel {
     let title: String
     var cancellables = [AnyCancellable]()
-    var events: [Event]?
+    var summary: DaySummary?
 
     init(
         title: String,
@@ -37,7 +37,7 @@ class MenuDayViewModel {
             let summary = MenuDayViewModel.summary(from: filteredEvents)
             view.update(with: summary, title: title)
 
-            self?.events = filteredEvents
+            self?.summary = summary
         }
         .store(in: &cancellables)
     }
@@ -57,16 +57,25 @@ class MenuDayViewModel {
     @objc func viewTapped(_ sender: Any) {
         print("\(title.capitalized) tapped")
 
-        guard let events = events else {
+        guard let summary = summary else {
             return
         }
 
-        let text = events
-            .map { $0.standupText }
-            .joined(separator: "\n")
+        switch summary {
+        case .noEvents:
+            return
 
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(text, forType: .string)
+        case .someEvents(let events, let timeSpent):
+            var text = events
+                .map { $0.standupText }
+                .joined(separator: "\n")
+
+            let timeSpentString = String(format: "\n\n🕓 %.2f hours spent in meetings", timeSpent)
+            text.append(contentsOf: timeSpentString)
+
+            let pasteboard = NSPasteboard.general
+            pasteboard.declareTypes([.string], owner: nil)
+            pasteboard.setString(text, forType: .string)
+        }
     }
 }
