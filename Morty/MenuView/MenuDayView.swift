@@ -21,7 +21,6 @@ class MenuDayView: NSView {
 
     func update(with summary: DaySummary, title: String) {
         if stackView != nil {
-            NSLayoutConstraint.deactivate(stackView.constraints)
             stackView.removeFromSuperview()
         }
 

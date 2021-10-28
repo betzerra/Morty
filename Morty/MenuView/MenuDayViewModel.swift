@@ -35,9 +35,12 @@ class MenuDayViewModel {
                 }
 
             let summary = MenuDayViewModel.summary(from: filteredEvents)
-            view.update(with: summary, title: title)
 
-            self?.summary = summary
+            DispatchQueue.main.async { [weak self] in
+                view.update(with: summary, title: title)
+
+                self?.summary = summary
+            }
         }
         .store(in: &cancellables)
     }
