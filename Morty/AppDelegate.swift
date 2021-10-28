@@ -8,7 +8,7 @@
 import Cocoa
 
 @main
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate {
 
     static var current: AppDelegate {
         guard let appDelegate = NSApplication.shared.delegate as? AppDelegate else {
@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         menuViewModel = MenuViewModel(
             menu: menu,
-            eventsPublisher: eventsManager.dayEventsFetched
+            eventsPublisher: eventsManager.eventsFetched
         )
 
         eventsManager.updateDayEvents()
@@ -57,11 +57,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
     }
 
-    // MARK: NSMenuDelegate
-    func menuWillOpen(_ menu: NSMenu) {
-        eventsManager.updateDayEvents()
-    }
-
     // MARK: Private
     private func setupStatusItem() {
         // Set status item
@@ -74,7 +69,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Set menu when icon is clicked
         if let menu = menu {
             statusItem?.menu = menu
-            menu.delegate = self
         }
     }
 }

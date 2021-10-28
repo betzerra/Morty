@@ -10,15 +10,27 @@ import Foundation
 import EventKit
 
 class EventsManager {
-    let dayEventsFetched: AnyPublisher <[Day], Never>
-    private let _dayEventsFetched = CurrentValueSubject<[Day], Never>([])
+    let eventsFetched: AnyPublisher <[Event], Never>
+    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
 
     var store = EKEventStore()
     let settings: Settings
 
+    var cancellables = [AnyCancellable]()
+
     init(settings: Settings) {
         self.settings = settings
-        dayEventsFetched = _dayEventsFetched.eraseToAnyPublisher()
+
+        eventsFetched = _eventsFetched
+            .prepend([])
+            .eraseToAnyPublisher()
+
+        NotificationCenter.default.publisher(for: .EKEventStoreChanged)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] (_) in
+                self?.updateDayEvents()
+            }
+            .store(in: &cancellables)
     }
 
     func requestAccess(completion: ((Bool, Error) -> Void)) {
@@ -31,7 +43,7 @@ class EventsManager {
 
     func fetchEvents() -> [EKEvent] {
         guard let yesterday = dateByAdding(days: -1),
-              let tomorrow = dateByAdding(days: 1) else {
+              let tomorrow = dateByAdding(days: 2) else {
 
             return []
         }
@@ -51,16 +63,19 @@ class EventsManager {
     }
 
     func updateDayEvents() {
-        let events = fetchEvents()
+        let rawEvents = fetchEvents()
             .map {
                 Event.init(
-                    date: $0.startDate,
+                    startDate: $0.startDate,
+                    endDate: $0.endDate,
                     title: $0.title,
                     type: .meeting
                 )
             }
 
-        _dayEventsFetched.value = EventsHelper.days(from: events)
+        // Remove duplicates
+        let events = Array(Set(rawEvents))
+        _eventsFetched.value = events
     }
 
     func isCalendarEnabled(identifier: String) -> Bool {

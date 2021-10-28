@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,19 +22,28 @@
                                                 <action selector="preferencesTapped:" target="Voe-Tx-rLC" id="NtG-w3-NTr"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="uCo-LL-WdS"/>
+                                        <menuItem title="Yesterday" tag="1" id="BQk-77-56i">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="􀉄 Copy yesterday's items." tag="10" id="biT-tt-NXL">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="xwP-WH-vvU"/>
+                                        <menuItem title="Today" tag="2" id="ppN-Rh-81O">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="􀉄 Copy today's items." tag="20" id="HCZ-3f-396">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="NVS-SI-gcV"/>
+                                        <menuItem title="Tomorrow" tag="3" id="3Ox-ph-Xzh">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="􀉄 Copy tomorrow's items." tag="30" id="Tge-JN-cl9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="vdt-GS-N5Z"/>
-                                        <menuItem title="Yesterday" tag="9" enabled="NO" id="hfn-GT-qK8">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="BpR-yd-Ttj"/>
-                                        <menuItem title="Today" tag="10" enabled="NO" id="vAF-4J-DOU">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Tomorrow" tag="11" enabled="NO" id="cWs-hM-eWY">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="cB8-Pd-OL0"/>
                                         <menuItem title="Quit Morty" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
@@ -52,7 +61,6 @@
                 <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Morty" customModuleProvider="target">
                     <connections>
                         <outlet property="menu" destination="uQy-DD-JDr" id="oTG-G6-mga"/>
-                        <outlet property="todayMenuItem" destination="vAF-4J-DOU" id="Hf7-ms-7ok"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -204,7 +212,7 @@
                                                                     <tableColumnResizingMask key="resizingMask" userResizable="YES"/>
                                                                     <prototypeCellViews>
                                                                         <tableCellView identifier="calendarIdentifier" id="TCo-cj-QXI">
-                                                                            <rect key="frame" x="18" y="0.0" width="449" height="24"/>
+                                                                            <rect key="frame" x="8" y="0.0" width="449" height="24"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <button verticalHuggingPriority="750" id="Prn-tQ-bD4">
