@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         menuViewModel = MenuViewModel(
             menu: menu,
-            eventsPublisher: eventsManager.dayEventsFetched
+            eventsPublisher: eventsManager.eventsFetched
         )
 
         eventsManager.updateDayEvents()

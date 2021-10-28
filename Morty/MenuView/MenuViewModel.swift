@@ -9,104 +9,81 @@ import AppKit
 import Combine
 import Foundation
 
-private let yesterdayTitleTag = 9
-private let yesterdayItemsTag = 90
-private let todayTitleTag = 10
-private let todayItemsTag = 100
-private let tomorrowTitleTag = 11
-private let tomorrowItemsTag = 110
+private let yesterdayMenuTag = 1
+private let todayMenuTag = 2
+private let tomorrowMenuTag = 3
+
+private let menuItemViewWidth = 350.0
 
 class MenuViewModel {
     weak var menu: NSMenu?
 
-    let todayHandler = DayEventHandler(
-        titleTag: todayTitleTag,
-        itemsTag: todayItemsTag,
-        dayDescription: "today"
-    )
-
-    let yesterdayHandler = DayEventHandler(
-        titleTag: yesterdayTitleTag,
-        itemsTag: yesterdayItemsTag,
-        dayDescription: "yesterday"
-    )
-
-    let tomorrowHandler = DayEventHandler(
-        titleTag: tomorrowTitleTag,
-        itemsTag: tomorrowItemsTag,
-        dayDescription: "tomorrow"
-    )
-
-    let customMenuDayViewModel: MenuDayViewModel
+    private (set) var yesterdayViewModel: MenuDayViewModel!
+    private (set) var todayViewModel: MenuDayViewModel!
+    private (set) var tomorrowViewModel: MenuDayViewModel!
 
     var cancellables = [AnyCancellable]()
 
-    init(menu: NSMenu?, eventsPublisher: AnyPublisher <[Day], Never>) {
+    init(menu: NSMenu?, eventsPublisher: AnyPublisher <[Event], Never>) {
         self.menu = menu
 
-        let customView = MenuDayView(frame: NSRect(origin: .zero, size: .zero))
-        customView.autoresizingMask = [.width, .height]
+        guard
+            let yesterdayMenuItem = menu?.item(withTag: yesterdayMenuTag),
+            let todayMenuItem = menu?.item(withTag: todayMenuTag),
+            let tomorrowMenuItem = menu?.item(withTag: tomorrowMenuTag) else {
 
-        let customItem = menu?.item(withTag: 1)
-        customItem!.view = customView
-
-        customMenuDayViewModel = MenuDayViewModel(view: customView, publisher: eventsPublisher)
-
-        eventsPublisher
-            .receive(on: RunLoop.main)
-            .sink { [weak self] days in
-                guard let self = self else {
-                    return
-                }
-
-                let events = days.flatMap { $0.events }
-
-                self.updateDayHandler(
-                    self.todayHandler,
-                    with: events.filter { Calendar.current.isDateInToday($0.startDate) }
-                )
-
-                self.updateDayHandler(
-                    self.yesterdayHandler,
-                    with: events.filter { Calendar.current.isDateInYesterday($0.startDate) }
-                )
-
-                self.updateDayHandler(
-                    self.tomorrowHandler,
-                    with: events.filter { Calendar.current.isDateInTomorrow($0.startDate) }
-                )
+                fatalError("Can't get menu items from IB")
             }
-            .store(in: &cancellables)
+
+        yesterdayViewModel = viewModel(
+            title: "yesterday",
+            menuItem: yesterdayMenuItem,
+            publisher: eventsPublisher,
+            eventFilter: { Calendar.current.isDateInYesterday($0.startDate) }
+        )
+
+        yesterdayMenuItem.target = yesterdayViewModel
+        yesterdayMenuItem.action = #selector(viewTapped)
+        yesterdayMenuItem.isEnabled = true
+
+        todayViewModel = viewModel(
+            title: "today",
+            menuItem: todayMenuItem,
+            publisher: eventsPublisher,
+            eventFilter: { Calendar.current.isDateInToday($0.startDate) }
+        )
+
+        todayMenuItem.target = todayViewModel
+        todayMenuItem.action = #selector(viewTapped)
+        todayMenuItem.isEnabled = true
+
+        tomorrowViewModel = viewModel(
+            title: "tomorrow",
+            menuItem: tomorrowMenuItem,
+            publisher: eventsPublisher,
+            eventFilter: { Calendar.current.isDateInTomorrow($0.startDate) }
+        )
+
+        tomorrowMenuItem.target = tomorrowViewModel
+        tomorrowMenuItem.action = #selector(viewTapped)
+        tomorrowMenuItem.isEnabled = true
     }
 
-    private func updateDayHandler(_ handler: DayEventHandler, with events: [Event]) {
-        // Remove old elements from menu
-        removeItems(with: handler.itemsTag)
-
-        // Update handler's events
-        handler.events = events
-
-        // Add new items to Menu
-        addItems(from: handler)
+    @objc func viewTapped(_ sender: Any) {
+        // TODO: Fix this
+        // if I remove this, the app won't compile
     }
 
-    private func removeItems(with tag: Int) {
-        guard let menu = menu else {
-            return
-        }
+    private func viewModel(
+        title: String,
+        menuItem: NSMenuItem,
+        publisher: AnyPublisher<[Event], Never>,
+        eventFilter: @escaping ((Event) -> Bool)
+    ) -> MenuDayViewModel {
 
-        while let item = menu.item(withTag: tag) {
-            menu.removeItem(item)
-        }
-    }
-
-    private func addItems(from handler: DayEventHandler) {
-        guard let tagIndex = menu?.indexOfItem(withTag: handler.titleTag) else {
-            return
-        }
-
-        handler.menuItems.enumerated().forEach { (index, item) in
-            menu?.insertItem(item, at: tagIndex + index + 1)
-        }
+        let view = MenuDayView(frame: NSRect(origin: .zero, size: CGSize(width: menuItemViewWidth, height: 0)))
+        view.autoresizingMask = [.width, .height]
+        menuItem.view = view
+        return MenuDayViewModel(title: title, view: view, publisher: publisher, eventFilter: eventFilter)
     }
 }

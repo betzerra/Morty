@@ -10,15 +10,15 @@ import Foundation
 import EventKit
 
 class EventsManager {
-    let dayEventsFetched: AnyPublisher <[Day], Never>
-    private let _dayEventsFetched = CurrentValueSubject<[Day], Never>([])
+    let eventsFetched: AnyPublisher <[Event], Never>
+    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
 
     var store = EKEventStore()
     let settings: Settings
 
     init(settings: Settings) {
         self.settings = settings
-        dayEventsFetched = _dayEventsFetched.eraseToAnyPublisher()
+        eventsFetched = _eventsFetched.eraseToAnyPublisher()
     }
 
     func requestAccess(completion: ((Bool, Error) -> Void)) {
@@ -51,7 +51,7 @@ class EventsManager {
     }
 
     func updateDayEvents() {
-        let events = fetchEvents()
+        let rawEvents = fetchEvents()
             .map {
                 Event.init(
                     startDate: $0.startDate,
@@ -61,7 +61,9 @@ class EventsManager {
                 )
             }
 
-        _dayEventsFetched.value = EventsHelper.days(from: events)
+        // Remove duplicates
+        let events = Array(Set(rawEvents))
+        _eventsFetched.value = events
     }
 
     func isCalendarEnabled(identifier: String) -> Bool {
