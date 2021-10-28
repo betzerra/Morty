@@ -59,7 +59,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: NSMenuDelegate
     func menuWillOpen(_ menu: NSMenu) {
+        print("\(#function)")
         eventsManager.updateDayEvents()
+    }
+
+    func menuDidClose(_ menu: NSMenu) {
+        print("\(#function)")
     }
 
     // MARK: Private
