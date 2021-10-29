@@ -54,7 +54,7 @@ class EventsManager {
     }
 
     func fetchEvents() -> [EKEvent] {
-        guard let yesterday = dateByAdding(days: -1),
+        guard let yesterday = dateByAdding(days: -2),
               let tomorrow = dateByAdding(days: 2) else {
 
             return []
