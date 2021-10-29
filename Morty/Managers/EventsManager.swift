@@ -10,6 +10,8 @@ import Foundation
 import EventKit
 
 class EventsManager {
+    private let fetchTimeInterval: TimeInterval = 60
+
     let eventsFetched: AnyPublisher <[Event], Never>
     private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
 
@@ -25,6 +27,16 @@ class EventsManager {
             .prepend([])
             .eraseToAnyPublisher()
 
+        // Fetch events every minute
+        Timer
+            .publish(every: fetchTimeInterval, on: .main, in: .default)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updateDayEvents()
+            }
+            .store(in: &cancellables)
+
+        // Fetch events every time the calendar changes
         NotificationCenter.default.publisher(for: .EKEventStoreChanged)
             .receive(on: RunLoop.main)
             .sink { [weak self] (_) in
