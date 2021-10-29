@@ -28,21 +28,34 @@ class EventsManager {
             .eraseToAnyPublisher()
 
         // Fetch events every minute
-        Timer
+        let timerPublisher: AnyPublisher<(), Never> = Timer
             .publish(every: fetchTimeInterval, on: .main, in: .default)
             .autoconnect()
-            .sink { [weak self] _ in
-                self?.updateDayEvents()
-            }
-            .store(in: &cancellables)
+            .map { _ in () }
+            .eraseToAnyPublisher()
 
         // Fetch events every time the calendar changes
-        NotificationCenter.default.publisher(for: .EKEventStoreChanged)
+        let eventStoreChanged: AnyPublisher<(), Never> = NotificationCenter
+            .default
+            .publisher(for: .EKEventStoreChanged)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        // Fetch events every time the selected calendars change
+        let selectedCalendarsChanged: AnyPublisher<(), Never> = settings
+            .$enabledCalendars
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        Publishers.Merge3(
+            timerPublisher,
+            eventStoreChanged,
+            selectedCalendarsChanged
+        )
             .receive(on: RunLoop.main)
-            .sink { [weak self] (_) in
-                self?.updateDayEvents()
-            }
-            .store(in: &cancellables)
+            .sink { [weak self] _ in
+            self?.updateDayEvents()
+        }.store(in: &cancellables)
     }
 
     func requestAccess(completion: ((Bool, Error) -> Void)) {
@@ -64,6 +77,12 @@ class EventsManager {
         let calendars = store
             .calendars(for: .event)
             .filter { settings.enabledCalendars.contains($0.calendarIdentifier) }
+
+        guard calendars.count > 0 else {
+            // Making a predicate with no items will be the same as
+            // making a predicate with all the calendars
+            return []
+        }
 
         let predicate = store.predicateForEvents(
             withStart: yesterday,
