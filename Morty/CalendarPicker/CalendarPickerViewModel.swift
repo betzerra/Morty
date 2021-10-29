@@ -10,7 +10,7 @@ import EventKit
 import Foundation
 
 class CalendarPickerViewModel {
-    lazy var calendars: [EKCalendar] = {
+    var calendars: [EKCalendar] {
         AppDelegate.current.eventsManager
             .store.calendars(for: .event)
             .sorted { lhs, rhs in
@@ -28,7 +28,7 @@ class CalendarPickerViewModel {
 
                 return lhs.displayTitle < rhs.displayTitle
             }
-    }()
+    }
 
     func enableCalendar(_ identifier: String, _ enable: Bool) {
         AppDelegate

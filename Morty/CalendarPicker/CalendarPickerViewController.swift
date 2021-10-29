@@ -18,17 +18,26 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        allowButton.title = EventsManager.isAuthorized ? "Granted" : "Allow"
+        updateAllowButton()
 
         tableView.dataSource = self
         tableView.delegate = self
+    }
+
+    private func updateAllowButton() {
+        allowButton.title = EventsManager.isAuthorized ? "Granted" : "Allow"
     }
 
     @IBAction func allowButtonPressed(_ sender: Any) {
         AppDelegate
             .current
             .eventsManager
-            .requestAccess { _, _ in }
+            .requestAccess(completion: { [weak self] _, _ in
+                DispatchQueue.main.async {
+                    self?.updateAllowButton()
+                    self?.tableView.reloadData()
+                }
+            })
     }
 
     // MARK: NSTableViewDataSource

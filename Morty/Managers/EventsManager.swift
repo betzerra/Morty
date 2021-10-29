@@ -58,8 +58,8 @@ class EventsManager {
         }.store(in: &cancellables)
     }
 
-    func requestAccess(completion: ((Bool, Error) -> Void)) {
-        store.requestAccess(to: .event) { _, _ in }
+    func requestAccess(completion: @escaping ((Bool, Error?) -> Void)) {
+        store.requestAccess(to: .event, completion: completion)
     }
 
     static var isAuthorized: Bool {
