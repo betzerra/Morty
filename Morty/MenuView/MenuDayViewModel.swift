@@ -22,27 +22,42 @@ class MenuDayViewModel {
     init(
         title: String,
         view: MenuDayView,
+        copyMenuItem: NSMenuItem,
         publisher: AnyPublisher<[Event], Never>,
         eventFilter: @escaping ((Event) -> Bool)
     ) {
         self.title = title
+        setupCopyMenuItem(copyMenuItem)
 
-        publisher.sink { [weak self] events in
-            let filteredEvents = events
-                .filter(eventFilter)
-                .sorted { lhs, rhs in
-                    lhs.startDate < rhs.startDate
-                }
+        publisher
+            .map({ events -> DaySummary in
+                let filteredEvents = events
+                    .filter(eventFilter)
+                    .sorted { lhs, rhs in
+                        lhs.startDate < rhs.startDate
+                    }
 
-            let summary = MenuDayViewModel.summary(from: filteredEvents)
-
-            DispatchQueue.main.async { [weak self] in
+                return MenuDayViewModel.summary(from: filteredEvents)
+            })
+            .receive(on: RunLoop.main)
+            .sink { [weak self] summary in
                 view.update(with: summary, title: title)
+
+                MenuDayViewModel.updateCopyMenuItem(
+                    copyMenuItem,
+                    with: summary
+                )
 
                 self?.summary = summary
             }
-        }
-        .store(in: &cancellables)
+            .store(in: &cancellables)
+    }
+
+    func setupCopyMenuItem(_ item: NSMenuItem) {
+        item.isEnabled = true
+        item.target = self
+        item.action = #selector(viewTapped)
+        item.attributedTitle = "Copy \(title)'s items.".attributed(leadingSymbol: "doc.on.clipboard.fill")
     }
 
     static func summary(from events: [Event]) -> DaySummary {
@@ -55,6 +70,18 @@ class MenuDayViewModel {
             .reduce(0, { $0 + $1 }) / 3600
 
         return .someEvents(events, timeSpent: timeSpent)
+    }
+
+    static func updateCopyMenuItem(
+        _ item: NSMenuItem,
+        with summary: DaySummary
+    ) {
+        switch summary {
+        case .noEvents:
+            item.isHidden = true
+        case .someEvents(_, _):
+            item.isHidden = false
+        }
     }
 
     @objc func viewTapped(_ sender: Any) {

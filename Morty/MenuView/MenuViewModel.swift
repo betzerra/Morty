@@ -43,53 +43,52 @@ class MenuViewModel {
 
         yesterdayViewModel = viewModel(
             title: "yesterday",
-            menuItem: yesterdayMenuItem,
+            mainMenuItem: yesterdayMenuItem,
+            copyMenuItem: yesterdayCopyMenuItem,
             publisher: eventsPublisher,
             eventFilter: { Calendar.current.isDateInYesterday($0.startDate) }
         )
 
-        yesterdayCopyMenuItem.isEnabled = true
-        yesterdayCopyMenuItem.target = yesterdayViewModel
-        yesterdayCopyMenuItem.action = #selector(viewTapped)
-
         todayViewModel = viewModel(
             title: "today",
-            menuItem: todayMenuItem,
+            mainMenuItem: todayMenuItem,
+            copyMenuItem: todayCopyMenuItem,
             publisher: eventsPublisher,
             eventFilter: { Calendar.current.isDateInToday($0.startDate) }
         )
 
-        todayCopyMenuItem.isEnabled = true
-        todayCopyMenuItem.target = todayViewModel
-        todayCopyMenuItem.action = #selector(viewTapped)
-
         tomorrowViewModel = viewModel(
             title: "tomorrow",
-            menuItem: tomorrowMenuItem,
+            mainMenuItem: tomorrowMenuItem,
+            copyMenuItem: tomorrowCopyMenuItem,
             publisher: eventsPublisher,
             eventFilter: { Calendar.current.isDateInTomorrow($0.startDate) }
         )
-
-        tomorrowCopyMenuItem.isEnabled = true
-        tomorrowCopyMenuItem.target = tomorrowViewModel
-        tomorrowCopyMenuItem.action = #selector(viewTapped)
-    }
-
-    @objc func viewTapped(_ sender: Any) {
-        // TODO: Fix this
-        // if I remove this, the app won't compile
     }
 
     private func viewModel(
         title: String,
-        menuItem: NSMenuItem,
+        mainMenuItem: NSMenuItem,
+        copyMenuItem: NSMenuItem,
         publisher: AnyPublisher<[Event], Never>,
         eventFilter: @escaping ((Event) -> Bool)
     ) -> MenuDayViewModel {
 
-        let view = MenuDayView(frame: NSRect(origin: .zero, size: CGSize(width: menuItemViewWidth, height: 0)))
+        let frame = NSRect(
+            origin: .zero,
+            size: CGSize(width: menuItemViewWidth, height: 0)
+        )
+
+        let view = MenuDayView(frame: frame)
         view.autoresizingMask = [.width, .height]
-        menuItem.view = view
-        return MenuDayViewModel(title: title, view: view, publisher: publisher, eventFilter: eventFilter)
+        mainMenuItem.view = view
+
+        return MenuDayViewModel(
+            title: title,
+            view: view,
+            copyMenuItem: copyMenuItem,
+            publisher: publisher,
+            eventFilter: eventFilter
+        )
     }
 }
