@@ -67,7 +67,7 @@ class MenuDayViewModel {
 
         let timeSpent = events
             .compactMap { $0.endDate.timeIntervalSince($0.startDate) }
-            .reduce(0, { $0 + $1 }) / 3600
+            .reduce(0, { $0 + $1 })
 
         return .someEvents(events, timeSpent: timeSpent)
     }
@@ -106,6 +106,22 @@ class MenuDayViewModel {
             let pasteboard = NSPasteboard.general
             pasteboard.declareTypes([.string], owner: nil)
             pasteboard.setString(text, forType: .string)
+        }
+    }
+
+    static func timeSpentFormatted(from timeSpent: Double) -> String {
+        var minutes = timeSpent / 60
+        let hours = floor(minutes / 60)
+
+        if hours >= 1.0 {
+            minutes -= (hours * 60)
+            if minutes >= 1.0 {
+                return String(format: "%.0fh %.0fm", hours, minutes)
+            } else {
+                return String(format: "%.0fh", hours, minutes)
+            }
+        } else {
+            return String(format: "%.0fm", minutes)
         }
     }
 }
