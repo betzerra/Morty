@@ -66,6 +66,8 @@ class MenuDayViewModel {
         }
 
         let timeSpent = events
+            // allDay events should be ignored
+            .filter { $0.type == .meeting }
             .compactMap { $0.endDate.timeIntervalSince($0.startDate) }
             .reduce(0, { $0 + $1 })
 
@@ -100,8 +102,10 @@ class MenuDayViewModel {
                 .map { $0.standupText }
                 .joined(separator: "\n")
 
-            let timeSpentString = String(format: "\n\n🕓 %.2f hours spent in meetings", timeSpent)
-            text.append(contentsOf: timeSpentString)
+            if timeSpent > 0 {
+                let timeSpentString = String(format: "\n\n🕓 %.2f hours spent in meetings", timeSpent)
+                text.append(contentsOf: timeSpentString)
+            }
 
             let pasteboard = NSPasteboard.general
             pasteboard.declareTypes([.string], owner: nil)
