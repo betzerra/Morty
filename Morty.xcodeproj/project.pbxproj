@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6707F1D52727648D00953418 /* MenuDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D42727648D00953418 /* MenuDayView.swift */; };
 		6707F1D7272768F600953418 /* MenuDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D6272768F600953418 /* MenuDayViewModel.swift */; };
+		67101B8F27387FB10070327B /* MenuDayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */; };
 		67121AD9266F14AE00004442 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67121AD8266F14AE00004442 /* MenuViewModel.swift */; };
 		671856FE2660608D005EB677 /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671856FD2660608D005EB677 /* EventsManager.swift */; };
 		6718A54E266BD701007161B1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A54D266BD701007161B1 /* Event.swift */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		6707F1D42727648D00953418 /* MenuDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayView.swift; sourceTree = "<group>"; };
 		6707F1D6272768F600953418 /* MenuDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayViewModel.swift; sourceTree = "<group>"; };
+		67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayViewModelTests.swift; sourceTree = "<group>"; };
 		67121AD8266F14AE00004442 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		671856FD2660608D005EB677 /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
 		6718A54D266BD701007161B1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				673BBA1A265F432300F22219 /* MortyTests.swift */,
+				67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */,
 				673BBA1C265F432300F22219 /* Info.plist */,
 			);
 			path = MortyTests;
@@ -371,6 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67101B8F27387FB10070327B /* MenuDayViewModelTests.swift in Sources */,
 				673BBA1B265F432300F22219 /* MortyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
