@@ -66,8 +66,7 @@ class MenuDayViewModel {
         }
 
         let timeSpent = events
-            // allDay events should be ignored
-            .filter { $0.type == .meeting }
+            .filter { $0.takesTime }
             .compactMap { $0.endDate.timeIntervalSince($0.startDate) }
             .reduce(0, { $0 + $1 })
 
@@ -103,7 +102,7 @@ class MenuDayViewModel {
                 .joined(separator: "\n")
 
             if timeSpent > 0 {
-                let timeSpentString = String(format: "\n\n🕓 %.2f hours spent in meetings", timeSpent)
+                let timeSpentString = "\n\n🕓 \(MenuDayViewModel.timeSpentFormatted(from: timeSpent)) spent in meetings"
                 text.append(contentsOf: timeSpentString)
             }
 
