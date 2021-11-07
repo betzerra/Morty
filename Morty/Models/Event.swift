@@ -10,8 +10,16 @@ import AppKit
 import EventKit
 
 enum EventType: String, Codable {
-    case meeting
+    // An event that takes all day.
+    // Usually a holiday, birthday, out of the office event, etc.
     case allDay
+
+    // A regular meeting
+    case meeting
+
+    // A "meeting" that has no attendes.
+    // Usually a doctor appointment, blocked time for coding, etc.
+    case onePerson
 }
 
 struct Event: Codable, Hashable {
@@ -31,18 +39,26 @@ struct Event: Codable, Hashable {
 
         case .allDay:
             return "📅"
+
+        case .onePerson:
+            return "👤"
         }
+    }
+
+    /// Tells if the event should be included
+    /// in "time spent" summary
+    var takesTime: Bool {
+        return type != .allDay
     }
 
     private var text: String {
         switch type {
-        case .meeting:
+        case .meeting, .onePerson:
             return "\(startDate.time) - \(title)"
 
         case .allDay:
             return title
         }
-
     }
 }
 
@@ -72,6 +88,9 @@ extension Event {
 
         case .allDay:
             return "calendar"
+
+        case .onePerson:
+            return "person.fill"
         }
     }
 }
@@ -79,13 +98,23 @@ extension Event {
 // convenience init using EKEvent
 extension Event {
     init(from event: EKEvent) {
-        let eventType: EventType = event.isAllDay ? .allDay : .meeting
-
         self.init(
             startDate: event.startDate,
             endDate: event.endDate,
             title: event.title,
-            type: eventType
+            type: Event.type(from: event)
         )
+    }
+
+    static func type(from event: EKEvent) -> EventType {
+        if event.isAllDay {
+            return .allDay
+        }
+
+        if event.hasAttendees {
+            return .meeting
+        }
+
+        return .onePerson
     }
 }
