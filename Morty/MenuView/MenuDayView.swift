@@ -77,7 +77,7 @@ class MenuDayView: NSView {
         case .someEvents(let events, let timeSpent):
             // events views and at the end a summary about how many hours we have spent
             var eventViews = views(from: events)
-            let label = String(format: "%.2f hours spent in meetings.", timeSpent)
+            let label = "\(MenuDayViewModel.timeSpentFormatted(from: timeSpent)) spent in meetings."
             eventViews.append(summaryView(from: label))
             return eventViews
         }
