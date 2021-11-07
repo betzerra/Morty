@@ -94,15 +94,7 @@ class EventsManager {
     }
 
     func updateDayEvents() {
-        let rawEvents = fetchEvents()
-            .map {
-                Event.init(
-                    startDate: $0.startDate,
-                    endDate: $0.endDate,
-                    title: $0.title,
-                    type: .meeting
-                )
-            }
+        let rawEvents = fetchEvents().map { Event(from: $0) }
 
         // Remove duplicates
         let events = Array(Set(rawEvents))

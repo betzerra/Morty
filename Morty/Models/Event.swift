@@ -7,9 +7,11 @@
 
 import Foundation
 import AppKit
+import EventKit
 
 enum EventType: String, Codable {
     case meeting
+    case allDay
 }
 
 struct Event: Codable, Hashable {
@@ -19,18 +21,35 @@ struct Event: Codable, Hashable {
     let type: EventType
 
     var standupText: String {
-        "📞 \(text)"
+        "\(emoji) \(text)"
+    }
+
+    var emoji: String {
+        switch type {
+        case .meeting:
+            return "📞"
+
+        case .allDay:
+            return "📅"
+        }
     }
 
     private var text: String {
-        "\(startDate.time) - \(title)"
+        switch type {
+        case .meeting:
+            return "\(startDate.time) - \(title)"
+
+        case .allDay:
+            return title
+        }
+
     }
 }
 
 extension Event {
     var attributedText: NSAttributedString {
         let imageAttachment = NSTextAttachment()
-        imageAttachment.image = NSImage(systemSymbolName: "phone", accessibilityDescription: nil)
+        imageAttachment.image = NSImage(systemSymbolName: symbolName, accessibilityDescription: nil)
 
         let attributedImage = NSMutableAttributedString(attachment: imageAttachment)
         attributedImage.addAttribute(
@@ -44,5 +63,29 @@ extension Event {
         attributed.append(NSAttributedString(string: " \(text)"))
 
         return attributed
+    }
+
+    var symbolName: String {
+        switch type {
+        case .meeting:
+            return "phone"
+
+        case .allDay:
+            return "calendar"
+        }
+    }
+}
+
+// convenience init using EKEvent
+extension Event {
+    init(from event: EKEvent) {
+        let eventType: EventType = event.isAllDay ? .allDay : .meeting
+
+        self.init(
+            startDate: event.startDate,
+            endDate: event.endDate,
+            title: event.title,
+            type: eventType
+        )
     }
 }

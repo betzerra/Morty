@@ -77,6 +77,12 @@ class MenuDayView: NSView {
         case .someEvents(let events, let timeSpent):
             // events views and at the end a summary about how many hours we have spent
             var eventViews = views(from: events)
+
+            // if the events don't add time spent, then avoid the summaryView
+            guard timeSpent > 0 else {
+                return eventViews
+            }
+
             let label = "\(MenuDayViewModel.timeSpentFormatted(from: timeSpent)) spent in meetings."
             eventViews.append(summaryView(from: label))
             return eventViews
