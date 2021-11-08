@@ -51,6 +51,12 @@ struct Event: Codable, Hashable {
         return type != .allDay
     }
 
+    func isDuplicate(of event: Event) -> Bool {
+        return startDate == event.startDate &&
+            endDate == event.endDate &&
+            title == event.title
+    }
+
     private var text: String {
         switch type {
         case .meeting, .onePerson:

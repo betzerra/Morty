@@ -96,9 +96,26 @@ class EventsManager {
     func updateDayEvents() {
         let rawEvents = fetchEvents().map { Event(from: $0) }
 
-        // Remove duplicates
-        let events = Array(Set(rawEvents))
-        _eventsFetched.value = events
+        _eventsFetched.value = EventsManager.removeDuplicates(from: rawEvents)
+    }
+
+    // There's an app that makes mirror copies of meetings from other calendars except the
+    // attendes. So I need to remove those.
+    static func removeDuplicates(from events: [Event]) -> [Event] {
+        // This array *might* contain duplicates
+        let onePersonEvents = events.filter { $0.type == .onePerson }
+
+        // This not
+        let otherEvents = events.filter { $0.type != .onePerson }
+
+        let filtered = onePersonEvents
+            .filter { duplicated in
+                !otherEvents.contains { $0.isDuplicate(of: duplicated) }
+            }
+
+        var retVal = Set<Event>(filtered)
+        retVal.formUnion(otherEvents)
+        return Array(retVal)
     }
 
     func isCalendarEnabled(identifier: String) -> Bool {
