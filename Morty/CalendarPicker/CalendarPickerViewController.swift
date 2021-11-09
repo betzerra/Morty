@@ -6,11 +6,13 @@
 //
 
 import AppKit
+import Combine
 import Foundation
 import EventKit
 
 class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
+    @IBOutlet weak var filterOnePersonMeetingsCheckbox: NSButton!
     @IBOutlet weak var allowButton: NSButton!
     @IBOutlet weak var tableView: NSTableView!
     let viewModel = CalendarPickerViewModel()
@@ -19,6 +21,7 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
         super.viewDidLoad()
 
         updateAllowButton()
+        updateFilterOnePersonMeetingsCheckbox()
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -26,6 +29,13 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
 
     private func updateAllowButton() {
         allowButton.title = EventsManager.isAuthorized ? "Granted" : "Allow"
+    }
+
+    private func updateFilterOnePersonMeetingsCheckbox() {
+        filterOnePersonMeetingsCheckbox.state = AppDelegate
+            .current
+            .settings
+            .filterOnePersonMeetings ? .on : .off
     }
 
     @IBAction func allowButtonPressed(_ sender: Any) {
@@ -38,6 +48,14 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
                     self?.tableView.reloadData()
                 }
             })
+    }
+
+    @IBAction func onePersonMeetingsCheckboxChanged(_ sender: Any) {
+        guard let button = sender as? NSButton else {
+            return
+        }
+
+        AppDelegate.current.settings.filterOnePersonMeetings = button.state == .on
     }
 
     // MARK: NSTableViewDataSource

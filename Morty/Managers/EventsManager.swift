@@ -47,10 +47,17 @@ class EventsManager {
             .map { _ in () }
             .eraseToAnyPublisher()
 
-        Publishers.Merge3(
+        // Fetch events when filter one person meetings changed
+        let filterOnePersonMeetingsChanged: AnyPublisher<(), Never> = settings
+            .$filterOnePersonMeetings
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        Publishers.Merge4(
             timerPublisher,
             eventStoreChanged,
-            selectedCalendarsChanged
+            selectedCalendarsChanged,
+            filterOnePersonMeetingsChanged
         )
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in

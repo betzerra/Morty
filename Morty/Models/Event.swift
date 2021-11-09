@@ -48,7 +48,7 @@ struct Event: Codable, Hashable {
     /// Tells if the event should be included
     /// in "time spent" summary
     var takesTime: Bool {
-        return type != .allDay
+        return type == .meeting || (type == .onePerson && !AppDelegate.current.settings.filterOnePersonMeetings)
     }
 
     func isDuplicate(of event: Event) -> Bool {
