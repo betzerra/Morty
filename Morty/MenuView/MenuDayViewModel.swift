@@ -97,7 +97,19 @@ class MenuDayViewModel {
             return
 
         case .someEvents(let events, let timeSpent):
+            let filterOnePersonMeetings = AppDelegate
+                .current
+                .settings
+                .filterOnePersonMeetings
+
             var text = events
+                .filter({ event in
+                    guard filterOnePersonMeetings else {
+                        return true
+                    }
+
+                    return event.type != .onePerson
+                })
                 .map { $0.standupText }
                 .joined(separator: "\n")
 

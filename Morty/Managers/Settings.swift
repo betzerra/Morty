@@ -15,11 +15,18 @@ class Settings {
         }
     }
 
+    @Published var filterOnePersonMeetings: Bool = false {
+        willSet {
+            Settings.saveValue(setting: newValue, forKey: .filterOnePersonMeetings)
+        }
+    }
+
     var cancellables = [AnyCancellable]()
 
     // Try to keep all the keys sorted alphabetically :-)
     enum Key: String {
         case enabledCalendars
+        case filterOnePersonMeetings
     }
 
     // This will force developer to use always Settings.fromUserDefaults()
@@ -32,6 +39,8 @@ class Settings {
         if let tmp: Set<String> = Settings.loadValue(forKey: .enabledCalendars) {
             settings.enabledCalendars = tmp
         }
+
+        settings.filterOnePersonMeetings = Settings.loadValue(forKey: .filterOnePersonMeetings) ?? false
 
         return settings
     }
