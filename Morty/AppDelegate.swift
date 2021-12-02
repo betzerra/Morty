@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             .system
             .statusItem(withLength: NSStatusItem.variableLength)
 
-        statusItem?.button?.title = "Morty"
+        statusItem?.button?.image = NSImage(named: "TrayIcon")
 
         // Set menu when icon is clicked
         if let menu = menu {
