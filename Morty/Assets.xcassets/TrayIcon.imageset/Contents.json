@@ -1,11 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "M.png",
+      "filename" : "morty_icon@0.5x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "morty_icon.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
