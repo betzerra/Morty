@@ -45,16 +45,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {}
 
+    lazy var preferencesWindowController: NSWindowController? = {
+        let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
+        return storyboard.instantiateController(withIdentifier: "preferences") as? NSWindowController
+    }()
+    
     @IBAction func preferencesTapped(_ sender: Any) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-        if let windowController =
-            storyboard.instantiateController(withIdentifier: "preferences")
-            as? NSWindowController {
-
-            windowController.showWindow(self)
-            windowController.window?.orderFrontRegardless()
-        }
+        preferencesWindowController?.showWindow(self)
+        preferencesWindowController?.window?.orderFrontRegardless()
     }
 
     // MARK: Private
