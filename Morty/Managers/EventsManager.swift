@@ -53,11 +53,18 @@ class EventsManager {
             .map { _ in () }
             .eraseToAnyPublisher()
 
-        Publishers.Merge4(
+        // Fetch events when workdays changed
+        let workdaysChanged: AnyPublisher<(), Never> = settings
+            .$workdays
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        Publishers.Merge5(
             timerPublisher,
             eventStoreChanged,
             selectedCalendarsChanged,
-            filterOnePersonMeetingsChanged
+            filterOnePersonMeetingsChanged,
+            workdaysChanged
         )
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
