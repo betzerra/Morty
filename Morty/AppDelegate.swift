@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         menuViewModel = MenuViewModel(
             menu: menu,
+            settings: settings,
             eventsPublisher: eventsManager.eventsFetched
         )
 

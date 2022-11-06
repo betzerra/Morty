@@ -15,12 +15,12 @@ enum DaySummary {
 }
 
 class MenuDayViewModel {
-    let title: String
+    let title: (() -> String)
     var cancellables = [AnyCancellable]()
     var summary: DaySummary?
 
     init(
-        title: String,
+        title: @escaping (() -> String),
         view: MenuDayView,
         copyMenuItem: NSMenuItem,
         publisher: AnyPublisher<[Event], Never>,
@@ -41,7 +41,7 @@ class MenuDayViewModel {
             })
             .receive(on: RunLoop.main)
             .sink { [weak self] summary in
-                view.update(with: summary, title: title)
+                view.update(with: summary, title: title())
 
                 MenuDayViewModel.updateCopyMenuItem(
                     copyMenuItem,
@@ -57,7 +57,7 @@ class MenuDayViewModel {
         item.isEnabled = true
         item.target = self
         item.action = #selector(viewTapped)
-        item.attributedTitle = "Copy \(title)'s items.".attributed(leadingSymbol: "doc.on.clipboard.fill")
+        item.attributedTitle = "Copy \(title())'s items.".attributed(leadingSymbol: "doc.on.clipboard.fill")
     }
 
     static func summary(from events: [Event]) -> DaySummary {
@@ -86,7 +86,7 @@ class MenuDayViewModel {
     }
 
     @objc func viewTapped(_ sender: Any) {
-        print("\(title.capitalized) tapped")
+        print("\(title().capitalized) tapped")
 
         guard let summary = summary else {
             return
