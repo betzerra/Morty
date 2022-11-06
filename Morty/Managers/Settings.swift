@@ -21,12 +21,19 @@ class Settings {
         }
     }
 
+    @Published var workdays: Bool = false {
+        willSet {
+            Settings.saveValue(setting: newValue, forKey: .workdays)
+        }
+    }
+
     var cancellables = [AnyCancellable]()
 
     // Try to keep all the keys sorted alphabetically :-)
     enum Key: String {
         case enabledCalendars
         case filterOnePersonMeetings
+        case workdays
     }
 
     // This will force developer to use always Settings.fromUserDefaults()
@@ -36,11 +43,14 @@ class Settings {
     public static func fromUserDefaults() -> Settings {
         let settings = Settings()
 
+        // Enabled Calendars: calendars that are "synced" with Morty
         if let tmp: Set<String> = Settings.loadValue(forKey: .enabledCalendars) {
             settings.enabledCalendars = tmp
         }
 
         settings.filterOnePersonMeetings = Settings.loadValue(forKey: .filterOnePersonMeetings) ?? false
+
+        settings.workdays = Settings.loadValue(forKey: .workdays) ?? false
 
         return settings
     }
