@@ -20,6 +20,7 @@ private let menuItemViewWidth = 350.0
 
 class MenuViewModel {
     weak var menu: NSMenu?
+    let settings: Settings
 
     private (set) var yesterdayViewModel: MenuDayViewModel!
     private (set) var todayViewModel: MenuDayViewModel!
@@ -27,8 +28,13 @@ class MenuViewModel {
 
     var cancellables = [AnyCancellable]()
 
-    init(menu: NSMenu?, eventsPublisher: AnyPublisher <[Event], Never>) {
+    init(
+        menu: NSMenu?,
+        settings: Settings,
+        eventsPublisher: AnyPublisher <[Event], Never>
+    ) {
         self.menu = menu
+        self.settings = settings
 
         guard
             let yesterdayMenuItem = menu?.item(withTag: yesterdayMenuTag),
@@ -42,15 +48,15 @@ class MenuViewModel {
             }
 
         yesterdayViewModel = viewModel(
-            title: "yesterday",
+            title: previousDay,
             mainMenuItem: yesterdayMenuItem,
             copyMenuItem: yesterdayCopyMenuItem,
             publisher: eventsPublisher,
-            eventFilter: { Calendar.current.isDateInYesterday($0.startDate) }
+            eventFilter: isFromPreviousDay(event:)
         )
 
         todayViewModel = viewModel(
-            title: "today",
+            title: { return "Today" },
             mainMenuItem: todayMenuItem,
             copyMenuItem: todayCopyMenuItem,
             publisher: eventsPublisher,
@@ -58,16 +64,16 @@ class MenuViewModel {
         )
 
         tomorrowViewModel = viewModel(
-            title: "tomorrow",
+            title: nextDay,
             mainMenuItem: tomorrowMenuItem,
             copyMenuItem: tomorrowCopyMenuItem,
             publisher: eventsPublisher,
-            eventFilter: { Calendar.current.isDateInTomorrow($0.startDate) }
+            eventFilter: isFromNextDay(event:)
         )
     }
 
     private func viewModel(
-        title: String,
+        title: @escaping (() -> String),
         mainMenuItem: NSMenuItem,
         copyMenuItem: NSMenuItem,
         publisher: AnyPublisher<[Event], Never>,
@@ -90,5 +96,67 @@ class MenuViewModel {
             publisher: publisher,
             eventFilter: eventFilter
         )
+    }
+
+    private func isFromPreviousDay(event: Event) -> Bool {
+        return isPreviousDay(date: event.startDate)
+    }
+
+    private func isFromNextDay(event: Event) -> Bool {
+        return isNextDay(date: event.startDate)
+    }
+
+    /// Returns day before today.
+    /// - NOTE: If 'workdays' is enabled and today is Monday, then it will return
+    /// last Friday. Otherwise will return yesterday.
+    private func isPreviousDay(date: Date) -> Bool {
+        if settings.workdays {
+            if let weekday = Calendar.current.previousWeekday {
+                return Calendar.current.isDate(date, inSameDayAs: weekday)
+            } else {
+                // Defaults to yesterday
+                return Calendar.current.isDateInYesterday(date)
+            }
+        } else {
+            return Calendar.current.isDateInYesterday(date)
+        }
+    }
+
+    /// Returns day after today.
+    /// - NOTE: If 'workdays' is enabled and today is Friday, then it will return
+    /// next Monday. Otherwise will return tomorrow.
+    private func isNextDay(date: Date) -> Bool {
+        if settings.workdays {
+            if let weekday = Calendar.current.nextWeekday {
+                return Calendar.current.isDate(date, inSameDayAs: weekday)
+            } else {
+                // Defaults to tomorrow
+                return Calendar.current.isDateInTomorrow(date)
+            }
+        } else {
+            return Calendar.current.isDateInTomorrow(date)
+        }
+    }
+
+    private func previousDay() -> String {
+        if settings.workdays {
+            guard let date = Calendar.current.previousWeekday else {
+                return "Previous"
+            }
+            return date.weekday
+        } else {
+            return "Yesterday"
+        }
+    }
+
+    private func nextDay() -> String {
+        if settings.workdays {
+            guard let date = Calendar.current.nextWeekday else {
+                return "Next"
+            }
+            return date.weekday
+        } else {
+            return "Tomorrow"
+        }
     }
 }

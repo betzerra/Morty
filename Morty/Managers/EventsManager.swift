@@ -53,11 +53,18 @@ class EventsManager {
             .map { _ in () }
             .eraseToAnyPublisher()
 
-        Publishers.Merge4(
+        // Fetch events when workdays changed
+        let workdaysChanged: AnyPublisher<(), Never> = settings
+            .$workdays
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        Publishers.Merge5(
             timerPublisher,
             eventStoreChanged,
             selectedCalendarsChanged,
-            filterOnePersonMeetingsChanged
+            filterOnePersonMeetingsChanged,
+            workdaysChanged
         )
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
@@ -74,8 +81,22 @@ class EventsManager {
     }
 
     func fetchEvents() -> [EKEvent] {
-        guard let yesterday = dateByAdding(days: -2),
-              let tomorrow = dateByAdding(days: 2) else {
+        // If 'workdays' is enabled, then we need to fetch more days in case
+        // we need to cover the Friday / Monday gap.
+        //
+        // This could be improved by considering what day is today:
+        //
+        // For startDay:
+        // 1. If today is Monday, then get last Friday.
+        // 2. Otherwise, get yesterday.
+        //
+        // For endDay:
+        // 1. If today is Friday, then get next Monday.
+        // 2. Otherwise, get tomorrow
+        let dayRange = settings.workdays ? 4 : 2
+
+        guard let startDay = dateByAdding(days: -dayRange),
+              let endDay = dateByAdding(days: dayRange) else {
 
             return []
         }
@@ -92,8 +113,8 @@ class EventsManager {
         }
 
         let predicate = store.predicateForEvents(
-            withStart: yesterday,
-            end: tomorrow,
+            withStart: startDay,
+            end: endDay,
             calendars: calendars
         )
 
@@ -139,8 +160,5 @@ class EventsManager {
 }
 
 private func dateByAdding(days: Int) -> Date? {
-    var components = DateComponents()
-    components.day = days
-
-    return Calendar.current.date(byAdding: components, to: Date())
+    return Calendar.current.dateByAdding(days: days, to: Date())
 }

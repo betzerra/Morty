@@ -12,6 +12,7 @@ import EventKit
 
 class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
 
+    @IBOutlet weak var weekdaysCheckbox: NSButton!
     @IBOutlet weak var filterOnePersonMeetingsCheckbox: NSButton!
     @IBOutlet weak var allowButton: NSButton!
     @IBOutlet weak var tableView: NSTableView!
@@ -22,6 +23,7 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
 
         updateAllowButton()
         updateFilterOnePersonMeetingsCheckbox()
+        updateWeekdaysCheckbox()
 
         tableView.dataSource = self
         tableView.delegate = self
@@ -38,6 +40,14 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
             .filterOnePersonMeetings ? .on : .off
     }
 
+    private func updateWeekdaysCheckbox() {
+        weekdaysCheckbox.state = AppDelegate
+            .current
+            .settings
+            .workdays ? .on : .off
+    }
+
+    // MARK: IBActions
     @IBAction func allowButtonPressed(_ sender: Any) {
         AppDelegate
             .current
@@ -48,6 +58,14 @@ class CalendarPickerViewController: NSViewController, NSTableViewDataSource, NST
                     self?.tableView.reloadData()
                 }
             })
+    }
+
+    @IBAction func workdaysCheckboxChanged(_ sender: Any) {
+        guard let button = sender as? NSButton else {
+            return
+        }
+
+        AppDelegate.current.settings.workdays = button.state == .on
     }
 
     @IBAction func onePersonMeetingsCheckboxChanged(_ sender: Any) {

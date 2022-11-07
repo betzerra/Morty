@@ -37,6 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         menuViewModel = MenuViewModel(
             menu: menu,
+            settings: settings,
             eventsPublisher: eventsManager.eventsFetched
         )
 
@@ -49,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let storyboard: NSStoryboard = NSStoryboard(name: "Main", bundle: nil)
         return storyboard.instantiateController(withIdentifier: "preferences") as? NSWindowController
     }()
-    
+
     @IBAction func preferencesTapped(_ sender: Any) {
         preferencesWindowController?.showWindow(self)
         preferencesWindowController?.window?.orderFrontRegardless()

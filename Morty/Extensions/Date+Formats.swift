@@ -15,4 +15,10 @@ extension Date {
 
         return formatter.string(from: self)
     }
+
+    var weekday: String {
+        let weekdayIndex = Calendar.current.component(.weekday, from: self) - 1
+        let formatter = DateFormatter()
+        return formatter.weekdaySymbols[weekdayIndex]
+    }
 }
