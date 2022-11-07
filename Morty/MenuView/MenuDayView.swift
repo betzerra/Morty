@@ -83,7 +83,7 @@ class MenuDayView: NSView {
                 return eventViews
             }
 
-            let label = "\(MenuDayViewModel.timeSpentFormatted(from: timeSpent)) spent in meetings."
+            let label = "\(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings."
             eventViews.append(summaryView(from: label))
             return eventViews
         }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6707F1D52727648D00953418 /* MenuDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D42727648D00953418 /* MenuDayView.swift */; };
 		6707F1D7272768F600953418 /* MenuDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D6272768F600953418 /* MenuDayViewModel.swift */; };
-		67101B8F27387FB10070327B /* MenuDayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */; };
+		67101B8F27387FB10070327B /* TimeFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67101B8E27387FB10070327B /* TimeFormatterTests.swift */; };
 		67121AD9266F14AE00004442 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67121AD8266F14AE00004442 /* MenuViewModel.swift */; };
 		671856FE2660608D005EB677 /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671856FD2660608D005EB677 /* EventsManager.swift */; };
 		6718A54E266BD701007161B1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A54D266BD701007161B1 /* Event.swift */; };
@@ -26,6 +26,8 @@
 		678B31EC2724960700CC0574 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31EB2724960700CC0574 /* Settings.swift */; };
 		678B31EE2724A75B00CC0574 /* EKCalendar+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31ED2724A75B00CC0574 /* EKCalendar+View.swift */; };
 		67DB4CA1272774FA001E62BD /* String+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB4CA0272774FA001E62BD /* String+Symbols.swift */; };
+		67EE17FC29188EC60066394C /* DaySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE17FB29188EC60066394C /* DaySummary.swift */; };
+		67EE1800291890530066394C /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE17FF291890530066394C /* TimeFormatter.swift */; };
 		67EF68F7267678090005F99F /* CalendarPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EF68F6267678090005F99F /* CalendarPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +51,7 @@
 /* Begin PBXFileReference section */
 		6707F1D42727648D00953418 /* MenuDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayView.swift; sourceTree = "<group>"; };
 		6707F1D6272768F600953418 /* MenuDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayViewModel.swift; sourceTree = "<group>"; };
-		67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayViewModelTests.swift; sourceTree = "<group>"; };
+		67101B8E27387FB10070327B /* TimeFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatterTests.swift; sourceTree = "<group>"; };
 		67121AD8266F14AE00004442 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		671856FD2660608D005EB677 /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
 		6718A54D266BD701007161B1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -73,6 +75,8 @@
 		678B31EB2724960700CC0574 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		678B31ED2724A75B00CC0574 /* EKCalendar+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKCalendar+View.swift"; sourceTree = "<group>"; };
 		67DB4CA0272774FA001E62BD /* String+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Symbols.swift"; sourceTree = "<group>"; };
+		67EE17FB29188EC60066394C /* DaySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySummary.swift; sourceTree = "<group>"; };
+		67EE17FF291890530066394C /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
 		67EF68F6267678090005F99F /* CalendarPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -124,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				6718A54D266BD701007161B1 /* Event.swift */,
+				67EE17FB29188EC60066394C /* DaySummary.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				673BBA07265F432200F22219 /* AppDelegate.swift */,
 				678B31E8272486ED00CC0574 /* CalendarPicker */,
 				6718A553266BDE85007161B1 /* Extensions */,
+				67EE17FE291890360066394C /* Helpers */,
 				671856FC2660607D005EB677 /* Managers */,
 				6707F1D32727644200953418 /* MenuView */,
 				6718A54C266BD6D3007161B1 /* Models */,
@@ -182,7 +188,7 @@
 		673BBA19265F432300F22219 /* MortyTests */ = {
 			isa = PBXGroup;
 			children = (
-				67101B8E27387FB10070327B /* MenuDayViewModelTests.swift */,
+				67101B8E27387FB10070327B /* TimeFormatterTests.swift */,
 				673BBA1C265F432300F22219 /* Info.plist */,
 			);
 			path = MortyTests;
@@ -204,6 +210,14 @@
 				678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */,
 			);
 			path = CalendarPicker;
+			sourceTree = "<group>";
+		};
+		67EE17FE291890360066394C /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				67EE17FF291890530066394C /* TimeFormatter.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -356,6 +370,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67EE17FC29188EC60066394C /* DaySummary.swift in Sources */,
+				67EE1800291890530066394C /* TimeFormatter.swift in Sources */,
 				6707F1D7272768F600953418 /* MenuDayViewModel.swift in Sources */,
 				6707F1D52727648D00953418 /* MenuDayView.swift in Sources */,
 				6718A555266BDE9B007161B1 /* Bundle+Content.swift in Sources */,
@@ -379,7 +395,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67101B8F27387FB10070327B /* MenuDayViewModelTests.swift in Sources */,
+				67101B8F27387FB10070327B /* TimeFormatterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

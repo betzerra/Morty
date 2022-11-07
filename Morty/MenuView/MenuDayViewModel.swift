@@ -9,11 +9,6 @@ import AppKit
 import Combine
 import Foundation
 
-enum DaySummary {
-    case noEvents
-    case someEvents(_ events: [Event], timeSpent: Double)
-}
-
 class MenuDayViewModel {
     let title: (() -> String)
     var cancellables = [AnyCancellable]()
@@ -37,7 +32,7 @@ class MenuDayViewModel {
                         lhs.startDate < rhs.startDate
                     }
 
-                return MenuDayViewModel.summary(from: filteredEvents)
+                return filteredEvents.summary
             })
             .receive(on: RunLoop.main)
             .sink { [weak self] summary in
@@ -60,19 +55,6 @@ class MenuDayViewModel {
         item.attributedTitle = "Copy \(title())'s items.".attributed(leadingSymbol: "doc.on.clipboard.fill")
     }
 
-    static func summary(from events: [Event]) -> DaySummary {
-        if events.count == 0 {
-            return .noEvents
-        }
-
-        let timeSpent = events
-            .filter { $0.takesTime }
-            .compactMap { $0.endDate.timeIntervalSince($0.startDate) }
-            .reduce(0, { $0 + $1 })
-
-        return .someEvents(events, timeSpent: timeSpent)
-    }
-
     static func updateCopyMenuItem(
         _ item: NSMenuItem,
         with summary: DaySummary
@@ -88,55 +70,12 @@ class MenuDayViewModel {
     @objc func viewTapped(_ sender: Any) {
         print("\(title().capitalized) tapped")
 
-        guard let summary = summary else {
+        guard let text = summary?.text else {
             return
         }
 
-        switch summary {
-        case .noEvents:
-            return
-
-        case .someEvents(let events, let timeSpent):
-            let filterOnePersonMeetings = AppDelegate
-                .current
-                .settings
-                .filterOnePersonMeetings
-
-            var text = events
-                .filter({ event in
-                    guard filterOnePersonMeetings else {
-                        return true
-                    }
-
-                    return event.type != .onePerson
-                })
-                .map { $0.standupText }
-                .joined(separator: "\n")
-
-            if timeSpent > 0 {
-                let timeSpentString = "\n\n🕓 \(MenuDayViewModel.timeSpentFormatted(from: timeSpent)) spent in meetings"
-                text.append(contentsOf: timeSpentString)
-            }
-
-            let pasteboard = NSPasteboard.general
-            pasteboard.declareTypes([.string], owner: nil)
-            pasteboard.setString(text, forType: .string)
-        }
-    }
-
-    static func timeSpentFormatted(from timeSpent: Double) -> String {
-        var minutes = timeSpent / 60
-        let hours = floor(minutes / 60)
-
-        if hours >= 1.0 {
-            minutes -= (hours * 60)
-            if minutes >= 1.0 {
-                return String(format: "%.0fh %.0fm", hours, minutes)
-            } else {
-                return String(format: "%.0fh", hours, minutes)
-            }
-        } else {
-            return String(format: "%.0fm", minutes)
-        }
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(text, forType: .string)
     }
 }
