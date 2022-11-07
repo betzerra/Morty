@@ -9,31 +9,32 @@ import Foundation
 
 extension Calendar {
     var previousWeekday: Date? {
-        for offset in [-1, -2, -3].enumerated() {
-            if let date = dateByAdding(days: offset.element, to: Date()) {
-                if !date.isWeekend {
-                    return date
-                }
-            }
-        }
-        return nil
+        followingWeekday(startDate: Date(), forward: false)
     }
 
     var nextWeekday: Date? {
-        for offset in [1, 2, 3].enumerated() {
-            if let date = dateByAdding(days: offset.element, to: Date()) {
-                if !date.isWeekend {
-                    return date
-                }
-            }
-        }
-        return nil
+        followingWeekday(startDate: Date(), forward: true)
     }
 
+    /// Get a Date from another date before / after  X day(s)
     func dateByAdding(days: Int, to date: Date) -> Date? {
         var components = DateComponents()
         components.day = days
 
         return self.date(byAdding: components, to: date)
+    }
+
+    /// Get the next / previous following weekday from startDate
+    func followingWeekday(startDate: Date, forward: Bool) -> Date? {
+        let days: [Int] = forward ? [1, 2, 3] : [-1, -2, -3]
+
+        for offset in days.enumerated() {
+            if let date = dateByAdding(days: offset.element, to: startDate) {
+                if !date.isWeekend {
+                    return date
+                }
+            }
+        }
+        return nil
     }
 }
