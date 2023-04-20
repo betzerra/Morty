@@ -8,6 +8,10 @@
 import Foundation
 
 extension Calendar {
+    var yesterday: Date? {
+        dateByAdding(days: -1, to: Date())
+    }
+
     var previousWeekday: Date? {
         followingWeekday(startDate: Date(), forward: false)
     }

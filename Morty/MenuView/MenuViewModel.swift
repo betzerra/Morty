@@ -9,6 +9,7 @@ import AppKit
 import Combine
 import Foundation
 
+private let standupCopyTag = 100
 private let yesterdayMenuTag = 1
 private let yesterdayCopyTag = 10
 private let todayMenuTag = 2
@@ -42,7 +43,8 @@ class MenuViewModel {
             let todayMenuItem = menu?.item(withTag: todayMenuTag),
             let todayCopyMenuItem = menu?.item(withTag: todayCopyTag),
             let tomorrowMenuItem = menu?.item(withTag: tomorrowMenuTag),
-            let tomorrowCopyMenuItem = menu?.item(withTag: tomorrowCopyTag) else {
+            let tomorrowCopyMenuItem = menu?.item(withTag: tomorrowCopyTag),
+            let standupCopyMenuItem = menu?.item(withTag: standupCopyTag) else {
 
                 fatalError("Can't get menu items from IB")
             }
@@ -70,6 +72,42 @@ class MenuViewModel {
             publisher: eventsPublisher,
             eventFilter: isFromNextDay(event:)
         )
+
+        setupCopyStandup(standupCopyMenuItem)
+    }
+
+    private func setupCopyStandup(_ item: NSMenuItem) {
+        item.isEnabled = true
+        item.target = self
+        item.action = #selector(copyStandupTapped)
+        item.attributedTitle = "Copy standup.".attributed(leadingSymbol: "doc.on.clipboard.fill")
+    }
+
+    @objc func copyStandupTapped(_ sender: Any) {
+        print("Copy standup tapped")
+        let noMeetingsMessage = "No meetings"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        var pasteboardText = ""
+
+        if let yesterdaySummary = yesterdayViewModel.summary,
+           let yesterdayDate = settings.workdays ? Calendar.current.previousWeekday : Calendar.current.yesterday {
+            let yesterdayHeader = "**\(dateFormatter.string(from: yesterdayDate)) (previously)**\n\n"
+            pasteboardText += yesterdayHeader
+            pasteboardText += yesterdaySummary.text ?? noMeetingsMessage
+        }
+
+        if let todaySummary = todayViewModel.summary {
+            let todayHeader = "\n\n**\(dateFormatter.string(from: Date())) (today)**"
+            let todayText = todaySummary.text ?? noMeetingsMessage
+
+            pasteboardText += todayHeader
+            pasteboardText += "\n\n\(todayText)"
+        }
+
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(pasteboardText, forType: .string)
     }
 
     private func viewModel(
