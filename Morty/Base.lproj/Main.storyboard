@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,6 +22,7 @@
                                                 <action selector="preferencesTapped:" target="Voe-Tx-rLC" id="NtG-w3-NTr"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Copy Standup" tag="100" keyEquivalent="0" id="vA6-FT-hMy"/>
                                         <menuItem isSeparatorItem="YES" id="uCo-LL-WdS"/>
                                         <menuItem title="Yesterday" tag="1" id="BQk-77-56i">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -252,13 +253,13 @@ Enabling this won't copy those meetings into the clipboard.</string>
                                                 </textFieldCell>
                                             </textField>
                                             <scrollView autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZHK-42-dZ6">
-                                                <rect key="frame" x="0.0" y="0.0" width="182" height="150"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="142" height="150"/>
                                                 <clipView key="contentView" ambiguous="YES" id="c4p-lj-07H">
-                                                    <rect key="frame" x="1" y="1" width="180" height="148"/>
+                                                    <rect key="frame" x="1" y="1" width="140" height="133"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" ambiguous="YES" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" headerView="sjG-gr-w1A" viewBased="YES" id="dyd-q7-A0B">
-                                                            <rect key="frame" x="0.0" y="0.0" width="466" height="120"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="466" height="105"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <size key="intercellSpacing" width="17" height="0.0"/>
                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -307,7 +308,7 @@ Enabling this won't copy those meetings into the clipboard.</string>
                                                     <constraint firstAttribute="height" constant="150" id="Zg1-0g-9Gd"/>
                                                 </constraints>
                                                 <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="l2S-Mo-jWu">
-                                                    <rect key="frame" x="1" y="133" width="180" height="16"/>
+                                                    <rect key="frame" x="1" y="134" width="140" height="15"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="JBC-9T-oIb">

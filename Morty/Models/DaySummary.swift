@@ -14,8 +14,7 @@ enum DaySummary {
     var text: String? {
         switch self {
         case .noEvents:
-            return nil
-
+            return "No meetings"
         case .someEvents(let events, let timeSpent):
             let filterOnePersonMeetings = AppDelegate
                 .current
