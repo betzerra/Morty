@@ -18,3 +18,4 @@ This is very useful for me because I do standup meetings in Slack every day at w
 
 More features coming up soon!
 
+Blog post about this sideproject [here](https://www.betzerra.com/project/morty)
