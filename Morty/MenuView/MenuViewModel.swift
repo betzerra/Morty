@@ -23,9 +23,9 @@ class MenuViewModel {
     weak var menu: NSMenu?
     let settings: Settings
 
-    private (set) var yesterdayViewModel: MenuDayViewModel!
-    private (set) var todayViewModel: MenuDayViewModel!
-    private (set) var tomorrowViewModel: MenuDayViewModel!
+    private(set) var yesterdayViewModel: MenuDayViewModel!
+    private(set) var todayViewModel: MenuDayViewModel!
+    private(set) var tomorrowViewModel: MenuDayViewModel!
 
     var cancellables = [AnyCancellable]()
 

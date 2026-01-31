@@ -62,7 +62,7 @@ class MenuDayViewModel {
         switch summary {
         case .noEvents:
             item.isHidden = true
-        case .someEvents(_, _):
+        case .someEvents:
             item.isHidden = false
         }
     }
