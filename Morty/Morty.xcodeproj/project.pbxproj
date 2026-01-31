@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		67A180472F2EB5DD00998804 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67A17FC12F2E8FCB00998804 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 67A17FC82F2E8FCB00998804;
+			remoteInfo = Morty;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		67A17FC92F2E8FCB00998804 /* Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67A180432F2EB5DD00998804 /* MortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = Morty;
 			sourceTree = "<group>";
 		};
+		67A180442F2EB5DD00998804 /* MortyTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MortyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		67A17FC62F2E8FCB00998804 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67A180402F2EB5DD00998804 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				67A17FCB2F2E8FCB00998804 /* Morty */,
+				67A180442F2EB5DD00998804 /* MortyTests */,
 				67A17FCA2F2E8FCB00998804 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				67A17FC92F2E8FCB00998804 /* Morty.app */,
+				67A180432F2EB5DD00998804 /* MortyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 67A17FC92F2E8FCB00998804 /* Morty.app */;
 			productType = "com.apple.product-type.application";
 		};
+		67A180422F2EB5DD00998804 /* MortyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67A1804B2F2EB5DD00998804 /* Build configuration list for PBXNativeTarget "MortyTests" */;
+			buildPhases = (
+				67A1803F2F2EB5DD00998804 /* Sources */,
+				67A180402F2EB5DD00998804 /* Frameworks */,
+				67A180412F2EB5DD00998804 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				67A180482F2EB5DD00998804 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				67A180442F2EB5DD00998804 /* MortyTests */,
+			);
+			name = MortyTests;
+			packageProductDependencies = (
+			);
+			productName = MortyTests;
+			productReference = 67A180432F2EB5DD00998804 /* MortyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					67A17FC82F2E8FCB00998804 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					67A180422F2EB5DD00998804 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 67A17FC82F2E8FCB00998804;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				67A17FC82F2E8FCB00998804 /* Morty */,
+				67A180422F2EB5DD00998804 /* MortyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		67A17FC72F2E8FCB00998804 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67A180412F2EB5DD00998804 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		67A1803F2F2EB5DD00998804 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		67A180482F2EB5DD00998804 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 67A17FC82F2E8FCB00998804 /* Morty */;
+			targetProxy = 67A180472F2EB5DD00998804 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		67A17FD22F2E8FCC00998804 /* Debug */ = {
@@ -309,6 +384,46 @@
 			};
 			name = Release;
 		};
+		67A180492F2EB5DD00998804 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WUJDMCZJWL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.betzerra.MortyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Morty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Morty";
+			};
+			name = Debug;
+		};
+		67A1804A2F2EB5DD00998804 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WUJDMCZJWL;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.betzerra.MortyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Morty.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Morty";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -326,6 +441,15 @@
 			buildConfigurations = (
 				67A17FD52F2E8FCC00998804 /* Debug */,
 				67A17FD62F2E8FCC00998804 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		67A1804B2F2EB5DD00998804 /* Build configuration list for PBXNativeTarget "MortyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67A180492F2EB5DD00998804 /* Debug */,
+				67A1804A2F2EB5DD00998804 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
