@@ -10,11 +10,8 @@ import SwiftUI
 struct MenuView: View {
     var body: some View {
         VStack {
-            Button("Do something") {}
-            Divider()
-            Button("Quit") {}
+            DayView(viewModel: DayViewModel(events: []))
         }
-        .padding()
     }
 }
 
