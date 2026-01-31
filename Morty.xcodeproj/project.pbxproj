@@ -3,32 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6707F1D52727648D00953418 /* MenuDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D42727648D00953418 /* MenuDayView.swift */; };
-		6707F1D7272768F600953418 /* MenuDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6707F1D6272768F600953418 /* MenuDayViewModel.swift */; };
 		67101B8F27387FB10070327B /* TimeFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67101B8E27387FB10070327B /* TimeFormatterTests.swift */; };
-		67121AD9266F14AE00004442 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67121AD8266F14AE00004442 /* MenuViewModel.swift */; };
-		671856FE2660608D005EB677 /* EventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 671856FD2660608D005EB677 /* EventsManager.swift */; };
-		6718A54E266BD701007161B1 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A54D266BD701007161B1 /* Event.swift */; };
-		6718A555266BDE9B007161B1 /* Bundle+Content.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A554266BDE9B007161B1 /* Bundle+Content.swift */; };
-		6718A559266BE384007161B1 /* Date+Formats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A558266BE384007161B1 /* Date+Formats.swift */; };
-		6718A55B266BE498007161B1 /* JSONDecoder+Standard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6718A55A266BE498007161B1 /* JSONDecoder+Standard.swift */; };
-		673BBA08265F432200F22219 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BBA07265F432200F22219 /* AppDelegate.swift */; };
-		673BBA0C265F432300F22219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 673BBA0B265F432300F22219 /* Assets.xcassets */; };
-		673BBA0F265F432300F22219 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 673BBA0D265F432300F22219 /* Main.storyboard */; };
 		673BBA26265F432300F22219 /* MortyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BBA25265F432300F22219 /* MortyUITests.swift */; };
-		6775AFF92918407A00AB1400 /* Date+Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6775AFF82918407A00AB1400 /* Date+Calendar.swift */; };
-		6775AFFB291843D600AB1400 /* Calendar+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6775AFFA291843D600AB1400 /* Calendar+Misc.swift */; };
-		678B31EA2724870400CC0574 /* CalendarPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */; };
-		678B31EC2724960700CC0574 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31EB2724960700CC0574 /* Settings.swift */; };
-		678B31EE2724A75B00CC0574 /* EKCalendar+View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678B31ED2724A75B00CC0574 /* EKCalendar+View.swift */; };
-		67DB4CA1272774FA001E62BD /* String+Symbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DB4CA0272774FA001E62BD /* String+Symbols.swift */; };
-		67EE17FC29188EC60066394C /* DaySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE17FB29188EC60066394C /* DaySummary.swift */; };
-		67EE1800291890530066394C /* TimeFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EE17FF291890530066394C /* TimeFormatter.swift */; };
-		67EF68F7267678090005F99F /* CalendarPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67EF68F6267678090005F99F /* CalendarPickerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,36 +29,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6707F1D42727648D00953418 /* MenuDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayView.swift; sourceTree = "<group>"; };
-		6707F1D6272768F600953418 /* MenuDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuDayViewModel.swift; sourceTree = "<group>"; };
 		67101B8E27387FB10070327B /* TimeFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatterTests.swift; sourceTree = "<group>"; };
-		67121AD8266F14AE00004442 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
-		671856FD2660608D005EB677 /* EventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsManager.swift; sourceTree = "<group>"; };
-		6718A54D266BD701007161B1 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		6718A554266BDE9B007161B1 /* Bundle+Content.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Content.swift"; sourceTree = "<group>"; };
-		6718A558266BE384007161B1 /* Date+Formats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formats.swift"; sourceTree = "<group>"; };
-		6718A55A266BE498007161B1 /* JSONDecoder+Standard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Standard.swift"; sourceTree = "<group>"; };
 		673BBA04265F432200F22219 /* Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		673BBA07265F432200F22219 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		673BBA0B265F432300F22219 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		673BBA0E265F432300F22219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		673BBA10265F432300F22219 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		673BBA11265F432300F22219 /* Morty.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Morty.entitlements; sourceTree = "<group>"; };
 		673BBA16265F432300F22219 /* MortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		673BBA1C265F432300F22219 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		673BBA21265F432300F22219 /* MortyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		673BBA25265F432300F22219 /* MortyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortyUITests.swift; sourceTree = "<group>"; };
 		673BBA27265F432300F22219 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6775AFF82918407A00AB1400 /* Date+Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Calendar.swift"; sourceTree = "<group>"; };
-		6775AFFA291843D600AB1400 /* Calendar+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+Misc.swift"; sourceTree = "<group>"; };
-		678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewModel.swift; sourceTree = "<group>"; };
-		678B31EB2724960700CC0574 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		678B31ED2724A75B00CC0574 /* EKCalendar+View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EKCalendar+View.swift"; sourceTree = "<group>"; };
-		67DB4CA0272774FA001E62BD /* String+Symbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Symbols.swift"; sourceTree = "<group>"; };
-		67EE17FB29188EC60066394C /* DaySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaySummary.swift; sourceTree = "<group>"; };
-		67EE17FF291890530066394C /* TimeFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeFormatter.swift; sourceTree = "<group>"; };
-		67EF68F6267678090005F99F /* CalendarPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPickerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		673C2DEE2F2E7DF0003FA383 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 673BBA03265F432200F22219 /* Morty */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		673C2DD82F2E7DF0003FA383 /* Morty */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (673C2DEE2F2E7DF0003FA383 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Morty; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		673BBA01265F432200F22219 /* Frameworks */ = {
@@ -105,52 +77,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6707F1D32727644200953418 /* MenuView */ = {
-			isa = PBXGroup;
-			children = (
-				67121AD8266F14AE00004442 /* MenuViewModel.swift */,
-				6707F1D42727648D00953418 /* MenuDayView.swift */,
-				6707F1D6272768F600953418 /* MenuDayViewModel.swift */,
-			);
-			path = MenuView;
-			sourceTree = "<group>";
-		};
-		671856FC2660607D005EB677 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				671856FD2660608D005EB677 /* EventsManager.swift */,
-				678B31EB2724960700CC0574 /* Settings.swift */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
-		6718A54C266BD6D3007161B1 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				6718A54D266BD701007161B1 /* Event.swift */,
-				67EE17FB29188EC60066394C /* DaySummary.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		6718A553266BDE85007161B1 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6718A554266BDE9B007161B1 /* Bundle+Content.swift */,
-				67DB4CA0272774FA001E62BD /* String+Symbols.swift */,
-				678B31ED2724A75B00CC0574 /* EKCalendar+View.swift */,
-				6718A558266BE384007161B1 /* Date+Formats.swift */,
-				6775AFF82918407A00AB1400 /* Date+Calendar.swift */,
-				6775AFFA291843D600AB1400 /* Calendar+Misc.swift */,
-				6718A55A266BE498007161B1 /* JSONDecoder+Standard.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		673BB9FB265F432200F22219 = {
 			isa = PBXGroup;
 			children = (
-				673BBA06265F432200F22219 /* Morty */,
+				673C2DD82F2E7DF0003FA383 /* Morty */,
 				673BBA19265F432300F22219 /* MortyTests */,
 				673BBA24265F432300F22219 /* MortyUITests */,
 				673BBA05265F432200F22219 /* Products */,
@@ -165,24 +95,6 @@
 				673BBA21265F432300F22219 /* MortyUITests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		673BBA06265F432200F22219 /* Morty */ = {
-			isa = PBXGroup;
-			children = (
-				673BBA07265F432200F22219 /* AppDelegate.swift */,
-				678B31E8272486ED00CC0574 /* CalendarPicker */,
-				6718A553266BDE85007161B1 /* Extensions */,
-				67EE17FE291890360066394C /* Helpers */,
-				671856FC2660607D005EB677 /* Managers */,
-				6707F1D32727644200953418 /* MenuView */,
-				6718A54C266BD6D3007161B1 /* Models */,
-				673BBA0B265F432300F22219 /* Assets.xcassets */,
-				673BBA0D265F432300F22219 /* Main.storyboard */,
-				673BBA10265F432300F22219 /* Info.plist */,
-				673BBA11265F432300F22219 /* Morty.entitlements */,
-			);
-			path = Morty;
 			sourceTree = "<group>";
 		};
 		673BBA19265F432300F22219 /* MortyTests */ = {
@@ -203,23 +115,6 @@
 			path = MortyUITests;
 			sourceTree = "<group>";
 		};
-		678B31E8272486ED00CC0574 /* CalendarPicker */ = {
-			isa = PBXGroup;
-			children = (
-				67EF68F6267678090005F99F /* CalendarPickerViewController.swift */,
-				678B31E92724870400CC0574 /* CalendarPickerViewModel.swift */,
-			);
-			path = CalendarPicker;
-			sourceTree = "<group>";
-		};
-		67EE17FE291890360066394C /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				67EE17FF291890530066394C /* TimeFormatter.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -235,6 +130,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				673C2DD82F2E7DF0003FA383 /* Morty */,
 			);
 			name = Morty;
 			productName = Morty;
@@ -324,8 +222,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				673BBA0C265F432300F22219 /* Assets.xcassets in Resources */,
-				673BBA0F265F432300F22219 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,24 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				67EE17FC29188EC60066394C /* DaySummary.swift in Sources */,
-				67EE1800291890530066394C /* TimeFormatter.swift in Sources */,
-				6707F1D7272768F600953418 /* MenuDayViewModel.swift in Sources */,
-				6707F1D52727648D00953418 /* MenuDayView.swift in Sources */,
-				6718A555266BDE9B007161B1 /* Bundle+Content.swift in Sources */,
-				678B31EE2724A75B00CC0574 /* EKCalendar+View.swift in Sources */,
-				6775AFFB291843D600AB1400 /* Calendar+Misc.swift in Sources */,
-				67DB4CA1272774FA001E62BD /* String+Symbols.swift in Sources */,
-				678B31EC2724960700CC0574 /* Settings.swift in Sources */,
-				6718A54E266BD701007161B1 /* Event.swift in Sources */,
-				6775AFF92918407A00AB1400 /* Date+Calendar.swift in Sources */,
-				678B31EA2724870400CC0574 /* CalendarPickerViewModel.swift in Sources */,
-				673BBA08265F432200F22219 /* AppDelegate.swift in Sources */,
-				67EF68F7267678090005F99F /* CalendarPickerViewController.swift in Sources */,
-				6718A55B266BE498007161B1 /* JSONDecoder+Standard.swift in Sources */,
-				67121AD9266F14AE00004442 /* MenuViewModel.swift in Sources */,
-				671856FE2660608D005EB677 /* EventsManager.swift in Sources */,
-				6718A559266BE384007161B1 /* Date+Formats.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,17 +299,6 @@
 			targetProxy = 673BBA22265F432300F22219 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		673BBA0D265F432300F22219 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				673BBA0E265F432300F22219 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		673BBA28265F432300F22219 /* Debug */ = {
@@ -596,7 +463,6 @@
 		673BBA2E265F432300F22219 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -618,7 +484,6 @@
 		673BBA2F265F432300F22219 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -640,7 +505,6 @@
 		673BBA31265F432300F22219 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = WUJDMCZJWL;
@@ -660,7 +524,6 @@
 		673BBA32265F432300F22219 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = WUJDMCZJWL;
