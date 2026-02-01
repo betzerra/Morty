@@ -7,7 +7,7 @@
 import EventKit
 
 
-class AuthorizationServiceProtocolMock: AuthorizationServiceProtocol {
+class EventsServiceProtocolMock: EventsServiceProtocol {
     init() { }
     init(authorizationStatusForEvent: EKAuthorizationStatus) {
         self._authorizationStatusForEvent = authorizationStatusForEvent
@@ -29,6 +29,26 @@ class AuthorizationServiceProtocolMock: AuthorizationServiceProtocol {
             try await requestAccessToEventsHandler()
         }
         
+    }
+
+    private(set) var eventsCallCount = 0
+    var eventsHandler: ((NSPredicate) -> [EKEvent])?
+    func events(matching predicate: NSPredicate) -> [EKEvent] {
+        eventsCallCount += 1
+        if let eventsHandler = eventsHandler {
+            return eventsHandler(predicate)
+        }
+        return [EKEvent]()
+    }
+
+    private(set) var calendarsCallCount = 0
+    var calendarsHandler: ((EKEntityType) -> [EKCalendar])?
+    func calendars(for entityType: EKEntityType) -> [EKCalendar] {
+        calendarsCallCount += 1
+        if let calendarsHandler = calendarsHandler {
+            return calendarsHandler(entityType)
+        }
+        return [EKCalendar]()
     }
 }
 

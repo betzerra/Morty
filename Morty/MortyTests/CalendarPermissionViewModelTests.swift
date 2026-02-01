@@ -14,15 +14,15 @@ import Testing
 
 @MainActor
 struct CalendarPermissionViewModelTests {
-    let authorizationServiceMock: AuthorizationServiceProtocolMock
+    let eventsServiceMock: EventsServiceProtocolMock
 
     init() {
-        let serviceMock = AuthorizationServiceProtocolMock()
-        Container.shared.authorizationService.register { @MainActor in
+        let serviceMock = EventsServiceProtocolMock()
+        Container.shared.eventsService.register { @MainActor in
             serviceMock
         }
 
-        authorizationServiceMock = serviceMock
+        eventsServiceMock = serviceMock
     }
 
     @Test(
@@ -30,20 +30,20 @@ struct CalendarPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.notDetermined, EKAuthorizationStatus.writeOnly]
     )
     func authorizationNotDetermined(status: EKAuthorizationStatus) async {
-        authorizationServiceMock.authorizationStatusForEvent = status
+        eventsServiceMock.authorizationStatusForEvent = status
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled)
         #expect(viewModel.allowButtonTitle == "Allow")
-        #expect(authorizationServiceMock.requestAccessToEventsCallCount == 0)
+        #expect(eventsServiceMock.requestAccessToEventsCallCount == 0)
 
         await viewModel.allowButtonPressed()
-        #expect(authorizationServiceMock.requestAccessToEventsCallCount == 1)
+        #expect(eventsServiceMock.requestAccessToEventsCallCount == 1)
     }
 
     @Test("Test view model properties when authorization is granted")
     func authorizationAllowed() async {
-        authorizationServiceMock.authorizationStatusForEvent = .fullAccess
+        eventsServiceMock.authorizationStatusForEvent = .fullAccess
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled == false)
@@ -55,7 +55,7 @@ struct CalendarPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.denied, EKAuthorizationStatus.restricted]
     )
     func authorizationFailed(status: EKAuthorizationStatus) async {
-        authorizationServiceMock.authorizationStatusForEvent = status
+        eventsServiceMock.authorizationStatusForEvent = status
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled == false)

@@ -19,7 +19,7 @@ struct SettingsContentView: View {
             }
         }
         .scenePadding()
-        .frame(maxWidth: 500, minHeight: 200)
+        .frame(maxWidth: 500, minHeight: 400)
     }
 }
 

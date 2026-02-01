@@ -10,22 +10,22 @@ import Factory
 import SwiftUI
 
 @Observable @MainActor final class CalendarPermissionViewModel {
-    private var authorizationService = Container.shared.authorizationService()
+    private var eventsService = Container.shared.eventsService()
 
     var allowButtonTitle: String = ""
     var allowButtonEnabled: Bool = false
 
     init() {
-        let status = authorizationService.authorizationStatusForEvent
+        let status = eventsService.authorizationStatusForEvent
         updateAllowButton(with: status)
     }
 
     func allowButtonPressed() async {
         print("allowButtonPressed")
         do {
-            try await authorizationService.requestAccessToEvents()
+            try await eventsService.requestAccessToEvents()
 
-            let newStatus = authorizationService.authorizationStatusForEvent
+            let newStatus = eventsService.authorizationStatusForEvent
             updateAllowButton(with: newStatus)
         } catch {
             print("ERROR: \(error.localizedDescription)")

@@ -8,9 +8,16 @@
 import Factory
 
 extension Container {
-    var authorizationService: Factory<AuthorizationServiceProtocol> {
+    var calendarService: Factory<CalendarServiceProtocol> {
         Factory(self) { @MainActor in
-            AuthorizationService() as AuthorizationServiceProtocol
+            CalendarService() as CalendarServiceProtocol
+        }
+        .singleton
+    }
+
+    var eventsService: Factory<EventsServiceProtocol> {
+        Factory(self) { @MainActor in
+            EventsService() as EventsServiceProtocol
         }
         .singleton
     }
