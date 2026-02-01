@@ -13,5 +13,9 @@ struct MortyApp: App {
         MenuBarExtra("Morty", systemImage: "tray.fill") {
             MenuView()
         }
+
+        Settings {
+            SettingsContentView()
+        }
     }
 }
