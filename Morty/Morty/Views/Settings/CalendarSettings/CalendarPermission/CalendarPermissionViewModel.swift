@@ -39,12 +39,10 @@ import SwiftUI
 
     private static func buttonTitle(for status: EKAuthorizationStatus) -> String {
         switch status {
-        case .denied:
+        case .denied, .restricted:
             return String(localized: "denied").localizedCapitalized
         case .fullAccess:
             return String(localized: "granted").localizedCapitalized
-        case .restricted:
-            return String(localized: "restricted").localizedCapitalized
         case .notDetermined, .writeOnly:
             return String(localized: "allow").localizedCapitalized
         @unknown default:
