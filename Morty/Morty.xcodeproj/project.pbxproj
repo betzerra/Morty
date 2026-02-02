@@ -496,7 +496,7 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		67A180FB2F2EF41000998804 /* XCRemoteSwiftPackageReference "Factory" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:hmlongco/Factory.git";
+			repositoryURL = "https://github.com/hmlongco/Factory.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.5.3;
