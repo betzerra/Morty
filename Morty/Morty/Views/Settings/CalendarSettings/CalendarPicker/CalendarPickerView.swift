@@ -20,26 +20,20 @@ struct CalendarPickerView: View {
             Text("Pick the calendars you want to integrate with Morty")
 
             List(viewModel.calendars) { item in
-                row(for: item, isSelected: isCalendarSelected(item.id))
+                CalendarPickerRow(
+                    item: item,
+                    isSelected: isCalendarSelected(item.id)
+                )
+                .onTapGesture {
+                    calendarSelected(item)
+                }
             }
         }
+        .onAppear(perform: {
+            selectedCalendars = viewModel.allowedCalendars
+        })
         .onChange(of: selectedCalendars) { _, newValue in
             viewModel.allowedCalendarsChange(newValue)
-        }
-    }
-
-    @ViewBuilder
-    func row(for item: CalendarItem, isSelected: Bool) -> some View {
-        HStack {
-            Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-
-            Text(item.displayName)
-                .foregroundStyle(Color(cgColor: item.color))
-        }
-        .padding(.vertical, 4)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            calendarSelected(item)
         }
     }
 

@@ -15,6 +15,10 @@ final class CalendarPickerViewModel {
 
     var calendars: [CalendarItem] = []
 
+    var allowedCalendars: Set<String> {
+        calendarService.allowedCalendars
+    }
+
     init() {
         calendars = calendarService
             .fetchCalendars()
