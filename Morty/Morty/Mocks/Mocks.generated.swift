@@ -4,6 +4,7 @@
 
 
 
+import Combine
 import EventKit
 import Factory
 import Foundation
@@ -81,18 +82,11 @@ class CalendarServiceProtocolMock: CalendarServiceProtocol {
         return [CalendarItem]()
     }
 
-    private(set) var fetchEventsCallCount = 0
-    var fetchEventsHandler: (() -> [EKEvent])?
-    func fetchEvents() -> [EKEvent] {
-        fetchEventsCallCount += 1
-        if let fetchEventsHandler = fetchEventsHandler {
-            return fetchEventsHandler()
-        }
-        return [EKEvent]()
-    }
-
     private(set) var allowedCalendarsSetCallCount = 0
     var allowedCalendars: Set<String> = Set<String>() { didSet { allowedCalendarsSetCallCount += 1 } }
+
+    var allowedCalendarsPublisher: AnyPublisher<Set<String>, Never> { return self.allowedCalendarsPublisherSubject.eraseToAnyPublisher() }
+    private(set) var allowedCalendarsPublisherSubject = PassthroughSubject<Set<String>, Never>()
 }
 
 

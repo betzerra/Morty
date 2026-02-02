@@ -5,6 +5,7 @@
 //  Created by Ezequiel Becerra on 01/02/2026.
 //
 
+import Combine
 import EventKit
 import Factory
 import Foundation
@@ -13,12 +14,27 @@ import Foundation
 protocol CalendarServiceProtocol {
     func fetchCalendars() -> [CalendarItem]
     var allowedCalendars: Set<String> { get set }
+
+    var allowedCalendarsPublisher: AnyPublisher<Set<String>, Never> { get }
 }
 
 final class CalendarService: CalendarServiceProtocol {
     private let eventsService = Container.shared.eventKitService()
 
-    var allowedCalendars = Set<String>()
+    var allowedCalendars: Set<String> {
+        get {
+            allowedCalendarsSubject.value
+        }
+
+        set {
+            allowedCalendarsSubject.value = newValue
+        }
+    }
+
+    private let allowedCalendarsSubject = CurrentValueSubject<Set<String>, Never>(Set<String>())
+    lazy var allowedCalendarsPublisher: AnyPublisher<Set<String>, Never> = {
+        allowedCalendarsSubject.eraseToAnyPublisher()
+    }()
 
     func fetchCalendars() -> [CalendarItem] {
         eventsService
