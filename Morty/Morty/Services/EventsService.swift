@@ -19,6 +19,9 @@ protocol EventsServiceProtocol {
 
     /// Returns calendars that support a given entity type (reminders, events)
     func calendars(for entityType: EKEntityType) -> [EKCalendar]
+
+    /// Creates a simple query predicate to search for events within a certain date range.
+    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
 }
 
 final class EventsService: EventsServiceProtocol {
@@ -38,5 +41,9 @@ final class EventsService: EventsServiceProtocol {
 
     func calendars(for entityType: EKEntityType) -> [EKCalendar] {
         store.calendars(for: entityType)
+    }
+
+    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate {
+        store.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
     }
 }

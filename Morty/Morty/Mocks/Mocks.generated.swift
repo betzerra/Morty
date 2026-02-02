@@ -5,6 +5,8 @@
 
 
 import EventKit
+import Factory
+import Foundation
 
 
 class EventsServiceProtocolMock: EventsServiceProtocol {
@@ -50,6 +52,47 @@ class EventsServiceProtocolMock: EventsServiceProtocol {
         }
         return [EKCalendar]()
     }
+
+    private(set) var predicateForEventsCallCount = 0
+    var predicateForEventsHandler: ((Date, Date, [EKCalendar]?) -> NSPredicate)?
+    func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate {
+        predicateForEventsCallCount += 1
+        if let predicateForEventsHandler = predicateForEventsHandler {
+            return predicateForEventsHandler(startDate, endDate, calendars)
+        }
+        fatalError("predicateForEventsHandler returns can't have a default value thus its handler must be set")
+    }
+}
+
+class CalendarServiceProtocolMock: CalendarServiceProtocol {
+    init() { }
+    init(allowedCalendars: Set<String> = Set<String>()) {
+        self.allowedCalendars = allowedCalendars
+    }
+
+
+    private(set) var fetchCalendarsCallCount = 0
+    var fetchCalendarsHandler: (() -> [CalendarItem])?
+    func fetchCalendars() -> [CalendarItem] {
+        fetchCalendarsCallCount += 1
+        if let fetchCalendarsHandler = fetchCalendarsHandler {
+            return fetchCalendarsHandler()
+        }
+        return [CalendarItem]()
+    }
+
+    private(set) var fetchEventsCallCount = 0
+    var fetchEventsHandler: (() -> [EKEvent])?
+    func fetchEvents() -> [EKEvent] {
+        fetchEventsCallCount += 1
+        if let fetchEventsHandler = fetchEventsHandler {
+            return fetchEventsHandler()
+        }
+        return [EKEvent]()
+    }
+
+    private(set) var allowedCalendarsSetCallCount = 0
+    var allowedCalendars: Set<String> = Set<String>() { didSet { allowedCalendarsSetCallCount += 1 } }
 }
 
 

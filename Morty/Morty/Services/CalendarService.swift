@@ -18,7 +18,6 @@ protocol CalendarServiceProtocol {
 }
 
 final class CalendarService: CalendarServiceProtocol {
-    private let eventStore = EKEventStore()
     private let eventsService = Container.shared.eventsService()
 
     var allowedCalendars = Set<String>()
@@ -64,7 +63,7 @@ final class CalendarService: CalendarServiceProtocol {
         // Return events only from the calendars that the user previously selected
         let calendars = eventsService
             .calendars(for: .event)
-        //  .filter { settings.enabledCalendars.contains($0.calendarIdentifier) }
+            .filter { allowedCalendars.contains($0.calendarIdentifier) }
 
         guard calendars.count > 0 else {
             // Making a predicate with no items will be the same as
@@ -72,7 +71,7 @@ final class CalendarService: CalendarServiceProtocol {
             return []
         }
 
-        let predicate = eventStore.predicateForEvents(
+        let predicate = eventsService.predicateForEvents(
             withStart: startDay,
             end: endDay,
             calendars: calendars
