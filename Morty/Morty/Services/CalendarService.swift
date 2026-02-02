@@ -18,7 +18,7 @@ protocol CalendarServiceProtocol {
 }
 
 final class CalendarService: CalendarServiceProtocol {
-    private let eventsService = Container.shared.eventsService()
+    private let eventsService = Container.shared.eventKitService()
 
     var allowedCalendars = Set<String>()
 

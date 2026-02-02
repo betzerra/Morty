@@ -7,8 +7,9 @@
 
 import EventKit
 
+/// EventKit wrapper service
 /// @mockable
-protocol EventsServiceProtocol {
+protocol EKServiceProtocol {
     /// Returns the authorization status calendar events
     var authorizationStatusForEvent: EKAuthorizationStatus { get }
 
@@ -24,7 +25,7 @@ protocol EventsServiceProtocol {
     func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
 }
 
-final class EventsService: EventsServiceProtocol {
+final class EKService: EKServiceProtocol {
     private let store = EKEventStore()
 
     var authorizationStatusForEvent: EKAuthorizationStatus {

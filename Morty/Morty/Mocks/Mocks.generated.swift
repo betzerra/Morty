@@ -9,7 +9,7 @@ import Factory
 import Foundation
 
 
-class EventsServiceProtocolMock: EventsServiceProtocol {
+class EKServiceProtocolMock: EKServiceProtocol {
     init() { }
     init(authorizationStatusForEvent: EKAuthorizationStatus) {
         self._authorizationStatusForEvent = authorizationStatusForEvent
