@@ -16,7 +16,7 @@ struct EventViewModelTests {
     @Test("Test title property", arguments: [
         (input: Event.mockMeetingEvent(), "2:05 PM - Eze <> Tonchis"),
         (input: Event.mockOnePersonEvent(), "3:30 PM - Focus Time"),
-        (input: Event.mockAllDayEvent(), "Eze OOO"),
+        (input: Event.mockAllDayEvent(), "Eze OOO")
     ])
     func title(value: (event: Event, expected: String)) {
         let viewModel = EventViewModel(event: value.event)
@@ -26,7 +26,7 @@ struct EventViewModelTests {
     @Test("Test image name", arguments: [
         (input: Event.mockMeetingEvent(), "phone"),
         (input: Event.mockOnePersonEvent(), "person"),
-        (input: Event.mockAllDayEvent(), "calendar"),
+        (input: Event.mockAllDayEvent(), "calendar")
     ])
     func imageName(value: (event: Event, expected: String)) {
         let viewModel = EventViewModel(event: value.event)

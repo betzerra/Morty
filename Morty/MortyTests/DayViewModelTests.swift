@@ -32,7 +32,7 @@ struct DayViewModelTests {
         Calendar.current.date(byAdding: .day, value: -1, to: Date())!
     }
 
-    private static func tomorrow()  -> Date {
+    private static func tomorrow() -> Date {
         Calendar.current.date(byAdding: .day, value: 1, to: Date())!
     }
 }
