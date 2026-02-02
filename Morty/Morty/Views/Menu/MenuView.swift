@@ -10,7 +10,7 @@ import SwiftUI
 struct MenuView: View {
     @Environment(\.openSettings) private var openSettings
 
-    let viewModel = MenuViewModel()
+    @State var viewModel = MenuViewModel()
 
     var body: some View {
         VStack(alignment: .leading) {
