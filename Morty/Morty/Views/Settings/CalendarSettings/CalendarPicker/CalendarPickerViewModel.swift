@@ -11,12 +11,16 @@ import SwiftUI
 
 @Observable @MainActor
 final class CalendarPickerViewModel {
-    private let calendarService = Container.shared.calendarService()
+    private var calendarService = Container.shared.calendarService()
 
     var calendars: [CalendarItem] = []
 
     init() {
         calendars = calendarService
             .fetchCalendars()
+    }
+
+    func allowedCalendarsChange(_ value: Set<String>) {
+        calendarService.allowedCalendars = value
     }
 }

@@ -13,11 +13,15 @@ import Foundation
 protocol CalendarServiceProtocol {
     func fetchCalendars() -> [CalendarItem]
     func fetchEvents() -> [EKEvent]
+
+    var allowedCalendars: Set<String> { get set }
 }
 
 final class CalendarService: CalendarServiceProtocol {
     private let eventStore = EKEventStore()
     private let eventsService = Container.shared.eventsService()
+
+    var allowedCalendars = Set<String>()
 
     func fetchCalendars() -> [CalendarItem] {
         eventsService

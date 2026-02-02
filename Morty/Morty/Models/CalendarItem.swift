@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CalendarItem: Identifiable, Equatable {
+struct CalendarItem: Identifiable, Equatable, Hashable {
     let id: String
     let title: String
     let source: String
