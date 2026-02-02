@@ -14,11 +14,11 @@ import Testing
 
 @MainActor
 struct CalendarPermissionViewModelTests {
-    let eventsServiceMock: EventsServiceProtocolMock
+    let eventsServiceMock: EKServiceProtocolMock
 
     init() {
-        let serviceMock = EventsServiceProtocolMock()
-        Container.shared.eventsService.register { @MainActor in
+        let serviceMock = EKServiceProtocolMock()
+        Container.shared.eventKitService.register { @MainActor in
             serviceMock
         }
 

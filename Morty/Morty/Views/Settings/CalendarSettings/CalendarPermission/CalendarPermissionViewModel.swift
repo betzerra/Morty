@@ -10,7 +10,7 @@ import Factory
 import SwiftUI
 
 @Observable @MainActor final class CalendarPermissionViewModel {
-    private var eventsService = Container.shared.eventsService()
+    private var eventsService = Container.shared.eventKitService()
 
     var allowButtonTitle: String = ""
     var allowButtonEnabled: Bool = false

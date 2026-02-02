@@ -15,9 +15,9 @@ extension Container {
         .singleton
     }
 
-    var eventsService: Factory<EventsServiceProtocol> {
+    var eventKitService: Factory<EKServiceProtocol> {
         Factory(self) { @MainActor in
-            EventsService() as EventsServiceProtocol
+            EKService() as EKServiceProtocol
         }
         .singleton
     }
