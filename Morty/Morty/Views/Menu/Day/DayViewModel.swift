@@ -9,32 +9,19 @@ import SwiftUI
 
 @MainActor @Observable
 final class DayViewModel {
-    let date: Date
+    let title: String
     let events: [Event]
-
-    var title: String
 
     var timeSpent: TimeInterval
     var timeSpentSummary: String
 
-    init(date: Date, events: [Event]) {
-        self.date = date
+    init(title: String, events: [Event]) {
+        self.title = title
         self.events = events
-
-        self.title = Self.title(for: date)
 
         let timeSpent = Self.timeSpent(for: events)
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
-    }
-
-    private static func title(for date: Date) -> String {
-        if Calendar.current.isDateInToday(date) {
-            return String(localized: "today").localizedCapitalized
-        }
-
-        let formatStyle = Date.RelativeFormatStyle(presentation: .named, unitsStyle: .wide)
-        return formatStyle.format(date).localizedCapitalized
     }
 
     private static func timeSpent(for events: [Event]) -> TimeInterval {

@@ -10,14 +10,14 @@ import Factory
 import Foundation
 
 protocol EventServiceProtocol {
-    func fetchEvents() -> [EKEvent]
+    func fetchEvents() -> [Event]
 }
 
 final class EventService: EventServiceProtocol {
     private let calendarService = Container.shared.calendarService()
     private let eventKitService = Container.shared.eventKitService()
 
-    func fetchEvents() -> [EKEvent] {
+    func fetchEvents() -> [Event] {
         // If 'workdays' is enabled, then we need to fetch more days in case
         // we need to cover the Friday / Monday gap.
         //
@@ -58,7 +58,9 @@ final class EventService: EventServiceProtocol {
             calendars: calendars
         )
 
-        return eventKitService.events(matching: predicate)
+        return eventKitService
+            .events(matching: predicate)
+            .map { Event(from: $0) }
     }
 
     private func dateByAdding(days: Int) -> Date? {

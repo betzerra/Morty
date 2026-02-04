@@ -15,10 +15,18 @@ struct MenuView: View {
     var body: some View {
         VStack(alignment: .leading) {
             settingsButton
-
             Divider()
 
+            // Previous day
+            DayView(viewModel: viewModel.previousDayViewModel)
+            Divider()
+
+            // Today
             DayView(viewModel: viewModel.currentDayViewModel)
+            Divider()
+
+            // Next day
+            DayView(viewModel: viewModel.nextDayViewModel)
         }
         .padding()
         .onAppear {
