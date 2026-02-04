@@ -31,7 +31,7 @@ final class EventService: EventServiceProtocol {
         // 1. If today is Friday, then get next Monday.
         // 2. Otherwise, get tomorrow
         // let dayRange = settings.workdays ? 4 : 2
-        let dayRange = 2
+        let dayRange = 4
 
         guard let startDay = dateByAdding(days: -dayRange),
               let endDay = dateByAdding(days: dayRange) else {
