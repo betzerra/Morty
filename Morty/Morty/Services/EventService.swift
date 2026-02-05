@@ -58,7 +58,10 @@ final class EventService: EventServiceProtocol {
             calendars: calendars
         )
 
-        return eventKitService.events(matching: predicate)
+        return eventKitService
+            .events(matching: predicate)
+            .removedDuplicates()
+            .sortedByDefault()
     }
 
     private func dateByAdding(days: Int) -> Date? {

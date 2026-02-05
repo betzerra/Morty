@@ -79,3 +79,43 @@ extension Event {
         return .onePerson
     }
 }
+
+extension Array where Element == Event {
+    func removedDuplicates() -> [Event] {
+        Self.removeDuplicates(from: self)
+    }
+
+    func sortedByDefault() -> [Event] {
+        self.sorted { lhs, rhs in
+            if lhs.type == rhs.type {
+                if lhs.startDate == rhs.startDate {
+                    return lhs.title < rhs.title
+                }
+                return lhs.startDate < rhs.startDate
+            }
+
+            if lhs.type == .allDay {
+                return true
+            }
+
+            return lhs.startDate < rhs.startDate
+        }
+    }
+
+    private static func removeDuplicates(from events: [Event]) -> [Event] {
+        // This array *might* contain duplicates
+        let onePersonEvents = events.filter { $0.type == .onePerson }
+
+        // This not
+        let otherEvents = events.filter { $0.type != .onePerson }
+
+        let filtered = onePersonEvents
+            .filter { duplicated in
+                !otherEvents.contains { $0.isDuplicate(of: duplicated) }
+            }
+
+        var retVal = Set<Event>(filtered)
+        retVal.formUnion(otherEvents)
+        return Array(retVal)
+    }
+}

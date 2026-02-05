@@ -90,6 +90,13 @@ struct EventServiceTests {
                     endDate: isoFormatter.date(from: "2026-02-04T23:59:59Z")!,
                     title: "Pay Day",
                     type: .allDay
+                ),
+                Event(
+                    id: "6",
+                    startDate: isoFormatter.date(from: "2026-02-04T00:00:00Z")!,
+                    endDate: isoFormatter.date(from: "2026-02-04T23:59:59Z")!,
+                    title: "Mom's Birthday",
+                    type: .allDay
                 )
             ]
         }
@@ -99,6 +106,6 @@ struct EventServiceTests {
         #expect(events.count == 5)
 
         let ids = events.map { $0.id }
-        #expect(ids == ["1", "3", "2", "4", "5"])
+        #expect(ids == ["6", "5", "1", "3", "4"])
     }
 }
