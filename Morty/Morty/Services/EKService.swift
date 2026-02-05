@@ -16,7 +16,7 @@ protocol EKServiceProtocol {
     func requestAccessToEvents() async throws
 
     /// Searches for events that match the given predicate.
-    func events(matching predicate: NSPredicate) -> [EKEvent]
+    func events(matching predicate: NSPredicate) -> [Event]
 
     /// Returns calendars that support a given entity type (reminders, events)
     func calendars(for entityType: EKEntityType) -> [EKCalendar]
@@ -36,8 +36,9 @@ final class EKService: EKServiceProtocol {
         try await store.requestFullAccessToEvents()
     }
 
-    func events(matching predicate: NSPredicate) -> [EKEvent] {
+    func events(matching predicate: NSPredicate) -> [Event] {
         store.events(matching: predicate)
+            .map { Event(from: $0) }
     }
 
     func calendars(for entityType: EKEntityType) -> [EKCalendar] {
