@@ -7,24 +7,32 @@
 
 import EventKit
 import Factory
+import FactoryTesting
 import Foundation
 import Testing
 
 @testable import Morty
 
-struct MenuViewModelTests {
+class MenuViewModelTests {
     let calendarService: CalendarServiceProtocolMock
+    let defaultsService: DefaultsServiceProtocolMock
     let eventKitService: EKServiceProtocolMock
 
     init() {
         Scope.singleton.reset()
+
+        // Mock DefaultsService
+        let defaultsServiceMock = DefaultsServiceProtocolMock()
+        Container.shared.defaultsService.register { @MainActor in
+            defaultsServiceMock
+        }
+        defaultsService = defaultsServiceMock
 
         // Mock CalendarService
         let calendarServiceMock = CalendarServiceProtocolMock()
         Container.shared.calendarService.register { @MainActor in
             calendarServiceMock
         }
-
         calendarService = calendarServiceMock
 
         // Mock EKServiceProtocolMock
@@ -32,7 +40,6 @@ struct MenuViewModelTests {
         Container.shared.eventKitService.register { @MainActor in
             eventKitServiceMock
         }
-
         eventKitService = eventKitServiceMock
     }
 

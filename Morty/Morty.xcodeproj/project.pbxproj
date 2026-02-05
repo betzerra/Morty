@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67438E372F343132005CC26E /* FactoryTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 67438E362F343132005CC26E /* FactoryTesting */; };
 		67A180FD2F2EF41000998804 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 67A180FC2F2EF41000998804 /* Factory */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		67438E342F342F5F005CC26E /* Morty.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morty.xctestplan; sourceTree = "<group>"; };
 		67A17FC92F2E8FCB00998804 /* Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A180432F2EB5DD00998804 /* MortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -51,17 +53,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67438E372F343132005CC26E /* FactoryTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67438E352F343132005CC26E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		67A17FC02F2E8FCB00998804 = {
 			isa = PBXGroup;
 			children = (
+				67438E342F342F5F005CC26E /* Morty.xctestplan */,
 				67A17FCB2F2E8FCB00998804 /* Morty */,
 				67A180442F2EB5DD00998804 /* MortyTests */,
+				67438E352F343132005CC26E /* Frameworks */,
 				67A17FCA2F2E8FCB00998804 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,6 +131,7 @@
 			);
 			name = MortyTests;
 			packageProductDependencies = (
+				67438E362F343132005CC26E /* FactoryTesting */,
 			);
 			productName = MortyTests;
 			productReference = 67A180432F2EB5DD00998804 /* MortyTests.xctest */;
@@ -505,6 +518,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		67438E362F343132005CC26E /* FactoryTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67A180FB2F2EF41000998804 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryTesting;
+		};
 		67A180FC2F2EF41000998804 /* Factory */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 67A180FB2F2EF41000998804 /* XCRemoteSwiftPackageReference "Factory" */;
