@@ -42,9 +42,6 @@ struct MenuView: View {
             .disabled(viewModel.nextDayViewModel.copyStandupDisabled)
         }
         .padding()
-        .onAppear {
-            viewModel.refresh()
-        }
     }
 
     @ViewBuilder

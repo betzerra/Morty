@@ -78,6 +78,9 @@ class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
 
 class EventServiceProtocolMock: EventServiceProtocol {
     init() { }
+    init(events: [Event] = [Event]()) {
+        self.events = events
+    }
 
 
     private(set) var fetchEventsCallCount = 0
@@ -89,6 +92,12 @@ class EventServiceProtocolMock: EventServiceProtocol {
         }
         return [Event]()
     }
+
+
+    var events: [Event] = [Event]()
+
+    var eventsFetched: AnyPublisher<[Event], Never> { return self.eventsFetchedSubject.eraseToAnyPublisher() }
+    private(set) var eventsFetchedSubject = PassthroughSubject<[Event], Never>()
 }
 
 class CalendarServiceProtocolMock: CalendarServiceProtocol {
