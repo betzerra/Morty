@@ -15,6 +15,13 @@ extension Container {
         .singleton
     }
 
+    var defaultsService: Factory<DefaultsServiceProtocol> {
+        Factory(self) { @MainActor in
+            DefaultsService() as DefaultsServiceProtocol
+        }
+        .singleton
+    }
+
     var eventService: Factory<EventServiceProtocol> {
         Factory(self) { @MainActor in
             EventService() as EventServiceProtocol

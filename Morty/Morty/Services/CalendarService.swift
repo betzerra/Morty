@@ -19,7 +19,12 @@ protocol CalendarServiceProtocol {
 }
 
 final class CalendarService: CalendarServiceProtocol {
+    private var defaultsService = Container.shared.defaultsService()
     private let eventsService = Container.shared.eventKitService()
+
+    init() {
+        allowedCalendarsSubject.value = Set(defaultsService.allowedCalendars)
+    }
 
     var allowedCalendars: Set<String> {
         get {
@@ -28,6 +33,7 @@ final class CalendarService: CalendarServiceProtocol {
 
         set {
             allowedCalendarsSubject.value = newValue
+            defaultsService.allowedCalendars = Array(newValue)
         }
     }
 
