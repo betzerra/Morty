@@ -71,13 +71,13 @@ struct DayView: View {
 }
 
 #Preview("Some Events") {
-    let viewModel = DayViewModel(date: Date(), events: Event.mockDay())
+    let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
     DayView(viewModel: viewModel)
         .padding()
 }
 
 #Preview("No Events") {
-    let viewModel = DayViewModel(date: Date(), events: [])
+    let viewModel = DayViewModel(title: "Today", events: [])
     DayView(viewModel: viewModel)
         .padding()
 }

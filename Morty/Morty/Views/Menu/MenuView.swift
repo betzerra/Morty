@@ -10,15 +10,28 @@ import SwiftUI
 struct MenuView: View {
     @Environment(\.openSettings) private var openSettings
 
+    @State var viewModel = MenuViewModel()
+
     var body: some View {
         VStack(alignment: .leading) {
             settingsButton
-
             Divider()
 
-            DayView(viewModel: DayViewModel(date: Date(), events: Event.mockDay()))
+            // Previous day
+            DayView(viewModel: viewModel.previousDayViewModel)
+            Divider()
+
+            // Today
+            DayView(viewModel: viewModel.currentDayViewModel)
+            Divider()
+
+            // Next day
+            DayView(viewModel: viewModel.nextDayViewModel)
         }
         .padding()
+        .onAppear {
+            viewModel.refresh()
+        }
     }
 
     @ViewBuilder
