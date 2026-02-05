@@ -21,6 +21,7 @@ extension Event {
     // 75m timeSpent
     static func mockDay() -> [Event] {
         [
+            mockAllDayEvent(),
             mockMeetingEvent(), // 55m timeSpent
             Event(
                 id: "4",
@@ -28,8 +29,7 @@ extension Event {
                 endDate: dateToday(hour: 15, minute: 25),
                 title: "Standup Meeting", type: .meeting
             ),
-            mockOnePersonEvent(),
-            mockAllDayEvent()
+            mockOnePersonEvent()
         ]
     }
 

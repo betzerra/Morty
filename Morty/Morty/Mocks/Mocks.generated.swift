@@ -76,6 +76,21 @@ class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
     var allowedCalendars: [String] = [String]() { didSet { allowedCalendarsSetCallCount += 1 } }
 }
 
+class EventServiceProtocolMock: EventServiceProtocol {
+    init() { }
+
+
+    private(set) var fetchEventsCallCount = 0
+    var fetchEventsHandler: (() -> [Event])?
+    func fetchEvents() -> [Event] {
+        fetchEventsCallCount += 1
+        if let fetchEventsHandler = fetchEventsHandler {
+            return fetchEventsHandler()
+        }
+        return [Event]()
+    }
+}
+
 class CalendarServiceProtocolMock: CalendarServiceProtocol {
     init() { }
     init(allowedCalendars: Set<String> = Set<String>()) {
