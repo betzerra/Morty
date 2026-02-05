@@ -9,6 +9,7 @@ import EventKit
 import Factory
 import Foundation
 
+/// @mockable
 protocol EventServiceProtocol {
     func fetchEvents() -> [Event]
 }

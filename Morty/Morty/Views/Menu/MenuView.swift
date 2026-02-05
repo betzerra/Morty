@@ -5,6 +5,7 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import Factory
 import SwiftUI
 
 struct MenuView: View {
@@ -50,5 +51,12 @@ struct MenuView: View {
 }
 
 #Preview {
+    Container.shared.eventService.preview {
+        let mock = EventServiceProtocolMock()
+        mock.fetchEventsHandler = {
+            Event.mockDay()
+        }
+        return mock
+    }
     MenuView()
 }
