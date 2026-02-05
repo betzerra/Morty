@@ -15,6 +15,21 @@ final class DayViewModel {
     var timeSpent: TimeInterval
     var timeSpentSummary: String
 
+    var copyStandupDisabled: Bool
+
+    var standupText: String {
+        var standup = events
+            .compactMap { $0.standupText }
+            .joined(separator: "\n")
+
+        if timeSpent > 0 {
+            let timeSpentString = "\n\n🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
+            standup.append(timeSpentString)
+        }
+
+        return standup
+    }
+
     init(title: String, events: [Event]) {
         self.title = title
         self.events = events
@@ -22,6 +37,14 @@ final class DayViewModel {
         let timeSpent = Self.timeSpent(for: events)
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
+
+        self.copyStandupDisabled = events.isEmpty
+    }
+
+    func copyStandupButtonPressed() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(standupText, forType: .string)
     }
 
     private static func timeSpent(for events: [Event]) -> TimeInterval {
