@@ -22,7 +22,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		67438E342F342F5F005CC26E /* Morty.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = file; path = Morty.xctestplan; sourceTree = "<group>"; };
+		6700A08B2F356111005AFC50 /* MortyTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MortyTests.xctestplan; sourceTree = "<group>"; };
 		67A17FC92F2E8FCB00998804 /* Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A180432F2EB5DD00998804 /* MortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -70,7 +70,7 @@
 		67A17FC02F2E8FCB00998804 = {
 			isa = PBXGroup;
 			children = (
-				67438E342F342F5F005CC26E /* Morty.xctestplan */,
+				6700A08B2F356111005AFC50 /* MortyTests.xctestplan */,
 				67A17FCB2F2E8FCB00998804 /* Morty */,
 				67A180442F2EB5DD00998804 /* MortyTests */,
 				67438E352F343132005CC26E /* Frameworks */,

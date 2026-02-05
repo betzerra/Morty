@@ -33,17 +33,7 @@ final class MenuViewModel {
         setupUpdateEventsBindings()
     }
 
-    private func setupUpdateEventsBindings() {
-        eventService
-            .eventsFetched
-            .receive(on: RunLoop.main)
-            .sink { [weak self] events in
-                self?.update(events: events)
-            }
-            .store(in: &cancellables)
-    }
-
-    private func update(events: [Event]) {
+    func update(events: [Event]) {
         // Previous events
         if let previousDay = Self.nextNonWeekendDay(since: Date(), isForward: false) {
             let previousDayEvents = events
@@ -75,6 +65,16 @@ final class MenuViewModel {
             let nextDayTitle = Self.title(for: nextDay)
             nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents)
         }
+    }
+
+    private func setupUpdateEventsBindings() {
+        eventService
+            .eventsFetched
+            .receive(on: RunLoop.main)
+            .sink { [weak self] events in
+                self?.update(events: events)
+            }
+            .store(in: &cancellables)
     }
 
     private static func nextNonWeekendDay(since date: Date, isForward: Bool) -> Date? {
