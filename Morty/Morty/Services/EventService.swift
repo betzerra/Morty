@@ -5,6 +5,7 @@
 //  Created by Ezequiel Becerra on 01/02/2026.
 //
 
+import Combine
 import EventKit
 import Factory
 import Foundation
@@ -12,11 +13,29 @@ import Foundation
 /// @mockable
 protocol EventServiceProtocol {
     func fetchEvents() -> [Event]
+
+    var events: [Event] { get }
+    var eventsFetched: AnyPublisher<[Event], Never> { get }
 }
 
 final class EventService: EventServiceProtocol {
+    lazy var eventsFetched: AnyPublisher<[Event], Never> = {
+        _eventsFetched.eraseToAnyPublisher()
+    }()
+
+    var events: [Event] {
+        _eventsFetched.value
+    }
+
     private let calendarService = Container.shared.calendarService()
     private let eventKitService = Container.shared.eventKitService()
+
+    private var cancellables = Set<AnyCancellable>()
+    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
+
+    init() {
+        setupFetchBindings()
+    }
 
     func fetchEvents() -> [Event] {
         // If 'workdays' is enabled, then we need to fetch more days in case
@@ -63,6 +82,46 @@ final class EventService: EventServiceProtocol {
             .events(matching: predicate)
             .removedDuplicates()
             .sortedByDefault()
+    }
+
+    private func setupFetchBindings() {
+        let fetchTimeInterval: TimeInterval = 60
+
+        // Fetch events every minute
+        let timerPublisher: AnyPublisher<(), Never> = Timer
+            .publish(every: fetchTimeInterval, on: .main, in: .default)
+            .autoconnect()
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        // Fetch events every time the calendar changes
+        let eventStoreChanged: AnyPublisher<(), Never> = NotificationCenter
+            .default
+            .publisher(for: .EKEventStoreChanged)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+
+        // Fetch events every time the selected calendars change
+        let calendarsChanged = calendarService
+            .allowedCalendarsPublisher
+            .flatMap { _ in Just(()) }
+            .eraseToAnyPublisher()
+
+        Publishers.Merge4(
+            timerPublisher,
+            eventStoreChanged,
+            calendarsChanged,
+            Just(()), // fetch at startup
+        )
+        .debounce(for: 0.5, scheduler: RunLoop.main)
+        .sink { [weak self] _ in
+            guard let self else {
+                return
+            }
+
+            self._eventsFetched.value = self.fetchEvents()
+        }
+        .store(in: &cancellables)
     }
 
     private func dateByAdding(days: Int) -> Date? {

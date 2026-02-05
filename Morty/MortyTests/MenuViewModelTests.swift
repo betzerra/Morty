@@ -139,8 +139,7 @@ class MenuViewModelTests {
         #expect(events.count == 9)
 
         let viewModel = MenuViewModel()
-        viewModel.refresh()
-
+        viewModel.update(events: events)
         #expect(viewModel.previousDayViewModel.events.count == 5)
         #expect(viewModel.currentDayViewModel.events.count == 3)
         #expect(viewModel.nextDayViewModel.events.count == 1)

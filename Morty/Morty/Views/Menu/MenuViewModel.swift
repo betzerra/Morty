@@ -6,6 +6,7 @@
 //
 
 import Combine
+import EventKit
 import Factory
 import Foundation
 import SwiftUI
@@ -16,7 +17,6 @@ final class MenuViewModel {
     var currentDayViewModel: DayViewModel
     var nextDayViewModel: DayViewModel
 
-    private let calendarService = Container.shared.calendarService()
     private let eventService = Container.shared.eventService()
     private var cancellables = Set<AnyCancellable>()
 
@@ -33,16 +33,7 @@ final class MenuViewModel {
         setupUpdateEventsBindings()
     }
 
-    private func setupUpdateEventsBindings() {
-        calendarService.allowedCalendarsPublisher.sink { [weak self] _ in
-            self?.refresh()
-        }
-        .store(in: &cancellables)
-    }
-
-    func refresh() {
-        let events = eventService.fetchEvents()
-
+    func update(events: [Event]) {
         // Previous events
         if let previousDay = Self.nextNonWeekendDay(since: Date(), isForward: false) {
             let previousDayEvents = events
@@ -74,6 +65,16 @@ final class MenuViewModel {
             let nextDayTitle = Self.title(for: nextDay)
             nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents)
         }
+    }
+
+    private func setupUpdateEventsBindings() {
+        eventService
+            .eventsFetched
+            .receive(on: RunLoop.main)
+            .sink { [weak self] events in
+                self?.update(events: events)
+            }
+            .store(in: &cancellables)
     }
 
     private static func nextNonWeekendDay(since date: Date, isForward: Bool) -> Date? {

@@ -7,12 +7,22 @@
 		<key>Morty.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>MortyTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>67A17FC82F2E8FCB00998804</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>67A180422F2EB5DD00998804</key>
 		<dict>
 			<key>primary</key>
 			<true/>

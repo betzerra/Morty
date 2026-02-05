@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "27D92BFF-08BB-4B85-9899-DC111EB944D0",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:Morty.xcodeproj",
+        "identifier" : "67A180422F2EB5DD00998804",
+        "name" : "MortyTests"
+      }
+    }
+  ],
+  "version" : 1
+}

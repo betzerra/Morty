@@ -117,19 +117,36 @@ extension Array where Element == Event {
     }
 
     private static func removeDuplicates(from events: [Event]) -> [Event] {
-        // This array *might* contain duplicates
-        let onePersonEvents = events.filter { $0.type == .onePerson }
+        var tmp = [Event]()
 
-        // This not
-        let otherEvents = events.filter { $0.type != .onePerson }
+        events.forEach { event in
+            let foundIndex = tmp.firstIndex(where: { $0.isDuplicate(of: event) })
+            if let index = foundIndex {
+                let found = tmp[index]
 
-        let filtered = onePersonEvents
-            .filter { duplicated in
-                !otherEvents.contains { $0.isDuplicate(of: duplicated) }
+                switch (found.type, event.type) {
+                case (.onePerson, .meeting):
+                    // remove existing event and add the new one
+                    tmp.remove(at: index)
+                    tmp.append(event)
+
+                case (.meeting, .onePerson):
+                    // keep the one that currently exists,
+                    // meeting copy should prevail
+                    break
+
+                case (let lhs, let rhs) where lhs == rhs:
+                    // keep the one that currently exists,
+                    // they are the same
+                    break
+
+                default:
+                    tmp.append(event)
+                }
+            } else {
+                tmp.append(event)
             }
-
-        var retVal = Set<Event>(filtered)
-        retVal.formUnion(otherEvents)
-        return Array(retVal)
+        }
+        return tmp
     }
 }

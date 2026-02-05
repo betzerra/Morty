@@ -92,6 +92,20 @@ class EventServiceTests {
                     type: .onePerson
                 ),
                 Event(
+                    id: "8",
+                    startDate: isoFormatter.date(from: "2026-02-04T15:00:00Z")!,
+                    endDate: isoFormatter.date(from: "2026-02-04T18:00:00Z")!,
+                    title: "Focus Time",
+                    type: .onePerson
+                ),
+                Event(
+                    id: "8",
+                    startDate: isoFormatter.date(from: "2026-02-04T15:00:00Z")!,
+                    endDate: isoFormatter.date(from: "2026-02-04T18:00:00Z")!,
+                    title: "Focus Time",
+                    type: .onePerson
+                ),
+                Event(
                     id: "5",
                     startDate: isoFormatter.date(from: "2026-02-04T00:00:00Z")!,
                     endDate: isoFormatter.date(from: "2026-02-04T23:59:59Z")!,
