@@ -15,7 +15,7 @@ struct SettingsContentView: View {
             }
 
             Tab("Preferences", systemImage: "star") {
-                Text("Preferences")
+                PreferencesView()
             }
         }
         .scenePadding()

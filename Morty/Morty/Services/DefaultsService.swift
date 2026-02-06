@@ -10,6 +10,7 @@ import Foundation
 /// @mockable
 protocol DefaultsServiceProtocol {
     var allowedCalendars: [String] { get set }
+    var filterOnePersonMeetings: Bool { get set }
 }
 
 final class DefaultsService: DefaultsServiceProtocol {
@@ -18,9 +19,15 @@ final class DefaultsService: DefaultsServiceProtocol {
         set { DefaultsService.saveValue(setting: newValue, forKey: .allowedCalendars) }
     }
 
+    var filterOnePersonMeetings: Bool {
+        get { DefaultsService.loadValue(forKey: .filterOnePersonMeetings) ?? false }
+        set { DefaultsService.saveValue(setting: newValue, forKey: .filterOnePersonMeetings) }
+    }
+
     // Try to keep all the keys sorted alphabetically :-)
     enum Key: String {
         case allowedCalendars
+        case filterOnePersonMeetings
     }
 
     /// Load from disk a setting value previously saved.
