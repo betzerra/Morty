@@ -15,7 +15,7 @@ final class DayViewModel {
     var timeSpent: TimeInterval
     var timeSpentSummary: String
 
-    var copyStandupDisabled: Bool
+    var copyStandupEnabled: Bool
 
     var standupText: String {
         var standup = events
@@ -38,7 +38,7 @@ final class DayViewModel {
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
 
-        self.copyStandupDisabled = events.isEmpty
+        self.copyStandupEnabled = !events.isEmpty
     }
 
     func copyStandupButtonPressed() {
