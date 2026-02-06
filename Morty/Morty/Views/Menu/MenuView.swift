@@ -99,10 +99,9 @@ struct MenuView: View {
 #Preview {
     Container.shared.eventService.preview {
         let mock = EventServiceProtocolMock()
-        mock.fetchEventsHandler = {
-            Event.mockDay()
-        }
+        mock.events = Event.mockDay()
         return mock
     }
     MenuView()
+        .padding(.vertical)
 }

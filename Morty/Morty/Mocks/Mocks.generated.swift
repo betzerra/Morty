@@ -97,10 +97,9 @@ class EventServiceProtocolMock: EventServiceProtocol {
     }
 
 
-    var events: [Event] = [Event]()
+    @Published var events: [Event] = [Event]()
 
-    var eventsFetched: AnyPublisher<[Event], Never> { return self.eventsFetchedSubject.eraseToAnyPublisher() }
-    private(set) var eventsFetchedSubject = PassthroughSubject<[Event], Never>()
+    var eventsFetched: AnyPublisher<[Event], Never> { return self.$events.setFailureType(to: Never.self).eraseToAnyPublisher() }
 }
 
 class CalendarServiceProtocolMock: CalendarServiceProtocol {

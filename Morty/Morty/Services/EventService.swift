@@ -10,7 +10,7 @@ import EventKit
 import Factory
 import Foundation
 
-/// @mockable
+/// @mockable(combine: eventsFetched = @Published events)
 protocol EventServiceProtocol {
     func fetchEvents() -> [Event]
 
