@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		67438E372F343132005CC26E /* FactoryTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 67438E362F343132005CC26E /* FactoryTesting */; };
 		67A180FD2F2EF41000998804 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = 67A180FC2F2EF41000998804 /* Factory */; };
+		67E135B02F3576750011E71A /* morty.icon in Resources */ = {isa = PBXBuildFile; fileRef = 67E135AF2F3576750011E71A /* morty.icon */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +26,7 @@
 		6700A08B2F356111005AFC50 /* MortyTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MortyTests.xctestplan; sourceTree = "<group>"; };
 		67A17FC92F2E8FCB00998804 /* Morty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Morty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67A180432F2EB5DD00998804 /* MortyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MortyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67E135AF2F3576750011E71A /* morty.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = morty.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -70,6 +72,7 @@
 		67A17FC02F2E8FCB00998804 = {
 			isa = PBXGroup;
 			children = (
+				67E135AF2F3576750011E71A /* morty.icon */,
 				6700A08B2F356111005AFC50 /* MortyTests.xctestplan */,
 				67A17FCB2F2E8FCB00998804 /* Morty */,
 				67A180442F2EB5DD00998804 /* MortyTests */,
@@ -184,6 +187,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67E135B02F3576750011E71A /* morty.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,8 +349,9 @@
 		67A17FD52F2E8FCC00998804 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = morty;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -392,8 +397,9 @@
 		67A17FD62F2E8FCC00998804 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = morty;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				AUTOMATION_APPLE_EVENTS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
