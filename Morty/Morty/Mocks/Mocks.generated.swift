@@ -10,6 +10,17 @@ import Factory
 import Foundation
 
 
+class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
+    init() { }
+    init(allowedCalendars: [String] = [String]()) {
+        self.allowedCalendars = allowedCalendars
+    }
+
+
+    private(set) var allowedCalendarsSetCallCount = 0
+    var allowedCalendars: [String] = [String]() { didSet { allowedCalendarsSetCallCount += 1 } }
+}
+
 class EKServiceProtocolMock: EKServiceProtocol {
     init() { }
     init(authorizationStatusForEvent: EKAuthorizationStatus) {
@@ -23,6 +34,9 @@ class EKServiceProtocolMock: EKServiceProtocol {
         get { return _authorizationStatusForEvent }
         set { _authorizationStatusForEvent = newValue }
     }
+
+    var authorizationStatusForEventChanged: AnyPublisher<Void, Never> { return self.authorizationStatusForEventChangedSubject.eraseToAnyPublisher() }
+    private(set) var authorizationStatusForEventChangedSubject = PassthroughSubject<Void, Never>()
 
     private(set) var requestAccessToEventsCallCount = 0
     var requestAccessToEventsHandler: (() async throws -> ())?
@@ -63,17 +77,6 @@ class EKServiceProtocolMock: EKServiceProtocol {
         }
         fatalError("predicateForEventsHandler returns can't have a default value thus its handler must be set")
     }
-}
-
-class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
-    init() { }
-    init(allowedCalendars: [String] = [String]()) {
-        self.allowedCalendars = allowedCalendars
-    }
-
-
-    private(set) var allowedCalendarsSetCallCount = 0
-    var allowedCalendars: [String] = [String]() { didSet { allowedCalendarsSetCallCount += 1 } }
 }
 
 class EventServiceProtocolMock: EventServiceProtocol {

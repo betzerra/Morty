@@ -5,6 +5,7 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import Combine
 import EventKit
 
 /// EventKit wrapper service
@@ -12,6 +13,8 @@ import EventKit
 protocol EKServiceProtocol {
     /// Returns the authorization status calendar events
     var authorizationStatusForEvent: EKAuthorizationStatus { get }
+
+    var authorizationStatusForEventChanged: AnyPublisher<Void, Never> { get }
 
     func requestAccessToEvents() async throws
 
@@ -27,13 +30,19 @@ protocol EKServiceProtocol {
 
 final class EKService: EKServiceProtocol {
     private let store = EKEventStore()
+    private let _authorizationStatusForEventChanged = PassthroughSubject<Void, Never>()
+
+    lazy var authorizationStatusForEventChanged: AnyPublisher<Void, Never> = { _authorizationStatusForEventChanged.eraseToAnyPublisher()
+    }()
 
     var authorizationStatusForEvent: EKAuthorizationStatus {
         EKEventStore.authorizationStatus(for: .event)
     }
 
     func requestAccessToEvents() async throws {
-        try await store.requestFullAccessToEvents()
+        if try await store.requestFullAccessToEvents() {
+            _authorizationStatusForEventChanged.send()
+        }
     }
 
     func events(matching predicate: NSPredicate) -> [Event] {
