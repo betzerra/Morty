@@ -34,7 +34,7 @@ struct DayView: View {
         Label {
             Text("No events!")
         } icon: {
-            Image(systemName: "gamecontroller")
+            Image(systemName: "party.popper")
         }
         .foregroundStyle(.secondary)
     }
