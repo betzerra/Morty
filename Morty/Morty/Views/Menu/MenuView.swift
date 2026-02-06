@@ -20,26 +20,29 @@ struct MenuView: View {
 
             // Previous day
             DayView(viewModel: viewModel.previousDayViewModel)
-            copyStandupButton {
-                viewModel.previousDayViewModel.copyStandupButtonPressed()
+            if viewModel.previousDayViewModel.copyStandupEnabled {
+                copyStandupButton {
+                    viewModel.previousDayViewModel.copyStandupButtonPressed()
+                }
             }
-            .disabled(viewModel.previousDayViewModel.copyStandupDisabled)
             Divider()
 
             // Today
             DayView(viewModel: viewModel.currentDayViewModel)
-            copyStandupButton {
-                viewModel.currentDayViewModel.copyStandupButtonPressed()
+            if viewModel.currentDayViewModel.copyStandupEnabled {
+                copyStandupButton {
+                    viewModel.currentDayViewModel.copyStandupButtonPressed()
+                }
             }
-            .disabled(viewModel.currentDayViewModel.copyStandupDisabled)
             Divider()
 
             // Next day
             DayView(viewModel: viewModel.nextDayViewModel)
-            copyStandupButton {
-                viewModel.nextDayViewModel.copyStandupButtonPressed()
+            if viewModel.nextDayViewModel.copyStandupEnabled {
+                copyStandupButton {
+                    viewModel.nextDayViewModel.copyStandupButtonPressed()
+                }
             }
-            .disabled(viewModel.nextDayViewModel.copyStandupDisabled)
             Divider()
 
             // Quit
@@ -96,10 +99,9 @@ struct MenuView: View {
 #Preview {
     Container.shared.eventService.preview {
         let mock = EventServiceProtocolMock()
-        mock.fetchEventsHandler = {
-            Event.mockDay()
-        }
+        mock.events = Event.mockDay()
         return mock
     }
     MenuView()
+        .padding(.vertical)
 }

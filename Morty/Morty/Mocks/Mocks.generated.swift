@@ -12,13 +12,17 @@ import Foundation
 
 class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
     init() { }
-    init(allowedCalendars: [String] = [String]()) {
+    init(allowedCalendars: [String] = [String](), filterOnePersonMeetings: Bool = false) {
         self.allowedCalendars = allowedCalendars
+        self.filterOnePersonMeetings = filterOnePersonMeetings
     }
 
 
     private(set) var allowedCalendarsSetCallCount = 0
     var allowedCalendars: [String] = [String]() { didSet { allowedCalendarsSetCallCount += 1 } }
+
+    private(set) var filterOnePersonMeetingsSetCallCount = 0
+    var filterOnePersonMeetings: Bool = false { didSet { filterOnePersonMeetingsSetCallCount += 1 } }
 }
 
 class EKServiceProtocolMock: EKServiceProtocol {
@@ -97,10 +101,9 @@ class EventServiceProtocolMock: EventServiceProtocol {
     }
 
 
-    var events: [Event] = [Event]()
+    @Published var events: [Event] = [Event]()
 
-    var eventsFetched: AnyPublisher<[Event], Never> { return self.eventsFetchedSubject.eraseToAnyPublisher() }
-    private(set) var eventsFetchedSubject = PassthroughSubject<[Event], Never>()
+    var eventsFetched: AnyPublisher<[Event], Never> { return self.$events.setFailureType(to: Never.self).eraseToAnyPublisher() }
 }
 
 class CalendarServiceProtocolMock: CalendarServiceProtocol {

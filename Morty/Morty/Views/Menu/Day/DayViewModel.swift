@@ -5,6 +5,8 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import Factory
+import Foundation
 import SwiftUI
 
 @MainActor @Observable
@@ -15,10 +17,18 @@ final class DayViewModel {
     var timeSpent: TimeInterval
     var timeSpentSummary: String
 
-    var copyStandupDisabled: Bool
+    var copyStandupEnabled: Bool
+
+    private let defaultService = Container.shared.defaultsService()
 
     var standupText: String {
-        var standup = events
+        var standupEvents = events
+
+        if defaultService.filterOnePersonMeetings {
+            standupEvents = standupEvents.filter { $0.type == .meeting || $0.type == .allDay }
+        }
+
+        var standup = standupEvents
             .compactMap { $0.standupText }
             .joined(separator: "\n")
 
@@ -38,7 +48,7 @@ final class DayViewModel {
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
 
-        self.copyStandupDisabled = events.isEmpty
+        self.copyStandupEnabled = !events.isEmpty
     }
 
     func copyStandupButtonPressed() {
