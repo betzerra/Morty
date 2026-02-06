@@ -40,6 +40,10 @@ struct MenuView: View {
                 viewModel.nextDayViewModel.copyStandupButtonPressed()
             }
             .disabled(viewModel.nextDayViewModel.copyStandupDisabled)
+            Divider()
+
+            // Quit
+            quitButton
         }
         .padding()
     }
@@ -55,6 +59,22 @@ struct MenuView: View {
                 Image(systemName: "doc.on.clipboard.fill")
             }
         }
+        .buttonStyle(.borderless)
+    }
+
+    @ViewBuilder
+    private var quitButton: some View {
+        Button {
+            NSApp.terminate(nil)
+        } label: {
+            Label {
+                Text("Quit")
+            } icon: {
+                Image(systemName: "xmark.rectangle")
+            }
+
+        }
+        .keyboardShortcut("q", modifiers: .command)
         .buttonStyle(.borderless)
     }
 
