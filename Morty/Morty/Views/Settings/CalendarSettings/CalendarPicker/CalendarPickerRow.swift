@@ -24,23 +24,37 @@ struct CalendarPickerRow: View {
 }
 
 #Preview("Selected") {
+    let color = CGColor(
+        red: 1,
+        green: 45/255.0,
+        blue: 224/255.0,
+        alpha: 1
+    )
+
     let item = CalendarItem(
         id: UUID().uuidString,
         title: "Ezequiel Becerra",
         source: "iCloud",
-        color: Color.pink.cgColor!
+        color: color
     )
 
     CalendarPickerRow(item: item, isSelected: true)
 }
 
 #Preview("Not Selected") {
+    let color = CGColor(
+        red: 1,
+        green: 45/255.0,
+        blue: 224/255.0,
+        alpha: 1
+    )
+
     let item = CalendarItem(
         id: UUID().uuidString,
         title: "Ezequiel Becerra",
         source: "iCloud",
-        color: Color.pink.cgColor!
+        color: color
     )
 
-    CalendarPickerRow(item: item, isSelected: false)
+    return CalendarPickerRow(item: item, isSelected: false)
 }
