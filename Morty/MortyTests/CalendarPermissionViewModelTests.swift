@@ -30,20 +30,24 @@ struct CalendarPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.notDetermined, EKAuthorizationStatus.writeOnly]
     )
     func authorizationNotDetermined(status: EKAuthorizationStatus) async {
-        eventsServiceMock.authorizationStatusForEvent = status
+        eventsServiceMock.authorizationStatusHandler = { type in
+            return status
+        }
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled)
         #expect(viewModel.allowButtonTitle == "Allow")
-        #expect(eventsServiceMock.requestAccessToEventsCallCount == 0)
+        #expect(eventsServiceMock.requestAccessCallCount == 0)
 
         await viewModel.allowButtonPressed()
-        #expect(eventsServiceMock.requestAccessToEventsCallCount == 1)
+        #expect(eventsServiceMock.requestAccessCallCount == 1)
     }
 
     @Test("Test view model properties when authorization is granted")
     func authorizationAllowed() async {
-        eventsServiceMock.authorizationStatusForEvent = .fullAccess
+        eventsServiceMock.authorizationStatusHandler = { type in
+            return .fullAccess
+        }
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled == false)
@@ -55,7 +59,9 @@ struct CalendarPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.denied, EKAuthorizationStatus.restricted]
     )
     func authorizationFailed(status: EKAuthorizationStatus) async {
-        eventsServiceMock.authorizationStatusForEvent = status
+        eventsServiceMock.authorizationStatusHandler = { type in
+            return status
+        }
 
         let viewModel = CalendarPermissionViewModel()
         #expect(viewModel.allowButtonEnabled == false)

@@ -1,5 +1,5 @@
 //
-//  CalendarPermissionViewModel.swift
+//  EKPermissionViewModel.swift
 //  Morty
 //
 //  Created by Ezequiel Becerra on 31/01/2026.
@@ -9,23 +9,28 @@ import EventKit
 import Factory
 import SwiftUI
 
-@Observable @MainActor final class CalendarPermissionViewModel {
-    private var eventsService = Container.shared.eventKitService()
+/// EventKitpermissionViewModel, handles buttons and text for
+/// reminders and calendars permissions
+@Observable @MainActor final class EKPermissionViewModel {
+    private var ekService = Container.shared.eventKitService()
 
+    var type: EKEntityType
     var allowButtonTitle: String = ""
     var allowButtonEnabled: Bool = false
 
-    init() {
-        let status = eventsService.authorizationStatusForEvent
+    init(type: EKEntityType) {
+        self.type = type
+
+        let status = ekService.authorizationStatus(for: self.type)
         updateAllowButton(with: status)
     }
 
     func allowButtonPressed() async {
         print("allowButtonPressed")
         do {
-            try await eventsService.requestAccessToEvents()
+            try await ekService.requestAccess(to: self.type)
 
-            let newStatus = eventsService.authorizationStatusForEvent
+            let newStatus = ekService.authorizationStatus(for: self.type)
             updateAllowButton(with: newStatus)
         } catch {
             print("ERROR: \(error.localizedDescription)")

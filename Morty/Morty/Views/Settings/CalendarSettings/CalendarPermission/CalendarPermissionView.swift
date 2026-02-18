@@ -5,10 +5,11 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import EventKit
 import SwiftUI
 
 struct CalendarPermissionView: View {
-    let viewModel = CalendarPermissionViewModel()
+    let viewModel = EKPermissionViewModel(type: .event)
 
     var body: some View {
         HStack(alignment: .top) {

@@ -27,29 +27,29 @@ class DefaultsServiceProtocolMock: DefaultsServiceProtocol {
 
 class EKServiceProtocolMock: EKServiceProtocol {
     init() { }
-    init(authorizationStatusForEvent: EKAuthorizationStatus) {
-        self._authorizationStatusForEvent = authorizationStatusForEvent
-    }
 
 
+    var authorizationStatusChanged: AnyPublisher<EKEntityType, Never> { return self.authorizationStatusChangedSubject.eraseToAnyPublisher() }
+    private(set) var authorizationStatusChangedSubject = PassthroughSubject<EKEntityType, Never>()
 
-    private var _authorizationStatusForEvent: EKAuthorizationStatus!
-    var authorizationStatusForEvent: EKAuthorizationStatus {
-        get { return _authorizationStatusForEvent }
-        set { _authorizationStatusForEvent = newValue }
-    }
-
-    var authorizationStatusForEventChanged: AnyPublisher<Void, Never> { return self.authorizationStatusForEventChangedSubject.eraseToAnyPublisher() }
-    private(set) var authorizationStatusForEventChangedSubject = PassthroughSubject<Void, Never>()
-
-    private(set) var requestAccessToEventsCallCount = 0
-    var requestAccessToEventsHandler: (() async throws -> ())?
-    func requestAccessToEvents() async throws {
-        requestAccessToEventsCallCount += 1
-        if let requestAccessToEventsHandler = requestAccessToEventsHandler {
-            try await requestAccessToEventsHandler()
+    private(set) var requestAccessCallCount = 0
+    var requestAccessHandler: ((EKEntityType) async throws -> ())?
+    func requestAccess(to type: EKEntityType) async throws {
+        requestAccessCallCount += 1
+        if let requestAccessHandler = requestAccessHandler {
+            try await requestAccessHandler(type)
         }
         
+    }
+
+    private(set) var authorizationStatusCallCount = 0
+    var authorizationStatusHandler: ((EKEntityType) -> EKAuthorizationStatus)?
+    func authorizationStatus(for type: EKEntityType) -> EKAuthorizationStatus {
+        authorizationStatusCallCount += 1
+        if let authorizationStatusHandler = authorizationStatusHandler {
+            return authorizationStatusHandler(type)
+        }
+        fatalError("authorizationStatusHandler returns can't have a default value thus its handler must be set")
     }
 
     private(set) var eventsCallCount = 0

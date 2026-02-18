@@ -11,12 +11,14 @@ import EventKit
 /// EventKit wrapper service
 /// @mockable
 protocol EKServiceProtocol {
-    /// Returns the authorization status calendar events
-    var authorizationStatusForEvent: EKAuthorizationStatus { get }
+    /// Authorization status for an specific type (calendar/reminder) has changed
+    var authorizationStatusChanged: AnyPublisher<EKEntityType, Never> { get }
 
-    var authorizationStatusForEventChanged: AnyPublisher<Void, Never> { get }
+    /// Request access to calendar/reminder events
+    func requestAccess(to type: EKEntityType) async throws
 
-    func requestAccessToEvents() async throws
+    /// Returns the authorization status calendar/reminder events
+    func authorizationStatus(for type: EKEntityType) -> EKAuthorizationStatus
 
     /// Searches for events that match the given predicate.
     func events(matching predicate: NSPredicate) -> [Event]
@@ -30,18 +32,27 @@ protocol EKServiceProtocol {
 
 final class EKService: EKServiceProtocol {
     private let store = EKEventStore()
-    private let _authorizationStatusForEventChanged = PassthroughSubject<Void, Never>()
+    private let _authorizationStatusChanged = PassthroughSubject<EKEntityType, Never>()
 
-    lazy var authorizationStatusForEventChanged: AnyPublisher<Void, Never> = { _authorizationStatusForEventChanged.eraseToAnyPublisher()
+    lazy var authorizationStatusChanged: AnyPublisher<EKEntityType, Never> = { _authorizationStatusChanged.eraseToAnyPublisher()
     }()
 
-    var authorizationStatusForEvent: EKAuthorizationStatus {
-        EKEventStore.authorizationStatus(for: .event)
+    func authorizationStatus(for type: EKEntityType) -> EKAuthorizationStatus {
+        EKEventStore.authorizationStatus(for: type)
     }
 
-    func requestAccessToEvents() async throws {
-        if try await store.requestFullAccessToEvents() {
-            _authorizationStatusForEventChanged.send()
+    func requestAccess(to type: EKEntityType) async throws {
+        switch type {
+        case .event:
+            if try await store.requestFullAccessToEvents() {
+                _authorizationStatusChanged.send(.event)
+            }
+        case .reminder:
+            if try await store.requestFullAccessToReminders() {
+                _authorizationStatusChanged.send(.reminder)
+            }
+        @unknown default:
+            fatalError("Unsupported type")
         }
     }
 
