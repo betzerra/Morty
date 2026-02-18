@@ -49,6 +49,7 @@ struct MenuView: View {
             quitButton
         }
         .padding()
+        .frame(maxWidth: 300)
     }
 
     @ViewBuilder
