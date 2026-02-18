@@ -8,8 +8,8 @@
 import EventKit
 import SwiftUI
 
-struct CalendarPermissionView: View {
-    let viewModel = EKPermissionViewModel(type: .event)
+struct EKPermissionView: View {
+    let viewModel: EKPermissionViewModel
 
     var body: some View {
         HStack(alignment: .top) {
@@ -17,7 +17,7 @@ struct CalendarPermissionView: View {
                 .font(.headline)
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Allow this app to use your calendar.")
+                Text(viewModel.subtitle)
 
                 Button {
                     Task {
@@ -33,5 +33,6 @@ struct CalendarPermissionView: View {
 }
 
 #Preview {
-    CalendarPermissionView()
+    let viewModel = EKPermissionViewModel(type: .event)
+    EKPermissionView(viewModel: viewModel)
 }

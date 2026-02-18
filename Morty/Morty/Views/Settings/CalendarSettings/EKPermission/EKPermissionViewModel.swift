@@ -15,11 +15,21 @@ import SwiftUI
     private var ekService = Container.shared.eventKitService()
 
     var type: EKEntityType
+    var subtitle: String = ""
     var allowButtonTitle: String = ""
     var allowButtonEnabled: Bool = false
 
     init(type: EKEntityType) {
         self.type = type
+
+        switch type {
+        case .event:
+            subtitle = String(localized: "permissions.subtitle.events")
+        case .reminder:
+            subtitle = String(localized: "permissions.subtitle.reminder")
+        @unknown default:
+            fatalError("Unsupported type")
+        }
 
         let status = ekService.authorizationStatus(for: self.type)
         updateAllowButton(with: status)

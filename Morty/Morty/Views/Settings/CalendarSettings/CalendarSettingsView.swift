@@ -5,12 +5,13 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import EventKit
 import SwiftUI
 
 struct CalendarSettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            CalendarPermissionView()
+            EKPermissionView(viewModel: EKPermissionViewModel(type: .event))
 
             Divider()
 
