@@ -6,6 +6,7 @@
 //
 
 import Combine
+import EventKit
 import Factory
 import Foundation
 import SwiftUI
@@ -26,8 +27,10 @@ final class CalendarPickerViewModel {
     init() {
         updateCalendars()
 
-        eventKitService.authorizationStatusForEventChanged
-            .sink { [weak self] _ in
+        eventKitService.authorizationStatusChanged
+            // ignore Reminder authorization updates
+            .filter { $0 == .event }
+            .sink { [weak self] value in
                 self?.updateCalendars()
             }
             .store(in: &cancellables)
