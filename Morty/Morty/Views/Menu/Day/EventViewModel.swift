@@ -9,6 +9,8 @@ import SwiftUI
 final class EventViewModel {
     let event: Event
 
+    private let titleLimit: Int = 30
+
     init(event: Event) {
         self.event = event
     }
@@ -16,10 +18,10 @@ final class EventViewModel {
     var title: String {
         switch event.type {
         case .meeting, .onePerson:
-            return "\(event.startDate.time) - \(event.title)"
+            return "\(event.startDate.time) - \(event.title.truncated(to: titleLimit))"
 
         case .allDay:
-            return event.title
+            return event.title.truncated(to: titleLimit)
         }
     }
 
