@@ -1,5 +1,5 @@
 //
-//  CalendarPickerViewModel.swift
+//  EKCalendarPickerViewModel.swift
 //  Morty
 //
 //  Created by Ezequiel Becerra on 01/02/2026.
@@ -12,11 +12,14 @@ import Foundation
 import SwiftUI
 
 @Observable @MainActor
-final class CalendarPickerViewModel {
+final class EKCalendarPickerViewModel {
+    private let type: EKEntityType
     private var eventKitService = Container.shared.eventKitService()
     private var calendarService = Container.shared.calendarService()
 
-    var calendars: [CalendarItem] = []
+    var title: String = ""
+    var subtitle: String = ""
+    var calendars: [EKCalendarItem] = []
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -24,12 +27,25 @@ final class CalendarPickerViewModel {
         calendarService.allowedCalendars
     }
 
-    init() {
+    init(type: EKEntityType) {
+        self.type = type
+
+        switch type {
+        case .event:
+            title = String(localized: "settings.picker.event.title")
+            subtitle = String(localized: "settings.picker.event.subtitle")
+        case .reminder:
+            title = String(localized: "settings.picker.reminder.title")
+            subtitle = String(localized: "settings.picker.reminder.subtitle")
+        @unknown default:
+            fatalError("Unsupported type")
+        }
+
         updateCalendars()
 
         eventKitService.authorizationStatusChanged
             // ignore Reminder authorization updates
-            .filter { $0 == .event }
+            .filter { $0 == self.type }
             .sink { [weak self] value in
                 self?.updateCalendars()
             }
@@ -41,6 +57,6 @@ final class CalendarPickerViewModel {
     }
 
     private func updateCalendars() {
-        calendars = calendarService.fetchCalendars()
+        calendars = calendarService.fetchCalendars(type: type)
     }
 }

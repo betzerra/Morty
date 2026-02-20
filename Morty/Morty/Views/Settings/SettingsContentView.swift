@@ -5,13 +5,18 @@
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import EventKit
 import SwiftUI
 
 struct SettingsContentView: View {
     var body: some View {
         TabView {
             Tab("Calendars", systemImage: "calendar") {
-                CalendarSettingsView()
+                EKCalendarSettingsView(type: .event)
+            }
+
+            Tab("Reminders", systemImage: "checklist") {
+                EKCalendarSettingsView(type: .reminder)
             }
 
             Tab("Preferences", systemImage: "star") {

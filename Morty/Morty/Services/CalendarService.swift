@@ -12,7 +12,7 @@ import Foundation
 
 /// @mockable
 protocol CalendarServiceProtocol {
-    func fetchCalendars() -> [CalendarItem]
+    func fetchCalendars(type: EKEntityType) -> [EKCalendarItem]
     var allowedCalendars: Set<String> { get set }
 
     var allowedCalendarsPublisher: AnyPublisher<Set<String>, Never> { get }
@@ -42,15 +42,16 @@ final class CalendarService: CalendarServiceProtocol {
         allowedCalendarsSubject.eraseToAnyPublisher()
     }()
 
-    func fetchCalendars() -> [CalendarItem] {
+    func fetchCalendars(type: EKEntityType) -> [EKCalendarItem] {
         eventsService
-            .calendars(for: .event)
+            .calendars(for: type)
             .map {
-                CalendarItem(
+                EKCalendarItem(
                     id: $0.calendarIdentifier,
                     title: $0.title,
                     source: $0.source.title,
-                    color: $0.cgColor
+                    color: $0.cgColor,
+                    entityType: type
                 )
             }
             .sorted { lhs, rhs in
