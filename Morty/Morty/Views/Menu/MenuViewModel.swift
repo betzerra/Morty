@@ -20,20 +20,37 @@ final class MenuViewModel {
     private let eventService = Container.shared.eventService()
     private var cancellables = Set<AnyCancellable>()
 
+    var fullStandupText: String {
+        let howAreYouFeeling = "1️⃣ How are you feeling? 🌡️"
+
+        var previousReport = "2️⃣ What have you worked on since your last report? 📋"
+        previousReport.append("\n")
+        previousReport.append(previousDayViewModel.title)
+        previousReport.append("\n")
+        previousReport.append(previousDayViewModel.standupText)
+
+        var todayReport = "3️⃣ What will you do today? 📋"
+        todayReport.append("\n")
+        todayReport.append(currentDayViewModel.standupText)
+
+        return [howAreYouFeeling, previousReport, todayReport]
+            .joined(separator: "\n\n")
+    }
+
     init() {
         let previousDayTitle = String(localized: "previously").localizedCapitalized
-        previousDayViewModel = DayViewModel(title: previousDayTitle, events: [])
+        previousDayViewModel = DayViewModel(title: previousDayTitle, events: [], reminders: [])
 
         let todayTitle = String(localized: "today").localizedCapitalized
-        currentDayViewModel = DayViewModel(title: todayTitle, events: [])
+        currentDayViewModel = DayViewModel(title: todayTitle, events: [], reminders: [])
 
         let nextDayTitle = String(localized: "next").localizedCapitalized
-        nextDayViewModel = DayViewModel(title: nextDayTitle, events: [])
+        nextDayViewModel = DayViewModel(title: nextDayTitle, events: [], reminders: [])
 
         setupUpdateEventsBindings()
     }
 
-    func update(events: [Event]) {
+    func update(events: [Event], reminders: [Reminder]) {
         // Previous events
         if let previousDay = Self.nextNonWeekendDay(since: Date(), isForward: false) {
             let previousDayEvents = events
@@ -42,7 +59,7 @@ final class MenuViewModel {
                     lhs.startDate < rhs.startDate
                 }
             let previousDayTitle = Self.title(for: previousDay)
-            previousDayViewModel = DayViewModel(title: previousDayTitle, events: previousDayEvents)
+            previousDayViewModel = DayViewModel(title: previousDayTitle, events: previousDayEvents, reminders: [])
         }
 
         // Today events
@@ -52,8 +69,14 @@ final class MenuViewModel {
                 lhs.startDate < rhs.startDate
             }
 
+        let todayReminders = reminders.filter { !$0.isCompleted }
+
         let todayTitle = String(localized: "today").localizedCapitalized
-        currentDayViewModel = DayViewModel(title: todayTitle, events: todayEvents)
+        currentDayViewModel = DayViewModel(
+            title: todayTitle,
+            events: todayEvents,
+            reminders: todayReminders
+        )
 
         // Next events
         if let nextDay = Self.nextNonWeekendDay(since: Date(), isForward: true) {
@@ -63,16 +86,22 @@ final class MenuViewModel {
                     lhs.startDate < rhs.startDate
                 }
             let nextDayTitle = Self.title(for: nextDay)
-            nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents)
+            nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents, reminders: [])
         }
+    }
+
+    func copyFullStandupButtonPressed() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(fullStandupText, forType: .string)
     }
 
     private func setupUpdateEventsBindings() {
         eventService
             .eventsFetched
             .receive(on: RunLoop.main)
-            .sink { [weak self] events in
-                self?.update(events: events)
+            .sink { [weak self] values in
+                self?.update(events: values.0, reminders: values.1)
             }
             .store(in: &cancellables)
     }

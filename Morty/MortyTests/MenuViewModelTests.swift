@@ -44,7 +44,7 @@ class MenuViewModelTests {
     }
 
     @Test @MainActor
-    func fetchEvents() {
+    func fetchEventsAndFullStandupText() {
         let mockedCalendarItem = EKCalendar(for: .event, eventStore: EKEventStore())
         mockedCalendarItem.title = "Foo"
 
@@ -139,10 +139,40 @@ class MenuViewModelTests {
         #expect(events.count == 9)
 
         let viewModel = MenuViewModel()
-        viewModel.update(events: events)
+        viewModel.update(events: events, reminders: Reminder.mockSet())
+
+        // These asserts can fail during a weekend.
         #expect(viewModel.previousDayViewModel.events.count == 5)
         #expect(viewModel.currentDayViewModel.events.count == 3)
         #expect(viewModel.nextDayViewModel.events.count == 1)
+
+        let expected = """
+        1️⃣ How are you feeling? 🌡️
+
+        2️⃣ What have you worked on since your last report? 📋
+        Yesterday
+        📅 Mom's Birthday
+        📅 Pay Day
+        📞 10:05 AM - Stand up meeting
+        📞 11:05 AM - Eze <> Tonchis
+        👤 3:00 PM - Focus Time
+
+        🕓 1h 20m spent in meetings
+
+        3️⃣ What will you do today? 📋
+        📞 10:05 AM - Stand up meeting
+        👤 12:00 PM - Lunch
+        👤 2:30 PM - Focus Time
+
+        🕓 25m spent in meetings
+
+        📝 Fix important bug on Settings
+        There's a bug on the settings screen that crashes the app
+
+        📝 Unit Tests
+        """
+
+        #expect(viewModel.fullStandupText == expected)
     }
 
     private static func yesterdayDate(hour: Int, minute: Int) -> Date {

@@ -1,26 +1,27 @@
 //
-//  CalendarPickerView.swift
+//  EKCalendarPickerView.swift
 //  Morty
 //
 //  Created by Ezequiel Becerra on 31/01/2026.
 //
 
+import EventKit
 import SwiftUI
 
-struct CalendarPickerView: View {
+struct EKCalendarPickerView: View {
     @State var selectedCalendars = Set<String>()
 
-    let viewModel = CalendarPickerViewModel()
+    let viewModel: EKCalendarPickerViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Calendars")
+            Text(viewModel.title)
                 .font(.headline)
 
-            Text("Pick the calendars you want to integrate with Morty")
+            Text(viewModel.subtitle)
 
             List(viewModel.calendars) { item in
-                CalendarPickerRow(
+                EKCalendarPickerRow(
                     item: item,
                     isSelected: isCalendarSelected(item.id)
                 )
@@ -41,7 +42,7 @@ struct CalendarPickerView: View {
         selectedCalendars.contains(id)
     }
 
-    func calendarSelected(_ item: CalendarItem) {
+    func calendarSelected(_ item: EKCalendarItem) {
         if isCalendarSelected(item.id) {
             selectedCalendars.remove(item.id)
         } else {
@@ -51,5 +52,6 @@ struct CalendarPickerView: View {
 }
 
 #Preview {
-    CalendarPickerView()
+    let viewModel = EKCalendarPickerViewModel(type: .event)
+    EKCalendarPickerView(viewModel: viewModel)
 }

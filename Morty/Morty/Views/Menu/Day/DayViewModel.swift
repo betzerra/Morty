@@ -13,6 +13,7 @@ import SwiftUI
 final class DayViewModel {
     let title: String
     let events: [Event]
+    let reminders: [Reminder]
 
     var timeSpent: TimeInterval
     var timeSpentSummary: String
@@ -28,27 +29,38 @@ final class DayViewModel {
             standupEvents = standupEvents.filter { $0.type == .meeting || $0.type == .allDay }
         }
 
-        var standup = standupEvents
+        let standup = standupEvents
             .compactMap { $0.standupText }
             .joined(separator: "\n")
 
+        var timeReport: String?
         if timeSpent > 0 {
-            let timeSpentString = "\n\n🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
-            standup.append(timeSpentString)
+            timeReport = "🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
         }
 
-        return standup
+        let tasks = reminders
+            .filter { !$0.isCompleted }
+            .map { $0.standupText }
+            .joined(separator: "\n\n")
+
+        let retVal = [standup, timeReport, tasks]
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n\n")
+
+        return retVal
     }
 
-    init(title: String, events: [Event]) {
+    init(title: String, events: [Event], reminders: [Reminder]) {
         self.title = title
         self.events = events
+        self.reminders = reminders
 
         let timeSpent = Self.timeSpent(for: events)
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
 
-        self.copyStandupEnabled = !events.isEmpty
+        self.copyStandupEnabled = !events.isEmpty || !reminders.isEmpty
     }
 
     func copyStandupButtonPressed() {

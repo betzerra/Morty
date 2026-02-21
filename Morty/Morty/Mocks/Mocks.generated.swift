@@ -81,13 +81,30 @@ class EKServiceProtocolMock: EKServiceProtocol {
         }
         fatalError("predicateForEventsHandler returns can't have a default value thus its handler must be set")
     }
+
+    private(set) var predicateForRemindersCallCount = 0
+    var predicateForRemindersHandler: (([EKCalendar]?) -> NSPredicate)?
+    func predicateForReminders(calendars: [EKCalendar]?) -> NSPredicate {
+        predicateForRemindersCallCount += 1
+        if let predicateForRemindersHandler = predicateForRemindersHandler {
+            return predicateForRemindersHandler(calendars)
+        }
+        fatalError("predicateForRemindersHandler returns can't have a default value thus its handler must be set")
+    }
+
+    private(set) var remindersCallCount = 0
+    var remindersHandler: ((NSPredicate) async -> [Reminder])?
+    func reminders(matching predicate: NSPredicate) async -> [Reminder] {
+        remindersCallCount += 1
+        if let remindersHandler = remindersHandler {
+            return await remindersHandler(predicate)
+        }
+        return [Reminder]()
+    }
 }
 
 class EventServiceProtocolMock: EventServiceProtocol {
     init() { }
-    init(events: [Event] = [Event]()) {
-        self.events = events
-    }
 
 
     private(set) var fetchEventsCallCount = 0
@@ -100,10 +117,18 @@ class EventServiceProtocolMock: EventServiceProtocol {
         return [Event]()
     }
 
+    private(set) var fetchRemindersCallCount = 0
+    var fetchRemindersHandler: (() async -> [Reminder])?
+    func fetchReminders() async -> [Reminder] {
+        fetchRemindersCallCount += 1
+        if let fetchRemindersHandler = fetchRemindersHandler {
+            return await fetchRemindersHandler()
+        }
+        return [Reminder]()
+    }
 
-    @Published var events: [Event] = [Event]()
-
-    var eventsFetched: AnyPublisher<[Event], Never> { return self.$events.setFailureType(to: Never.self).eraseToAnyPublisher() }
+    var eventsFetched: AnyPublisher<([Event], [Reminder]), Never> { return self.eventsFetchedSubject.eraseToAnyPublisher() }
+    private(set) var eventsFetchedSubject = PassthroughSubject<([Event], [Reminder]), Never>()
 }
 
 class CalendarServiceProtocolMock: CalendarServiceProtocol {
@@ -114,13 +139,13 @@ class CalendarServiceProtocolMock: CalendarServiceProtocol {
 
 
     private(set) var fetchCalendarsCallCount = 0
-    var fetchCalendarsHandler: (() -> [CalendarItem])?
-    func fetchCalendars() -> [CalendarItem] {
+    var fetchCalendarsHandler: ((EKEntityType) -> [EKCalendarItem])?
+    func fetchCalendars(type: EKEntityType) -> [EKCalendarItem] {
         fetchCalendarsCallCount += 1
         if let fetchCalendarsHandler = fetchCalendarsHandler {
-            return fetchCalendarsHandler()
+            return fetchCalendarsHandler(type)
         }
-        return [CalendarItem]()
+        return [EKCalendarItem]()
     }
 
     private(set) var allowedCalendarsSetCallCount = 0

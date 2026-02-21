@@ -27,7 +27,12 @@ final class DayViewModelTests {
 
     @Test @MainActor
     func timeSpent() {
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
+
         #expect(viewModel.timeSpent == 75 * 60.0)
         #expect(viewModel.timeSpentSummary == "1h 15m spent in meetings.")
     }
@@ -35,7 +40,11 @@ final class DayViewModelTests {
     @Test @MainActor
     func standupTextWithoutOnePersonEvents() {
         defaultsService.filterOnePersonMeetings = true
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
 
         let expected = """
         📅 Eze OOO
@@ -51,7 +60,11 @@ final class DayViewModelTests {
     @Test @MainActor
     func standupTextWithOnePersonEvents() {
         defaultsService.filterOnePersonMeetings = false
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
 
         let expected = """
         📅 Eze OOO
@@ -63,5 +76,57 @@ final class DayViewModelTests {
         """
 
         #expect(viewModel.standupText == expected)
+    }
+
+    @Test @MainActor
+    func standupTextWithReminders() {
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: Reminder.mockSet()
+        )
+
+        let expected = """
+        📅 Eze OOO
+        📞 2:05 PM - Eze <> Tonchis
+        📞 3:05 PM - Standup Meeting
+        👤 3:30 PM - Focus Time
+
+        🕓 1h 15m spent in meetings
+
+        📝 Fix important bug on Settings
+        There's a bug on the settings screen that crashes the app
+
+        📝 Unit Tests
+        """
+
+        #expect(viewModel.standupText == expected)
+    }
+
+    @Test @MainActor
+    func copyStandupEnabled() {
+        var viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
+        #expect(viewModel.copyStandupEnabled)
+
+        viewModel = DayViewModel(
+            title: "Today",
+            events: [],
+            reminders: Reminder.mockSet()
+        )
+        #expect(viewModel.copyStandupEnabled)
+    }
+
+    @Test @MainActor
+    func copyStandupDisabled() {
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: [],
+            reminders: []
+        )
+        #expect(!viewModel.copyStandupEnabled)
     }
 }

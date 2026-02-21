@@ -5,10 +5,11 @@
 //  Created by Ezequiel Becerra on 01/02/2026.
 //
 
+import EventKit
 import SwiftUI
 
-struct CalendarPickerRow: View {
-    let item: CalendarItem
+struct EKCalendarPickerRow: View {
+    let item: EKCalendarItem
     let isSelected: Bool
 
     var body: some View {
@@ -31,14 +32,15 @@ struct CalendarPickerRow: View {
         alpha: 1
     )
 
-    let item = CalendarItem(
+    let item = EKCalendarItem(
         id: UUID().uuidString,
         title: "Ezequiel Becerra",
         source: "iCloud",
-        color: color
+        color: color,
+        entityType: .event
     )
 
-    CalendarPickerRow(item: item, isSelected: true)
+    EKCalendarPickerRow(item: item, isSelected: true)
 }
 
 #Preview("Not Selected") {
@@ -49,12 +51,13 @@ struct CalendarPickerRow: View {
         alpha: 1
     )
 
-    let item = CalendarItem(
+    let item = EKCalendarItem(
         id: UUID().uuidString,
         title: "Ezequiel Becerra",
         source: "iCloud",
-        color: color
+        color: color,
+        entityType: .event
     )
 
-    return CalendarPickerRow(item: item, isSelected: false)
+    return EKCalendarPickerRow(item: item, isSelected: false)
 }

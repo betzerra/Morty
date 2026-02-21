@@ -19,6 +19,8 @@ struct DayView: View {
             } else {
                 eventList
             }
+
+            reminderList
         }
     }
 
@@ -68,16 +70,22 @@ struct DayView: View {
         let viewModel = EventViewModel(event: event)
         EventView(viewModel: viewModel)
     }
+
+    private var reminderList: some View {
+        ForEach(viewModel.reminders) { reminder in
+            ReminderView(reminder)
+        }
+    }
 }
 
 #Preview("Some Events") {
-    let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+    let viewModel = DayViewModel(title: "Today", events: Event.mockDay(), reminders: [])
     DayView(viewModel: viewModel)
         .padding()
 }
 
 #Preview("No Events") {
-    let viewModel = DayViewModel(title: "Today", events: [])
+    let viewModel = DayViewModel(title: "Today", events: [], reminders: [])
     DayView(viewModel: viewModel)
         .padding()
 }
