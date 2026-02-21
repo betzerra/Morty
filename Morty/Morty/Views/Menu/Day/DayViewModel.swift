@@ -30,7 +30,7 @@ final class DayViewModel {
         }
 
         let standup = standupEvents
-            .compactMap { $0.standupText(format: .day) }
+            .compactMap { $0.standupText }
             .joined(separator: "\n")
 
         var timeReport: String?
@@ -39,7 +39,7 @@ final class DayViewModel {
         }
 
         let tasks = reminders
-            .map { $0.standupText(format: .day) }
+            .map { $0.standupText }
             .joined(separator: "\n\n")
 
         let retVal = [standup, timeReport, tasks]

@@ -27,7 +27,12 @@ final class DayViewModelTests {
 
     @Test @MainActor
     func timeSpent() {
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
+
         #expect(viewModel.timeSpent == 75 * 60.0)
         #expect(viewModel.timeSpentSummary == "1h 15m spent in meetings.")
     }
@@ -35,7 +40,11 @@ final class DayViewModelTests {
     @Test @MainActor
     func standupTextWithoutOnePersonEvents() {
         defaultsService.filterOnePersonMeetings = true
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
 
         let expected = """
         📅 Eze OOO
@@ -51,7 +60,11 @@ final class DayViewModelTests {
     @Test @MainActor
     func standupTextWithOnePersonEvents() {
         defaultsService.filterOnePersonMeetings = false
-        let viewModel = DayViewModel(title: "Today", events: Event.mockDay())
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
 
         let expected = """
         📅 Eze OOO

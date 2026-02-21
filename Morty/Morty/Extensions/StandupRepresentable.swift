@@ -5,17 +5,12 @@
 //  Created by Ezequiel Becerra on 20/02/2026.
 //
 
-enum StandupFormat {
-    case day
-    case full
-}
-
 protocol StandupRepresentable {
-    func standupText(format: StandupFormat) -> String
+    var standupText: String { get }
 }
 
 extension Event: StandupRepresentable {
-    func standupText(format: StandupFormat) -> String {
+    var standupText: String {
         "\(emoji) \(text)"
     }
 
@@ -44,7 +39,7 @@ extension Event: StandupRepresentable {
 }
 
 extension Reminder: StandupRepresentable {
-    func standupText(format: StandupFormat) -> String {
+    var standupText: String {
         var text = "📝 \(title)"
 
         if let notes {
