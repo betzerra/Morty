@@ -29,25 +29,25 @@ final class DayViewModel {
             standupEvents = standupEvents.filter { $0.type == .meeting || $0.type == .allDay }
         }
 
-        var standup = standupEvents
+        let standup = standupEvents
             .compactMap { $0.standupText(format: .day) }
             .joined(separator: "\n")
+
+        var timeReport: String?
+        if timeSpent > 0 {
+            timeReport = "🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
+        }
 
         let tasks = reminders
             .map { $0.standupText(format: .day) }
             .joined(separator: "\n\n")
 
-        if !tasks.isEmpty {
-            standup.append("\n\n")
-            standup.append(tasks)
-        }
+        let retVal = [standup, timeReport, tasks]
+            .compactMap { $0 }
+            .filter { !$0.isEmpty }
+            .joined(separator: "\n\n")
 
-        if timeSpent > 0 {
-            let timeSpentString = "\n\n🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
-            standup.append(timeSpentString)
-        }
-
-        return standup
+        return retVal
     }
 
     init(title: String, events: [Event], reminders: [Reminder]) {
