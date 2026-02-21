@@ -18,10 +18,13 @@ struct MenuView: View {
             settingsButton
             Divider()
 
+            copyFullStandupButton
+            Divider()
+
             // Previous day
             DayView(viewModel: viewModel.previousDayViewModel)
             if viewModel.previousDayViewModel.copyStandupEnabled {
-                copyStandupButton {
+                copyDailyButton {
                     viewModel.previousDayViewModel.copyStandupButtonPressed()
                 }
             }
@@ -30,7 +33,7 @@ struct MenuView: View {
             // Today
             DayView(viewModel: viewModel.currentDayViewModel)
             if viewModel.currentDayViewModel.copyStandupEnabled {
-                copyStandupButton {
+                copyDailyButton {
                     viewModel.currentDayViewModel.copyStandupButtonPressed()
                 }
             }
@@ -39,7 +42,7 @@ struct MenuView: View {
             // Next day
             DayView(viewModel: viewModel.nextDayViewModel)
             if viewModel.nextDayViewModel.copyStandupEnabled {
-                copyStandupButton {
+                copyDailyButton {
                     viewModel.nextDayViewModel.copyStandupButtonPressed()
                 }
             }
@@ -53,12 +56,25 @@ struct MenuView: View {
     }
 
     @ViewBuilder
-    private func copyStandupButton(action: @escaping () -> Void) -> some View {
+    private var copyFullStandupButton: some View {
+        Button {
+            viewModel.copyFullStandupButtonPressed()
+        } label: {
+            Label {
+                Text("Copy full standup")
+            } icon: {
+                Image(systemName: "doc.on.clipboard.fill")
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func copyDailyButton(action: @escaping () -> Void) -> some View {
         Button {
             action()
         } label: {
             Label {
-                Text("Copy standup")
+                Text("Copy daily")
             } icon: {
                 Image(systemName: "doc.on.clipboard.fill")
             }

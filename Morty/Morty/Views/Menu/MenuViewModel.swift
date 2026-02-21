@@ -20,6 +20,23 @@ final class MenuViewModel {
     private let eventService = Container.shared.eventService()
     private var cancellables = Set<AnyCancellable>()
 
+    var fullStandupText: String {
+        let howAreYouFeeling = "1️⃣ How are you feeling? 🌡️"
+
+        var previousReport = "2️⃣ What have you worked on since your last report? 📋"
+        previousReport.append("\n")
+        previousReport.append(previousDayViewModel.title)
+        previousReport.append("\n")
+        previousReport.append(previousDayViewModel.standupText)
+
+        var todayReport = "3️⃣ What will you do today? 📋"
+        todayReport.append("\n")
+        todayReport.append(currentDayViewModel.standupText)
+
+        return [howAreYouFeeling, previousReport, todayReport]
+            .joined(separator: "\n\n")
+    }
+
     init() {
         let previousDayTitle = String(localized: "previously").localizedCapitalized
         previousDayViewModel = DayViewModel(title: previousDayTitle, events: [], reminders: [])
@@ -71,6 +88,12 @@ final class MenuViewModel {
             let nextDayTitle = Self.title(for: nextDay)
             nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents, reminders: [])
         }
+    }
+
+    func copyFullStandupButtonPressed() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(fullStandupText, forType: .string)
     }
 
     private func setupUpdateEventsBindings() {
