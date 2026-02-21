@@ -46,7 +46,7 @@ final class EKCalendarPickerViewModel {
         eventKitService.authorizationStatusChanged
             // ignore Reminder authorization updates
             .filter { $0 == self.type }
-            .sink { [weak self] value in
+            .sink { [weak self] _ in
                 self?.updateCalendars()
             }
             .store(in: &cancellables)

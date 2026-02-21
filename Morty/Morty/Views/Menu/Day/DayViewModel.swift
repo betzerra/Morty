@@ -39,6 +39,7 @@ final class DayViewModel {
         }
 
         let tasks = reminders
+            .filter { !$0.isCompleted }
             .map { $0.standupText }
             .joined(separator: "\n\n")
 

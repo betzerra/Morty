@@ -77,4 +77,29 @@ final class DayViewModelTests {
 
         #expect(viewModel.standupText == expected)
     }
+
+    @Test @MainActor
+    func standupTextWithReminders() {
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: Reminder.mockSet()
+        )
+
+        let expected = """
+        📅 Eze OOO
+        📞 2:05 PM - Eze <> Tonchis
+        📞 3:05 PM - Standup Meeting
+        👤 3:30 PM - Focus Time
+
+        🕓 1h 15m spent in meetings
+
+        📝 Fix important bug on Settings
+        There's a bug on the settings screen that crashes the app
+
+        📝 Unit Tests
+        """
+
+        #expect(viewModel.standupText == expected)
+    }
 }

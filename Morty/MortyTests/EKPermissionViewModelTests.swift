@@ -30,7 +30,7 @@ struct EKPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.notDetermined, EKAuthorizationStatus.writeOnly]
     )
     func authorizationNotDetermined(status: EKAuthorizationStatus) async {
-        eventsServiceMock.authorizationStatusHandler = { type in
+        eventsServiceMock.authorizationStatusHandler = { _ in
             return status
         }
 
@@ -45,7 +45,7 @@ struct EKPermissionViewModelTests {
 
     @Test("Test view model properties when authorization is granted")
     func authorizationAllowed() async {
-        eventsServiceMock.authorizationStatusHandler = { type in
+        eventsServiceMock.authorizationStatusHandler = { _ in
             return .fullAccess
         }
 
@@ -59,7 +59,7 @@ struct EKPermissionViewModelTests {
         arguments: [EKAuthorizationStatus.denied, EKAuthorizationStatus.restricted]
     )
     func authorizationFailed(status: EKAuthorizationStatus) async {
-        eventsServiceMock.authorizationStatusHandler = { type in
+        eventsServiceMock.authorizationStatusHandler = { _ in
             return status
         }
 
@@ -70,7 +70,7 @@ struct EKPermissionViewModelTests {
 
     @Test("Request calendar access when pressing the button")
     func requestAccess() async {
-        eventsServiceMock.authorizationStatusHandler = { type in
+        eventsServiceMock.authorizationStatusHandler = { _ in
             return .fullAccess
         }
 
