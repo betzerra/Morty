@@ -102,4 +102,31 @@ final class DayViewModelTests {
 
         #expect(viewModel.standupText == expected)
     }
+
+    @Test @MainActor
+    func copyStandupEnabled() {
+        var viewModel = DayViewModel(
+            title: "Today",
+            events: Event.mockDay(),
+            reminders: []
+        )
+        #expect(viewModel.copyStandupEnabled)
+
+        viewModel = DayViewModel(
+            title: "Today",
+            events: [],
+            reminders: Reminder.mockSet()
+        )
+        #expect(viewModel.copyStandupEnabled)
+    }
+
+    @Test @MainActor
+    func copyStandupDisabled() {
+        let viewModel = DayViewModel(
+            title: "Today",
+            events: [],
+            reminders: []
+        )
+        #expect(!viewModel.copyStandupEnabled)
+    }
 }

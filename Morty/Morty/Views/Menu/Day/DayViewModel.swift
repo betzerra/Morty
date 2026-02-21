@@ -60,7 +60,7 @@ final class DayViewModel {
         self.timeSpent = timeSpent
         self.timeSpentSummary = Self.timeSpentSummary(timeSpent: timeSpent)
 
-        self.copyStandupEnabled = !events.isEmpty
+        self.copyStandupEnabled = !events.isEmpty || !reminders.isEmpty
     }
 
     func copyStandupButtonPressed() {
