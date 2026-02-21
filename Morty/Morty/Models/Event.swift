@@ -29,23 +29,6 @@ struct Event: Codable, Hashable, Identifiable {
     let title: String
     let type: EventType
 
-    var standupText: String {
-        "\(emoji) \(text)"
-    }
-
-    var emoji: String {
-        switch type {
-        case .meeting:
-            return "📞"
-
-        case .allDay:
-            return "📅"
-
-        case .onePerson:
-            return "👤"
-        }
-    }
-
     /// Tells if the event should be included
     /// in "time spent" summary
     var takesTime: Bool {
@@ -56,16 +39,6 @@ struct Event: Codable, Hashable, Identifiable {
         return startDate == event.startDate &&
             endDate == event.endDate &&
             title == event.title
-    }
-
-    private var text: String {
-        switch type {
-        case .meeting, .onePerson:
-            return "\(startDate.time) - \(title)"
-
-        case .allDay:
-            return title
-        }
     }
 }
 

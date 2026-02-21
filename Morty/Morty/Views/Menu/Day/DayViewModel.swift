@@ -30,15 +30,15 @@ final class DayViewModel {
         }
 
         var standup = standupEvents
-            .compactMap { $0.standupText }
+            .compactMap { $0.standupText(format: .day) }
             .joined(separator: "\n")
 
         let tasks = reminders
-            .map { $0.standupText }
-            .joined(separator: "\n")
+            .map { $0.standupText(format: .day) }
+            .joined(separator: "\n\n")
 
         if !tasks.isEmpty {
-            standup.append("\n")
+            standup.append("\n\n")
             standup.append(tasks)
         }
 
