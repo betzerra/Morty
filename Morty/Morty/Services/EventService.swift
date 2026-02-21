@@ -10,31 +10,44 @@ import EventKit
 import Factory
 import Foundation
 
-/// @mockable(combine: eventsFetched = @Published events)
+/// @mockable
 protocol EventServiceProtocol {
     func fetchEvents() -> [Event]
+    func fetchReminders() async -> [Reminder]
 
-    var events: [Event] { get }
-    var eventsFetched: AnyPublisher<[Event], Never> { get }
+    var eventsFetched: AnyPublisher<([Event], [Reminder]), Never> { get }
 }
 
 final class EventService: EventServiceProtocol {
-    lazy var eventsFetched: AnyPublisher<[Event], Never> = {
+    lazy var eventsFetched: AnyPublisher<([Event], [Reminder]), Never> = {
         _eventsFetched.eraseToAnyPublisher()
     }()
 
     var events: [Event] {
-        _eventsFetched.value
+        _eventsFetched.value.0
     }
 
     private let calendarService = Container.shared.calendarService()
     private let eventKitService = Container.shared.eventKitService()
 
     private var cancellables = Set<AnyCancellable>()
-    private let _eventsFetched = CurrentValueSubject<[Event], Never>([])
+    private let _eventsFetched = CurrentValueSubject<([Event], [Reminder]), Never>(([],[]))
 
     init() {
         setupFetchBindings()
+    }
+
+    func fetchReminders() async -> [Reminder] {
+        let allowedCalendars = calendarService.allowedCalendars
+
+        // Return events only from the calendars that the user previously selected
+        let calendars = eventKitService
+            .calendars(for: .reminder)
+            .filter { allowedCalendars.contains($0.calendarIdentifier) }
+
+        let predicate = eventKitService.predicateForReminders(calendars: calendars)
+
+        return await eventKitService.reminders(matching: predicate)
     }
 
     func fetchEvents() -> [Event] {
@@ -115,11 +128,16 @@ final class EventService: EventServiceProtocol {
         )
         .debounce(for: 0.5, scheduler: RunLoop.main)
         .sink { [weak self] _ in
-            guard let self else {
-                return
-            }
+            Task {
+                guard let self else {
+                    return
+                }
 
-            self._eventsFetched.value = self.fetchEvents()
+                let events = self.fetchEvents()
+                let reminders = await self.fetchReminders()
+
+                self._eventsFetched.value = (events, reminders)
+            }
         }
         .store(in: &cancellables)
     }

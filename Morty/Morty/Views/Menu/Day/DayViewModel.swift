@@ -13,6 +13,7 @@ import SwiftUI
 final class DayViewModel {
     let title: String
     let events: [Event]
+    let reminders: [Reminder]
 
     var timeSpent: TimeInterval
     var timeSpentSummary: String
@@ -32,6 +33,15 @@ final class DayViewModel {
             .compactMap { $0.standupText }
             .joined(separator: "\n")
 
+        let tasks = reminders
+            .map { $0.standupText }
+            .joined(separator: "\n")
+
+        if !tasks.isEmpty {
+            standup.append("\n")
+            standup.append(tasks)
+        }
+
         if timeSpent > 0 {
             let timeSpentString = "\n\n🕓 \(TimeFormatter.string(fromSeconds: timeSpent)) spent in meetings"
             standup.append(timeSpentString)
@@ -40,9 +50,10 @@ final class DayViewModel {
         return standup
     }
 
-    init(title: String, events: [Event]) {
+    init(title: String, events: [Event], reminders: [Reminder]) {
         self.title = title
         self.events = events
+        self.reminders = reminders
 
         let timeSpent = Self.timeSpent(for: events)
         self.timeSpent = timeSpent

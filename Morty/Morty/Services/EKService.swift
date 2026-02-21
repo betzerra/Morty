@@ -28,6 +28,12 @@ protocol EKServiceProtocol {
 
     /// Creates a simple query predicate to search for events within a certain date range.
     func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate
+
+    /// Creates a simple query predicate to search for reminders within a certain date range.
+    func predicateForReminders(calendars: [EKCalendar]?) -> NSPredicate
+
+    /// Searches for reminders that match the given predicate.
+    func reminders(matching predicate: NSPredicate) async -> [Reminder]
 }
 
 final class EKService: EKServiceProtocol {
@@ -67,5 +73,32 @@ final class EKService: EKServiceProtocol {
 
     func predicateForEvents(withStart startDate: Date, end endDate: Date, calendars: [EKCalendar]?) -> NSPredicate {
         store.predicateForEvents(withStart: startDate, end: endDate, calendars: calendars)
+    }
+
+    func predicateForReminders(calendars: [EKCalendar]?) -> NSPredicate {
+        store.predicateForReminders(in: calendars)
+    }
+
+    @MainActor
+    func reminders(matching predicate: NSPredicate) async -> [Reminder] {
+        await withCheckedContinuation { continuation in
+            _ = store.fetchReminders(matching: predicate) { reminders in
+                guard let reminders else {
+                    continuation.resume(returning: [])
+                    return
+                }
+
+                let values = reminders.map {
+                    Reminder(
+                        id: $0.calendarItemIdentifier,
+                        title: $0.title,
+                        notes: $0.notes,
+                        isCompleted: $0.isCompleted
+                    )
+                }
+
+                continuation.resume(returning: values)
+            }
+        }
     }
 }

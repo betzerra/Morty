@@ -22,18 +22,18 @@ final class MenuViewModel {
 
     init() {
         let previousDayTitle = String(localized: "previously").localizedCapitalized
-        previousDayViewModel = DayViewModel(title: previousDayTitle, events: [])
+        previousDayViewModel = DayViewModel(title: previousDayTitle, events: [], reminders: [])
 
         let todayTitle = String(localized: "today").localizedCapitalized
-        currentDayViewModel = DayViewModel(title: todayTitle, events: [])
+        currentDayViewModel = DayViewModel(title: todayTitle, events: [], reminders: [])
 
         let nextDayTitle = String(localized: "next").localizedCapitalized
-        nextDayViewModel = DayViewModel(title: nextDayTitle, events: [])
+        nextDayViewModel = DayViewModel(title: nextDayTitle, events: [], reminders: [])
 
         setupUpdateEventsBindings()
     }
 
-    func update(events: [Event]) {
+    func update(events: [Event], reminders: [Reminder]) {
         // Previous events
         if let previousDay = Self.nextNonWeekendDay(since: Date(), isForward: false) {
             let previousDayEvents = events
@@ -42,7 +42,7 @@ final class MenuViewModel {
                     lhs.startDate < rhs.startDate
                 }
             let previousDayTitle = Self.title(for: previousDay)
-            previousDayViewModel = DayViewModel(title: previousDayTitle, events: previousDayEvents)
+            previousDayViewModel = DayViewModel(title: previousDayTitle, events: previousDayEvents, reminders: [])
         }
 
         // Today events
@@ -52,8 +52,14 @@ final class MenuViewModel {
                 lhs.startDate < rhs.startDate
             }
 
+        let todayReminders = reminders.filter { !$0.isCompleted }
+
         let todayTitle = String(localized: "today").localizedCapitalized
-        currentDayViewModel = DayViewModel(title: todayTitle, events: todayEvents)
+        currentDayViewModel = DayViewModel(
+            title: todayTitle,
+            events: todayEvents,
+            reminders: todayReminders
+        )
 
         // Next events
         if let nextDay = Self.nextNonWeekendDay(since: Date(), isForward: true) {
@@ -63,7 +69,7 @@ final class MenuViewModel {
                     lhs.startDate < rhs.startDate
                 }
             let nextDayTitle = Self.title(for: nextDay)
-            nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents)
+            nextDayViewModel = DayViewModel(title: nextDayTitle, events: nextDayEvents, reminders: [])
         }
     }
 
@@ -71,8 +77,8 @@ final class MenuViewModel {
         eventService
             .eventsFetched
             .receive(on: RunLoop.main)
-            .sink { [weak self] events in
-                self?.update(events: events)
+            .sink { [weak self] values in
+                self?.update(events: values.0, reminders: values.1)
             }
             .store(in: &cancellables)
     }

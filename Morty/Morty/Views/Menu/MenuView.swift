@@ -100,7 +100,6 @@ struct MenuView: View {
 #Preview {
     Container.shared.eventService.preview {
         let mock = EventServiceProtocolMock()
-        mock.events = Event.mockDay()
         return mock
     }
     MenuView()
