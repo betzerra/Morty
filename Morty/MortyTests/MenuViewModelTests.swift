@@ -147,19 +147,12 @@ class MenuViewModelTests {
         #expect(viewModel.nextDayViewModel.events.count == 1)
 
         let expected = """
-        1️⃣ How are you feeling? 🌡️
+        Worked since last report (Friday) 📋
 
-        2️⃣ What have you worked on since your last report? 📋
-        Yesterday
-        📅 Mom's Birthday
-        📅 Pay Day
-        📞 10:05 AM - Stand up meeting
-        📞 11:05 AM - Eze <> Tonchis
-        👤 3:00 PM - Focus Time
 
-        🕓 1h 20m spent in meetings
+        ---
 
-        3️⃣ What will you do today? 📋
+        Today's work plan 📋
         📞 10:05 AM - Stand up meeting
         👤 12:00 PM - Lunch
         👤 2:30 PM - Focus Time

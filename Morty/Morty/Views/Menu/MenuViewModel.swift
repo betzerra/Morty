@@ -21,20 +21,16 @@ final class MenuViewModel {
     private var cancellables = Set<AnyCancellable>()
 
     var fullStandupText: String {
-        let howAreYouFeeling = "1️⃣ How are you feeling? 🌡️"
-
-        var previousReport = "2️⃣ What have you worked on since your last report? 📋"
-        previousReport.append("\n")
-        previousReport.append(previousDayViewModel.title)
+        var previousReport = "Worked since last report (\(previousDayViewModel.title.localizedCapitalized)) 📋"
         previousReport.append("\n")
         previousReport.append(previousDayViewModel.standupText)
 
-        var todayReport = "3️⃣ What will you do today? 📋"
+        var todayReport = "Today's work plan 📋"
         todayReport.append("\n")
         todayReport.append(currentDayViewModel.standupText)
 
-        return [howAreYouFeeling, previousReport, todayReport]
-            .joined(separator: "\n\n")
+        return [previousReport, todayReport]
+            .joined(separator: "\n\n---\n\n")
     }
 
     init() {
