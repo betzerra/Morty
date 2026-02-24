@@ -40,7 +40,7 @@ extension Event: StandupRepresentable {
 
 extension Reminder: StandupRepresentable {
     var standupText: String {
-        var text = "📝 \(title)"
+        var text = "\(emoji) \(title)"
 
         if let notes {
             text.append("\n")
@@ -48,5 +48,19 @@ extension Reminder: StandupRepresentable {
         }
 
         return text
+    }
+
+    private var emoji: String {
+        let target = title.lowercased()
+
+        if isCompleted {
+            return "✅"
+        } else if target.contains("blocked") {
+            return "🛑"
+        } else if target.contains("bug") || target.contains("fix") {
+            return "🐛"
+        } else {
+            return "📝"
+        }
     }
 }
