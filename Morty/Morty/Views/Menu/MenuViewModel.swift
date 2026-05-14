@@ -30,7 +30,7 @@ final class MenuViewModel {
         todayReport.append(currentDayViewModel.standupText)
 
         return [previousReport, todayReport]
-            .joined(separator: "\n\n---\n\n")
+            .joined(separator: "\n\n")
     }
 
     init() {

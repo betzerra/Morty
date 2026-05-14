@@ -29,9 +29,13 @@ final class DayViewModel {
             standupEvents = standupEvents.filter { $0.type == .meeting || $0.type == .allDay }
         }
 
-        let standup = standupEvents
-            .compactMap { $0.standupText }
+        var standup = standupEvents
+            .compactMap { "• \($0.standupText)" }
             .joined(separator: "\n")
+
+        if standup.isEmpty {
+            standup = "• No Events ⛱️"
+        }
 
         var timeReport: String?
         if timeSpent > 0 {
@@ -40,7 +44,7 @@ final class DayViewModel {
 
         let tasks = reminders
             .filter { !$0.isCompleted }
-            .map { $0.standupText }
+            .map { "• \($0.standupText)" }
             .joined(separator: "\n\n")
 
         let retVal = [standup, timeReport, tasks]
