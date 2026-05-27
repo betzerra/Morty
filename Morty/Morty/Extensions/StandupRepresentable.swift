@@ -59,6 +59,8 @@ extension Reminder: StandupRepresentable {
             return "🛑"
         } else if target.contains("bug") || target.contains("fix") {
             return "🐛"
+        } else if target.contains("pull request") || target.split(separator: " ").contains("pr") {
+            return "🧑‍💻"
         } else {
             return "📝"
         }

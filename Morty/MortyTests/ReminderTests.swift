@@ -57,6 +57,39 @@ struct ReminderTests {
     }
 
     @Test(
+        "When PR is mentioned -> 🧑‍💻",
+        arguments: [
+            "PR Review: URL",
+            "Pull Request: URL",
+        ]
+    )
+    func pullRequestEmoji(title: String) {
+        let reminder = Reminder(
+            id: UUID().uuidString,
+            title: title,
+            notes: nil,
+            isCompleted: false
+        )
+        #expect(reminder.standupText.contains("🧑‍💻"))
+    }
+
+    @Test(
+        "Avoid false positives on '🧑‍💻' emoji",
+        arguments: [
+            "approval",
+        ]
+    )
+    func noPullRequestEmoji(title: String) {
+        let reminder = Reminder(
+            id: UUID().uuidString,
+            title: title,
+            notes: nil,
+            isCompleted: false
+        )
+        #expect(!reminder.standupText.contains("🧑‍💻"))
+    }
+
+    @Test(
         "Default emoji -> 📝",
         arguments: [
             "Ticket 12347 - Feature: Setting screen"
