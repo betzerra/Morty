@@ -47,9 +47,9 @@ final class DayViewModelTests {
         )
 
         let expected = """
-        📅 Eze OOO
-        📞 2:05 PM - Eze <> Tonchis
-        📞 3:05 PM - Standup Meeting
+        • 📅 Eze OOO
+        • 📞 2:05 PM - Eze <> Tonchis
+        • 📞 3:05 PM - Standup Meeting
 
         🕓 1h 15m spent in meetings
         """
@@ -67,10 +67,10 @@ final class DayViewModelTests {
         )
 
         let expected = """
-        📅 Eze OOO
-        📞 2:05 PM - Eze <> Tonchis
-        📞 3:05 PM - Standup Meeting
-        👤 3:30 PM - Focus Time
+        • 📅 Eze OOO
+        • 📞 2:05 PM - Eze <> Tonchis
+        • 📞 3:05 PM - Standup Meeting
+        • 👤 3:30 PM - Focus Time
 
         🕓 1h 15m spent in meetings
         """
@@ -87,17 +87,17 @@ final class DayViewModelTests {
         )
 
         let expected = """
-        📅 Eze OOO
-        📞 2:05 PM - Eze <> Tonchis
-        📞 3:05 PM - Standup Meeting
-        👤 3:30 PM - Focus Time
+        • 📅 Eze OOO
+        • 📞 2:05 PM - Eze <> Tonchis
+        • 📞 3:05 PM - Standup Meeting
+        • 👤 3:30 PM - Focus Time
 
         🕓 1h 15m spent in meetings
 
-        📝 Fix important bug on Settings
+        • 🐛 Fix important bug on Settings
         There's a bug on the settings screen that crashes the app
 
-        📝 Unit Tests
+        • 📝 Unit Tests
         """
 
         #expect(viewModel.standupText == expected)

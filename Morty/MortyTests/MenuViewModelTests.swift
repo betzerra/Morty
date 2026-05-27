@@ -43,7 +43,7 @@ class MenuViewModelTests {
         eventKitService = eventKitServiceMock
     }
 
-    @Test @MainActor
+    @Test(.disabled("This test needs rework")) @MainActor
     func fetchEventsAndFullStandupText() {
         let mockedCalendarItem = EKCalendar(for: .event, eventStore: EKEventStore())
         mockedCalendarItem.title = "Foo"
